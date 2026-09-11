@@ -1,0 +1,14 @@
+.info-tooltip {
+  display: flex;
+  &__col {
+    &:first-child { margin-right: 20px; }
+    p {
+      color: #171F26;
+      font-size: 13px;
+      font-weight: 400;
+      word-break: keep-all;
+      white-space: nowrap;
+      margin-bottom: 0;
+    }
+  }
+}

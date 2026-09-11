@@ -1,0 +1,267 @@
+// Styles for search field in sidebar
+.form-control {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px 10px;
+}
+
+.input-file {
+  max-width: 240px;
+  max-height: 40px;
+  padding: 8px 16px;
+  margin: 0px auto;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background-color: #f29111;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color .3s ease, border .3s;
+  &:hover {
+    background-color: $oracle-oragne;
+
+    label {
+      color: #ffffff!important;
+    }
+  }
+}
+
+.input-file [type = file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.input-file label {
+  font-weight: 400;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+  margin: 0 0 15px 0;
+
+  @include media-breakpoint-up(sm) {
+    margin: 0 15px 0 0;
+  }
+}
+
+ input[type=text]:focus {
+   outline: none;
+ }
+
+ input:-internal-autofill-selected {
+   background-color: #ccc;
+ }
+
+// // Option with label text
+// form.search-container {
+//   width: auto;
+//   margin: 10px;
+//   border-bottom: 0.4px solid #B2BEB5;
+//   color: #fff;
+//   font-size: 14px;
+// }
+
+// .search-container input {
+//   font-size: 14px;
+//   border: none;
+//   width:  100%;
+//   height: 30px;
+//   color: #FFFFFF;
+//   background: none;
+//   border-radius: 3px;
+
+//   &::placeholder {
+//     font-size: 12px;
+//   }
+// }
+
+// Option without placeholder text
+form.search-container {
+  max-width: 100%;
+  height: 36px;
+  margin: 20px 10px 20px 0px;
+  border: 0.4px solid #D7ECF6;
+  border-radius: 12px;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  box-shadow: inset 0px 4px 4px rgba(201, 220, 228, 0.8);
+  background: url("{{ '/resources/img/docs-home/search-new.svg' | relative_url }}") 1% 50%/ 28px 28px no-repeat, #DFEDF4;
+  @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px) {
+    max-width: 200px;
+  }
+}
+
+.search-container input {
+  font-size: 15px;
+  border: none;
+  width: 100%;
+  height: 30px;
+  color: #171F26;
+  background: none;
+  border-radius: 3px;
+  padding-left: 60px;
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    color: #171F26;
+    }
+
+}
+
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: -30px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.99;
+  border-radius: 3px;
+}
+
+.search-container button:focus {
+  background-color: none;
+  outline: none;
+}
+
+.search-container button:active {
+  background-color: #ccc;
+  outline: none;
+}
+
+form:focus {
+  outline: none;
+}
+
+.search-results ul {
+  padding-left: 0;
+}
+
+.search-results ul li {
+  padding-left: 0;
+}
+
+.search-results ul li:before {
+  content: none;
+}
+
+.search-container button.searchbttn {
+	width: 26px;
+	height: 26px;
+	top: 50%;
+	overflow: hidden;
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+	cursor: pointer;
+	text-indent: -9000px;
+  margin-left: 2px;
+}
+
+// Styles for search field in header menu
+.search-container button.bttn {
+  float: right;
+	height: 26px;
+	overflow: hidden;
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+	cursor: pointer;
+	text-indent: -9000px;
+  background-image: url("{{ '/resources/img/docs-home/search_icon.svg' | relative_url }}");
+	background-size: 26px auto;
+	background-repeat: no-repeat;
+}
+
+.menu__item input#search-box:active::placeholder {
+  visibility: hidden;
+}
+
+.menu__item input#search-box:focus::placeholder {
+  visibility: hidden;
+}
+
+.menu__item input#search-box::placeholder {
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  color: #00758F;
+  font-size: 15px;
+}
+
+.menu__item .search-container input[type=text] {
+  border: none;
+  width: 100%;
+  height: 30px;
+  color: #4a5366;
+  background: none;
+  border-radius: 3px;
+}
+
+.menu__item .search-container  input[type=text]:focus {
+  font-size: 1rem;
+  margin-top: -2px;
+}
+
+.menu__item .search-container input[type=text] {
+  font-size: 1rem;
+  color: #FFFFFF;
+}
+
+.search-container input:-internal-autofill-selected {
+  background-color: none !important;
+}
+
+.search-container input:-internal-autofill-previewed {
+  background-color: none !important;
+}
+
+.card #module-lookup-form input#module-name {
+  width: 100%;
+  border: 1px grey oldlace!important;
+}
+// Search results highlighting
+mark {
+    background-color: #f29110!important;
+}
+
+//Search results page
+.search.search-results {
+    background: #D4ECF1 url(/resources/img/docs-home/search-new.svg) 2% 50%/28px auto no-repeat;
+    border: 0.4px solid #00758F;
+    box-sizing: border-box;
+    backdrop-filter: blur(15px);
+    border-radius: 8px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.search-results .form-inline input[type=text] {
+    margin-left: 10px;
+    border: none;
+    height: 30px;
+    background: none;
+    border-radius: 3px;
+    font-size: 24px;
+    line-height: 28px;
+    color: #171F26;
+    cursor: pointer;
+}

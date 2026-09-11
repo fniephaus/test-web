@@ -1,0 +1,190 @@
+.docsnote {
+  padding: 0px 0px 0px 0px;
+  position:fixed;
+  z-index: 9;
+  margin-left: 335px;
+  width: 100%;
+  @media only screen
+  and (min-width: 768px)
+  and (max-width: 1280px) {
+    padding: 0px 0px 0px 0px;
+}
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 767x) {
+    padding: 0px 0px 0px 0px;
+    margin-left: 15px;
+  }
+}
+
+.docsnote__body {
+  font-family: Oracle Sans, sans-serif;
+  color: #FFFFFF;
+  padding: 0px 15px 0px 0px;
+  max-width: 100%;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 530px) {
+    max-width: 550px;
+  }
+}
+
+.docsnote__column {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 0px;
+}
+
+.docsnote__card {
+  background: linear-gradient(90deg, #FF5353 0%, #4A2A35 15%);
+  filter: drop-shadow(0px 8px 16px rgba(56, 18, 18, 0.2));
+  height: 56px;
+  margin-top: -3px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 767px) {
+    margin-top: -6px;
+  }
+}
+
+.docsnote-mid__card {
+  background: linear-gradient(90deg, #8EC9E6 6%, #D5C25B 15%);
+  filter: drop-shadow(0px 8px 16px rgba(56, 18, 18, 0.2));
+  height: 56px;
+  margin-top: -3px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 767px) {
+    margin-top: -6px;
+  }
+    @media only screen
+  and (min-width: 576px)
+  and (max-width: 1180px) {
+    height: 72px;
+  }
+}
+
+.rightside img {
+  width: 32px;
+  margin: 12px 12px 12px 44px;
+  @media only screen
+  and (min-width: 481px)
+  and (max-width: 640px) {
+    margin: 12px 12px 12px 12px;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 480px) {
+    width: 28px;
+    margin: 12px 12px 12px 8px;
+  }
+}
+
+.rightside {
+  display: flex;
+  align-items: center;
+  @media only screen
+  and (min-width: 1400px)
+  and (max-width: 1767px) {
+    margin-left: calc((100% - 310px - 1080px) / 2);
+  }
+  @media only screen and (min-width: 1768px) {
+    justify-content: center;
+    width: 1080px;
+    margin-left: calc((100% - 960px - 1080px) / 2);
+  }
+
+}
+
+p.docsnote__subtitle {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+  padding-left: 24px;
+  margin: 0px;
+  flex-wrap: wrap;
+  min-width: 400px;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 640px) {
+    font-size: 14px;
+    padding-left: 4px;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 530px) {
+    font-size: 13px;
+    min-width: 400px;
+    max-width: 370px;
+    line-height: inherit;
+  }
+}
+
+.docsnote__card a {
+  color: #f29111;
+  padding: 2px 0px 2px 6px;
+  line-height: normal;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 530px) {
+    padding: 0px;
+  }
+}
+
+p.docsnote-mid__subtitle {
+  display: flex;
+  align-items: center;
+  color: #1d2835;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+  padding-left: 24px;
+  margin: 0px;
+  flex-wrap: wrap;
+  min-width: 400px;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 640px) {
+    font-size: 14px;
+    padding-left: 4px;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 530px) {
+    font-size: 13px;
+    min-width: 400px;
+    max-width: 370px;
+    line-height: inherit;
+  }
+  @media only screen
+  and (min-width: 768px)
+  and (max-width: 1180px) {
+    max-width: 700px;
+    padding: 10px 0px;
+  }
+}
+
+.docsnote-mid__card a {
+  color: #1d2835;
+  padding: 2px 0px 2px 4px;
+  text-decoration: underline;
+  line-height: normal;
+  &:hover {
+    color: #f29111;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 530px) {
+    padding: 0px;
+  }
+}

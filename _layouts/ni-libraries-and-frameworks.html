@@ -1,0 +1,109 @@
+---
+layout: page_content
+---
+
+<section class="content-section nimain-blue">
+  <div class="wrapper">
+    <div class="ni-libs">
+      <div class="container">
+        <h3 class="ni-libs-frameworks__topics">Frameworks Ready for Native Image</h3>
+        <div class="ni-libs-frameworks__text">
+          <h5 class="ni-libsfram-mod">
+            The following frameworks are compatible with GraalVM Native Image. For more details, see their project launchers.
+          </h5>
+        </div>
+        <div class="row">
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='{{ "/resources/img/native-image/frameworks/01_micronaut.svg" | relative_url }}' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://micronaut.io/launch/">Project Launcher</a>
+                </div>
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://micronaut.io/learn/">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='{{ "/resources/img/native-image/frameworks/02_spring.svg" | relative_url }}' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://start.spring.io/">Project Launcher</a>
+                </div>
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://github.com/oracle/graalvm-reachability-metadata">Reachability Metadata</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='{{ "/resources/img/native-image/frameworks/03_quarkus.svg" | relative_url }}' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://code.quarkus.io/">Project Launcher</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='{{ "/resources/img/native-image/frameworks/04_helidon.svg" | relative_url }}' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://helidon.io/starter/">Project Launcher</a>
+                </div>
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://github.com/oracle/graalvm-reachability-metadata">Reachability Metadata</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 class="ni-libs-frameworks__topics">Libraries and Frameworks Tested with Native Image</h3>
+        <div class="ni-libs-frameworks__text">
+          <h5 class="ni-libsfram-mod">The following table lists libraries and frameworks from the Java ecosystem that
+            are tested with GraalVM Native Image. To ensure your application is compatible with any of these libraries,
+            use the latest version of the <a href="https://graalvm.github.io/native-build-tools/latest/index.html" target="_blank">Native Build Tools</a>.
+            Each item in the table is annotated with a <i>test level</i>, as follows:
+          </h5>
+          <h5 class="ni-libsfram-mod">
+            <ul class="test-level">
+              <li><i>Tested (★★)</i>: The library or framework is continuously tested by its maintainers. (This is the
+                best test level.)</li>
+              <li><i>Community-tested (★)</i>: The library or framework is continuously tested as part of the <a
+                  href="https://github.com/oracle/graalvm-reachability-metadata">GraalVM Reachability Metadata
+                  Repository</a> or some other community-driven project.</li>
+            </ul>
+          </h5>
+          <h5 class="ni-libsfram-mod">If you would like to add your library and framework to this list, open a pull
+            request and add an entry to <a href="https://github.com/oracle/graalvm-reachability-metadata/blob/master/metadata/library-and-framework-list.json">
+            this file</a> according to <a href="https://github.com/oracle/graalvm-reachability-metadata/blob/master/metadata/schemas/library-and-framework-list-schema-v1.0.0.json">this schema</a>.
+          </h5>
+        </div>
+        <div class="row metadata-table ni-libs-frameworks__text">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            {% include native-image-tested-libraries-and-frameworks.html %}
+            <h5 id="footnote-1">1) Requires metadata from the <a
+              href="https://github.com/oracle/graalvm-reachability-metadata" target="_blank">GraalVM Reachability
+              Metadata repository</a>.
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

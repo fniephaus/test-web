@@ -1,0 +1,84 @@
+// Define defaults for each variable.
+
+// @font-face {
+//  font-family: OpenSans;
+//  src: url("{{ '/resources/fonts/open-sans/OpenSans-Regular.ttf'),
+//      url("{{ '/resources/fonts/open-sans/OpenSans-Light.ttf');
+// }
+
+@font-face {
+  font-family: "OracleSans";
+  src: url('../resources/fonts/oracle-sans/OracleSans_Bd.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_BdIt.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_It.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_Lt.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_LtIt.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_SBd.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_SBdIt.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_ULt.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_ULtIt.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_XBd.ttf'),
+  url('../resources/fonts/oracle-sans/OracleSans_XBdIt.ttf');
+}
+
+$oracle-blue: #00758F !default;
+$oracle-oragne: #f29110 !default;
+
+$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$base-font-size:   1rem !default;
+$base-font-weight: 400 !default;
+$small-font-size:  $base-font-size * 0.875 !default;
+$base-line-height: 1.5 !default;
+
+$spacing-unit:     30px !default;
+
+// $text-color:            #44505f !default;
+$text-color:            #171F26 !default;
+$nav-bar-color:         #333 !default;
+$background-color:      #ffffff !default; //#ebf0f1 !default; //#ededed!default;
+$brand-color:           $oracle-blue !default; //#0081aa !default;
+$brand-highlight-color: $oracle-blue !default; //#00b1ea !default;
+$link-color:            #0081aa !default;
+$link-highlight-color:  #d9810c !default;
+
+$grey-color:               #828282 !default;
+$grey-color-light:         lighten($grey-color, 40%) !default;
+$grey-color-light-code:    lighten($grey-color, 35%) !default;
+$grey-color-light-border:  lighten($grey-color, 30%) !default;
+$grey-color-dark:          darken($grey-color, 25%) !default;
+
+$red-color:             #ff0000 !default;
+$red-color-less-dark:   darken($red-color, 15%) !default;
+$red-color-dark:        darken($red-color, 20%) !default;
+$red-color-more-dark:   darken($red-color, 25%) !default;
+$red-color-alt1:        #a02525;
+
+$orange-color:             #e48e00 !default;
+$orange-color-less-dark:   darken($orange-color, 5%) !default;
+$orange-color-dark:        darken($orange-color, 10%) !default;
+$orange-color-more-dark:   darken($orange-color, 15%) !default;
+
+$blue-color:               #00618a !default;
+$blue-color-less-dark:     lighten($blue-color, 5%) !default;
+$blue-color-dark:          darken($blue-color, 2%) !default;
+$blue-color-more-dark:     darken($blue-color, 5%) !default;
+$blue-color-very-dark:     darken($blue-color, 10%) !default;
+
+$primary-color:             $blue-color;
+$primary-color-less-dark:   $blue-color-less-dark;
+$primary-color-dark:        $blue-color-dark;
+$primary-color-more-dark:   $blue-color-more-dark;
+$primary-color-very-dark:   $blue-color-very-dark;
+$primary-color-alt1:        #00719a;
+
+$secondary-color:           $blue-color;
+
+$border-bottom-grey: #d8d8d8;
+$page-background:    #ededed;
+
+// Width of the content area
+// $content-width:    1080px !default;
+$content-width:    900px !default;
+
+$on-palm:          600px !default;
+$on-laptop:        700px !default;

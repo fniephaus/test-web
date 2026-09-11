@@ -1,0 +1,86 @@
+//Use Cases Page
+.clients__homescreen {
+  background: url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 122% 30%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 80px 0px 60px 0px;
+}
+
+.clients__screenback {
+  background: radial-gradient(45.76% 45.76% at 50% 50%, rgba(46, 79, 115, 0.8) 0%, rgba(20, 36, 53, 0.088) 100%);
+}
+
+h2.clients__title {
+  font-weight: 400;
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.clients__subtitle h5 {
+  text-align: center;
+  color: #C0DBE9;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.clients {
+  background: #161D24;
+  padding: 40px 0px 40px 0px;
+}
+
+.clients__row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.clients__column {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  width: 50%;
+  @media only screen and (min-width: 320px) and (max-width: 1280px) {
+    width: 100%;
+  }
+}
+
+.clients__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #213242;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  padding: 4px 16px;
+  height: 380px;
+  align-items: center;
+  @media only screen and (min-width: 320px) and (max-width: 1280px) {
+    margin-bottom: 30px;
+    height: fit-content; 
+  }
+  a {
+    color: #F29111;
+    &:hover {
+      color: #8EC8E6;
+    }
+  }
+  img {
+    padding: 15px 0px;
+  }
+}
+
+h5.clients__topics {
+  color: #ffffff;
+  text-align: center;
+  padding: 7px 20px 15px 20px;
+  margin: 0;
+}
+
+.clients__button {
+  padding: 20px 0px 20px 0px;
+  width: fit-content;
+  margin: 0 auto;
+}

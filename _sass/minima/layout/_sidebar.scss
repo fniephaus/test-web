@@ -1,0 +1,280 @@
+.col-bg {
+  &:after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    content: "";
+    width: 9999%;
+    height: 100%;
+    background: #171F26;
+    z-index: -1;
+  }
+}
+
+.sidebar-wrap {
+  position: relative;
+  background-color: transparent;
+  margin-left: 15px;
+}
+
+.inner-wrapper-sticky {
+  @include media-breakpoint-down(md) {
+    transform: none!important;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  background: transparent;
+  z-index: 99;
+  padding: 0 15px;
+  &.open {
+    transform: translateX(0);
+    background: url("/resources/img/home/grain.png") repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+    margin-top: 44px;
+  }
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      margin-left: 0;
+  }
+
+  @include media-breakpoint-up(sm) {
+    position: relative;
+    top: auto;
+    height: auto;
+    padding: 0px 0 10px;
+    background: transparent;
+    z-index: 2;
+    width: 320px;
+    left: auto;
+    transform: translate(0, 0); /* For browsers don't support translate3d. */
+    transform: translate3d(0, 0, 0);
+    will-change: position, transform;
+  }
+
+  &--ecosysytem {
+    @include media-breakpoint-up(sm) {
+      top: 60px;
+      position: sticky;
+      flex: 1;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
+
+//FOR DOCS PAGE, NOT ONLY SIDEBAR
+.col-sm-3.docsimpro {
+  flex: 0 0 335px;
+  max-width: 335px;
+  padding: 0px;
+}
+
+.col-sm-9.docsmod {
+  flex: 1 1 260px;
+  flex-wrap: wrap;
+  min-width: none;
+  overflow: auto;
+  background: #ffffff;
+  max-width: 100%;
+}
+
+.guides-container {
+  padding: 40px 24px 40px 48px;
+}
+
+.guide__content_2 {
+  min-width: none;
+  background-color: #F3F7FF;
+}
+
+.menuabout img {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin: 10px 0px 20px 20px;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 575px) {
+    display: none;
+  }
+}
+
+.no-display {
+  display: none;
+}
+
+.btn-color {
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 767px) {
+    background: #2F3747;
+    border-radius: 3px;
+  }
+}
+
+.container-fluid--sidebar {
+  max-width: 2440px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+//COLLAPSED SIDEBAR STYLES
+.short {
+  .menuabout img {  
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-left: 10px;
+    @media only screen
+    and (min-width: 320px)
+    and (max-width: 575px) {
+      display: none;
+    }
+  }
+  .toc-bullets {
+    display: none;
+  }
+  .element-about-pad {
+    padding-left: 0px;
+  }
+  .diagram-about {
+    margin-left: -32px;
+    @media only screen
+    and (min-width: 600px)
+    and (max-width: 1024px) {
+      margin-left: 0px;
+    }
+  }
+  .version-dropdown {
+    display: none !important;
+  }
+  .col-sm-9 {
+    flex: 0 0 95% !important;
+    max-width: 95% !important;
+    @media only screen
+    and (min-width: 320px)
+    and (max-width: 575px) {
+      flex: 0 0 100% !important;
+    }
+    @media only screen
+    and (min-width: 576px)
+    and (max-width: 719px) {
+      flex: 0 0 91% !important;
+    }
+    @media only screen
+    and (min-width: 720px)
+    and (max-width: 767px) {
+      flex: 0 0 92% !important;
+    }
+    @media only screen
+    and (min-width: 768px)
+    and (max-width: 860px) {
+      flex: 0 0 93% !important;
+    }
+    @media only screen
+    and (min-width: 861px)
+    and (max-width: 1024px) {
+      flex: 0 0 94% !important;
+    }
+  }
+  .col-sm-3.docsimpro {
+    max-width: 4%;
+    padding: 0px;
+    @media only screen
+    and (min-width: 576px)
+    and (max-width: 719px) {
+      max-width: 9%;
+    }
+    @media only screen
+    and (min-width: 720px)
+    and (max-width: 767px) {
+      max-width: 8%;
+    }
+    @media only screen
+    and (min-width: 768px)
+    and (max-width: 860px) {
+      max-width: 7%;
+    }
+    @media only screen
+    and (min-width: 861px)
+    and (max-width: 1024px) {
+      max-width: 6%;
+    }
+    @media only screen
+    and (min-width: 1025px)
+    and (max-width: 1270px) {
+      max-width: 5%;
+    }
+  }
+  .docs-content {
+    @media only screen and (min-width: 1268px) {
+      width: 1080px;
+      margin-left: calc((96% - 1080px) / 2);
+      padding-left: 12px;
+    }
+  }
+  .docs-content-old {
+    @media only screen and (min-width: 1268px) {
+      width: 1112px;
+      margin-left: calc((96% - 1112px) / 2);
+      padding-left: 12px;
+    }
+  }
+  .rightside {
+    @media only screen and (min-width: 1268px) {
+      margin-left: calc((94% - 1112px) / 2);
+      justify-content: left;
+  }
+    @media only screen
+    and (min-width: 768px)
+    and (max-width: 1267px) {
+      margin-left: 40px;
+    }
+  }
+  .docsnote {
+    @media only screen and (min-width: 1270px) {
+      margin-left: 4%;
+  }
+    @media only screen
+    and (min-width: 320px)
+    and (max-width: 575px) {
+      margin-left: 15px;
+      width: 110%;
+  }
+    @media only screen
+    and (min-width: 576px)
+    and (max-width: 719px) {
+      margin-left: 9%;
+  }
+    @media only screen
+    and (min-width: 720px)
+    and (max-width: 767px) {
+      margin-left: 8%;
+  }
+    @media only screen
+    and (min-width: 768px)
+    and (max-width: 860px) {
+      margin-left: 7%;
+  }
+    @media only screen
+    and (min-width: 861px)
+    and (max-width: 1024px) {
+      margin-left: 6%;
+  }
+    @media only screen
+    and (min-width: 1025px)
+    and (max-width: 1269px) {
+      margin-left: 5%;
+    }
+  }
+  .rightside img {
+    margin: 12px;
+  }
+} 

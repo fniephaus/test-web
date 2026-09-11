@@ -1,0 +1,4 @@
+[
+  { "name": "AccessJavaFromJS$MyClass", "allPublicFields": true },
+  { "name": "java.util.concurrent.Callable", "allPublicMethods": true }
+]

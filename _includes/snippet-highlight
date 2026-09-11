@@ -1,0 +1,83 @@
+<div class="snippet-container">
+
+  {% if include.tabtype == "java" %}
+
+  {% highlight java %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% elsif include.tabtype == "javascript" %}
+
+  {% highlight javascript %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% elsif include.tabtype == "ruby" %}
+
+  {% highlight ruby %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+  
+  {% elsif include.tabtype == "python" %}
+
+  {% highlight python %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% elsif include.tabtype == "r" %}
+
+  {% highlight ruby %} 
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+  
+  {% elsif include.tabtype == "c" %}
+
+  {% highlight c %} 
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% elsif include.tabtype == "markdown" %}
+
+  {% highlight markdown %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% else %}
+
+  {% elsif include.tabtype == "groovy" %}
+
+  {% highlight groovy %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% else %}
+
+  Unknown snippet type! {{ include.tabtype }}
+
+  {% endif %}
+
+  <script>
+  var beginPattern = "BEGIN-SNIPPET";
+  var endPattern = "END-SNIPPET";
+  var parent = document.currentScript.parentElement;
+  $(parent).find("figure > pre > code").each(function() {
+    var lines = this.textContent.split("\n");
+    var snippets = [];
+    var part = "";
+    for(var line of lines) {
+      if (line.includes(endPattern)) {
+        snippets.push(part);
+        part = "";
+      }
+      part += line + "\n";
+      if (line.includes(beginPattern)) {
+        snippets.push(part);
+        part = "";
+      }
+    }
+    snippets.push(part);
+    parent._snippets = snippets;
+    this.textContent = snippets.filter(function (_, index) { return index & 1; }).join("\n");
+  });
+  </script>
+</div>

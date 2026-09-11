@@ -1,0 +1,86 @@
+.banner {
+  align-items: center;
+  height: auto;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 6px 6px 6px #00000029;
+  opacity: 0.95;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(0,23,29,1) 0%, rgba(0,35,43,1) 30%, rgba(0,58,72,1) 64%);
+  z-index: 1;
+  @include media-breakpoint-up(sm) {
+     height: 50vh;
+  }
+}
+.banner__content {
+    width: 100%;
+}
+
+.banner__content .slogan {
+    padding: 0px;
+}
+
+.banner h2.page-heading__title {
+  font-size: 2.63em;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+}
+
+.banner p {
+  text-align: left;
+  font: 400 18px/30px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 1;
+  padding-left: 0;
+}
+
+.wrap section.content-section {
+    padding-top: 40px;
+    padding-bottom: 50px;
+}
+
+section.wrap {
+    padding-bottom: 50px;
+}
+
+.wrap .section-div {
+  max-width: 1140px;
+}
+
+.wrap h2.title-section {
+  text-align: left;
+  letter-spacing: 0;
+  color: #193e47;
+  opacity: 1;
+  margin-bottom: 0;
+  font-weight: 600;
+  font-size: 2.63em;
+  @media only screen
+    and (min-device-width: 480px)
+    and (max-device-width: 768px) {
+      margin: 32px 0px 0px 0px;
+  }
+}
+
+.wrap .title-underscore {
+  width: 50px;
+  height: 3px;
+  background: #193e47;
+  position: absolute;
+}
+
+.wrap p.desc {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.learn-more {
+    margin-top: 40px;
+}
+.learn-more .right-arrow {
+  color: #f29110;
+  float: left;
+}

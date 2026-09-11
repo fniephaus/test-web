@@ -1,0 +1,430 @@
+//Docs Landing Page
+.docs-landing__screenback {
+  background: radial-gradient(45.76% 45.76% at 50% 50%, rgba(46, 79, 115, 0.8) 0%, rgba(20, 36, 53, 0.088) 100%);
+}
+
+.docs-landing__homescreen {
+  background: url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 122% 30%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 80px 0px 60px 0px;
+}
+
+h2.docs-landing__title {
+  font-weight: 400;
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.docs-landing__dropdown {
+  margin: 0 auto;
+}
+
+.docs_page_banner {
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  height:fit-content;
+  box-shadow: 6px 6px 6px #00000029;
+  opacity: 0.95;
+  background: linear-gradient(180deg, #002E38 18.26%, #00758F 100.15%);
+  z-index: 1;
+}
+
+.doc-img-home {
+  margin-top: 40px;
+  display:flex;
+  &>img{
+    height: 120px;
+    width: 120px;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 480px) {
+    display:none;
+  }
+}
+
+.img-home-404 {
+  margin-top: 28px;
+  display:flex;
+  &>img{
+    height: 120px;
+    width: 120px;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 480px) {
+    display:none;
+  }
+}
+
+.docs_page_banner .banner__content {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0px;
+  margin-bottom: 10px;
+}
+
+.banner__content .slogan-docs {
+  padding: 0px;
+  font-style: normal;
+  line-height: 30px;
+  font-size: 20px;
+  color: #FFFFFF;
+  display: flex;
+  text-align: inherit;
+  margin-top: 24px;
+   @media only screen
+   and (min-width: 320px)
+   and (max-width: 480px) {
+     line-height: 24px;
+     font-size: 16px;
+   }
+}
+
+.docs_page_banner .tagline p {
+  font-style: normal;
+  font-weight: bold;
+  color: #FFFFFF;
+  display: flex;
+  line-height: 60px;
+  font-size: 52px;
+  padding-left: 0px;
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      line-height: 40px;
+      font-size: 34px;
+      margin-top: 30px;
+    }
+  @media only screen
+    and (min-width: 414px)
+    and (max-width: 736px) {
+      line-height: 40px;
+      font-size: 34px;
+      margin-top: 30px;
+    }
+  @media only screen
+    and (min-width: 768px)
+    and (max-width: 1024px) {
+      line-height: 40px;
+      font-size: 34px;
+  }
+}
+
+.docs_page_banner .tagline {
+  padding: 0px;
+  margin-top: 40px;
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      margin-top: 10px;
+    }
+}
+
+.docs_page_banner .tagline-404 {
+  padding: 0px;
+  margin-top: 64px;
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      margin-top: 10px;
+    }
+}
+
+.docs_page_banner .slogan span {
+  font-style: normal;
+  line-height: 24px;
+  font-size: 20px;
+  color: #FFFFFF;
+  text-align: inherit;
+  margin-top: 0px;
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      line-height: 24px;
+      font-size: 16px;
+    }
+  @media only screen
+    and (min-width: 414px)
+    and (max-width: 736px) {
+      line-height: 24px;
+      font-size: 16px;
+    }
+  @media only screen
+    and (min-width: 768px)
+    and (max-width: 1024px) {
+      line-height: 24px;
+      font-size: 16px;
+  }
+}
+
+//Search field
+.content-section-min {
+  padding: 20px 0px 20px 0px;
+  background: #1A2731;
+}
+
+.versions .search {
+  background: #4A6B7F url("{{ '/resources/img/docs-sidebar/search-new.svg' | relative_url }}") 2% 50%/28px auto no-repeat;
+  border-radius: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  width: 800px;
+  margin: 0 auto;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 480px) {
+    margin: 0px 12px 12px 14px;
+    width: 384px;
+  }
+}
+
+.versions form.form-inline {
+  width: auto;
+}
+
+.versions .form-inline input[type=text] {
+  border: none;
+  height: 30px;
+  color: #4a5366;
+  background: none;
+  border-radius: 3px;
+  font-size: 24px;
+  line-height: 28px;
+  color: #ffffff;
+  cursor: pointer;
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  @media only screen
+    and (min-width: 414px)
+    and (max-width: 736px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+}
+
+.form-inline input#search-box {
+  padding-left: 56px;
+  width: 600px;
+  @media only screen
+  and (min-width: 768px)
+  and (max-width: 1024px) {
+    margin-top:30px;
+    @-moz-document url-prefix() {
+      margin-top: 0px;
+    }
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 480px) {
+    margin-top: 6px;
+    width: 290px;
+  }
+}
+
+input::-webkit-input-placeholder {
+  color: #ffffff8e !important;
+  font-size: 22px !important;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+  color: #ffffff !important;
+  font-size: 22px !important;
+  margin-top:0px;
+}
+
+input::-moz-placeholder {  /* Firefox 19+ */
+  color: #ffffff !important;
+  font-size: 22px !important;
+  margin-top:0px;
+}
+
+input:-ms-input-placeholder {
+  color: #ffffff !important;
+  font-size: 22px !important;
+}
+
+.form-inline button {
+  padding: 15px ​20px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  cursor: pointer;
+  text-indent: -9000px;
+  outline: none;
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      width: 25px;
+      height: 25px;
+      background-size: 25px auto;
+    }
+  @media only screen
+    and (min-width: 414px)
+    and (max-width: 736px) {
+      width: 25px;
+      height: 25px;
+      background-size: 25px auto;
+    }
+}
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+// Versions dropdown
+.version-dropdown-landing {
+  max-width: 260px;
+  height: 36px;
+  background: #F29111;
+  background: url('/resources/img/docs-home/arrow-down.svg') 94% 50% no-repeat, #F29111;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+.display-value {
+  position: absolute;
+  display: flex;
+}
+
+.version-dropdown-landing .value-text {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-left: 10px;
+  color: #FFFFFF;
+  width: 250px;
+  cursor: pointer;
+}
+
+.versions ul#selectContainer {
+  visibility: hidden;
+}
+
+.versions .select-container {
+  width: 260px;
+  padding: 0px;
+  position: absolute;
+  visibility: hidden;
+  height: fit-content;
+  list-style-type: none;
+  display: block;
+  z-index: 1;
+  top: 36px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #A2CDD7;
+  box-sizing: border-box;
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  outline: none;
+  margin-top: 0px;
+}
+
+li.select-option {
+  font-size: 14px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #171F26;
+  height: 40px;
+  padding-left: 10px;
+  &:hover {
+    background: #8EC8E6;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  &:before {
+    content: none;
+  }
+}
+
+li.select-option:first-child {
+  border-radius: 12px 12px 0px 0px;
+}
+
+li.select-option:last-child {
+  border-radius: 0px 0px 12px 12px;
+}
+
+//New tabs styles
+.graal-docs {
+  background: #161D24;
+  padding: 40px 0px 40px 0px;
+}
+
+.graal-docs__row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  @media only screen
+  and (min-width: 767px)
+  and (max-width: 991px) {
+    justify-content: left;
+  }
+}
+
+.graal-docs__column {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  width: 33%;
+  @media only screen
+  and (min-width: 768px)
+  and (max-width: 991px) {
+    width: 50%;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 767px) {
+    width: 90%;
+  }
+}
+
+.graal-docs__card {
+  display: flex;
+  background: #213242;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  padding: 4px 16px;
+  min-height: 80px;
+  align-items: center;
+  min-width: 290px;
+}
+
+.graal-docs__title {
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 40px;
+  font-weight: 400;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.graal-docs__topics {
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 0px 0px 0px 20px;
+  &:hover {
+    color: #8EC9E6;
+  }
+}

@@ -1,0 +1,109 @@
+<header {% if page.url == "/" or page.url == "/downloads/" or page.url == "/javascript/" or page.url == "/python/" or page.url == "/webassembly/" %} class="header header--home" {% else %} class="header header--content" {% endif %}
+  role="banner">
+
+  {% assign default_paths = site.pages | map: "path" %}
+  {% if site.header_links %}
+
+{% comment %}
+  <div class="banner-survey">
+    <div class="container-fluid container-fluid--custom-sm">
+      <div class="align-items-center banner-survey__content">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center banner-survey__text">
+          <p class="banner-survey__mobile">Help us improve GraalVM! Tell us what we should add or change (takes <5 minutes)
+            <a href="https://graalvm.typeform.com/survey" class="btn-primary start"> Start survey</a>
+          </p>
+        </div>
+        <button class="banner-survey__close" type="button">
+          <span>
+            close
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+{% endcomment%}
+
+
+  <div class="d-flex">
+    <nav class="menu">
+      <div class="menu__logo">
+        <a class="menu__logojs" href="/">
+          <img src='{{ "/resources/img/home/logo_mobile_openmenu.svg" | relative_url }}' alt="GraalVM logo">
+        </a>
+      </div>
+      <ul class="menu__list">
+        <li class="menu__item">
+          <a href='{{ "/latest/docs/" | relative_url }}' class="menu__link">Docs</a>
+        </li>
+        <li class="menu__item">
+          <a href='{{ "/guides/" | relative_url }}' class="menu__link">Guides</a>
+        </li>
+        <li class="menu__item">
+          <a href="https://medium.com/graalvm" class="menu__link" target="_blank">Blog</a>
+        </li>
+        <li class="menu__item">
+          <a href="https://www.youtube.com/graalvm" class="menu__link" target="_blank">Videos</a>
+        </li>
+        <li class="menu__item">
+          <a href='{{ "/community/" | relative_url }}' class="menu__link">Community</a>
+        </li>
+        <li class="menu__item">
+          <div class="stack-container">
+            <a href="#" class="menu__link stack__header">Graal Projects</a>
+            <div class="stack-menu">
+              <div class="stack-row">
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/graalstack.svg">
+                    <a href="https://graal.cloud/" class="item-line">Graal Stack</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/gdk.svg">
+                    <a href="https://graal.cloud/gdk/" class="item-line">Graal Dev Kit for Micronaut</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/graalos.svg">
+                    <a href="https://graal.cloud/graalos/" class="item-line">GraalOS</a>
+                  </div>
+                </div>
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/js-navi.svg">
+                    <a href="/javascript/" class="item-line">GraalJS</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/python-navi.svg">
+                    <a href="https://graalpy.org/" class="item-line" target="_blank">GraalPy</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/wasm-navi.svg">
+                    <a href="/webassembly/" class="item-line">GraalWasm</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/java-navi.svg">
+                    <a href='{{ "/reference-manual/java-on-truffle/" | relative_url }}' class="item-line">Espresso</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <div class="menu__item icons githubstar" tabindex="0">
+          <span class="github-widget">
+            <a tabindex="-1" class="github-button" href="https://github.com/oracle/graal" data-icon="octicon-star"
+              data-show-count="true" aria-label="Star oracle/graal on GitHub">Star</a>
+          </span>
+        </div>
+        <div class="menu__downloads">
+          <a href='{{ "/downloads/" | relative_url }}' class="btn btn-try btn-primary">Download</a>
+        </div>
+      </ul>
+      <div role="button" class="menu-btn menu-btn--menu js-show-menu" tabindex="-1" title="sweet hamburger">
+        <div class="hamburger">
+          <div class="inner"></div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  {% endif %}
+</header>

@@ -1,0 +1,445 @@
+---
+layout: page_content
+---
+
+<section class="showcase-banner home">
+  <div class="wrapper">
+    <div class="content content--home">
+      <div class="hi">
+        <div class="container">
+          <div class="hi__row">
+            <div class="hi__body">
+              <h1 class="hi__title">Build faster, smaller, leaner applications</h1>
+              <div class="hi__buttons">
+                <a href='{{ "/downloads/" | relative_url }}' class="btn btn-primary start">Download</a>
+                <a href='{{ "/docs/getting-started/" | relative_url }}'
+                  class="btn btn-primary start">Get Started</a>
+              </div>
+            </div>
+            <div class="hi__image">
+              <img src='{{ "/resources/img/home/graalvm_rabbit_icon.svg" | relative_url }}' alt="graalvm-icon">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="wrapper">
+    <div class="announce">
+      <div class="container">
+        <div class="announce__card announce__back">
+          <div class="announce__back-inside">
+            <div>
+              <!-- <p class="announcement__label">Announcement</p> -->
+              <h3 class="announce__title">GraalVM 25.3 is here</h3>
+              <div class="announce__descrip">
+                <h5>Improve performance with priority inlining and vectorization, and strengthen Native Image security with control-flow integrity.</h5>
+              </div>
+              <div class="announce__button">
+                <a href="https://medium.com/p/41641acebfaf" class="btn btn-primary main-single">Learn more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% comment %}
+<section class="content-section">
+  <div class="wrapper">
+    <div class="announce">
+      <div class="container">
+        <div class="announce__card announce__back">
+          <div class="">
+            <p class="announcement__label">Announcement</p>
+            <h3 class="announce__title">Ready for GraalVM Native Image</h3>
+            <div class="announce__descrip">
+              <h5>Discover libraries and frameworks that work out-of-the-box with Native Image.</h5>
+            </div>
+            <div class="announce__button">
+              <a href='{{ "/native-image/libraries-and-frameworks/" | relative_url }}' class="btn btn-primary main-single">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endcomment %}
+<section class="content-section">
+  <div class="wrapper">
+    <div class="advantages">
+      <div class="container">
+        <h3 class="homenew__title">Features</h3>
+          <div class="advantages__row">
+            <div class="advantages__card">
+              <div class="advantages__icon">
+                <img src='{{ "/resources/img/icon-set-general/storage-icon.svg" | relative_url }}' alt="small footprint advantage icon">
+              </div>
+              <div class="advantages__title">
+                <h4>Low Resource Usage</h4>
+              </div>
+              <div class="advantages__descrip">
+                <h5>Native executables use only a fraction of memory and CPU resources required by a JVM, which improves utilization and reduces costs.</h5>
+              </div>
+            </div>
+            <div class="advantages__card">
+              <div class="advantages__icon">
+                <img src='{{ "/resources/img/icon-set-general/shield-icon.svg" | relative_url }}' alt="improved security advantage icon">
+              </div>
+              <div class="advantages__title">
+                <h4>Improved Security</h4>
+              </div>
+              <div class="advantages__descrip">
+                <h5>Native executables contain only the classes, methods, and fields that your application needs, which reduces attack surface area.</h5>
+              </div>
+            </div>
+          </div>
+          <div class="advantages__row">
+            <div class="advantages__card">
+              <div class="advantages__icon">
+                <img src='{{ "/resources/img/icon-set-general/speed-icon.svg" | relative_url }}' alt="fast startup advantage icon">
+              </div>
+              <div class="advantages__title">
+                <h4>Fast Startup</h4>
+              </div>
+              <div class="advantages__descrip">
+                <h5>Native executables compiled ahead of time start up instantly and require no warmup to run at peak performance.</h5>
+              </div>
+            </div>
+            <div class="advantages__card">
+              <div class="advantages__icon">
+                <img src='{{ "/resources/img/icon-set-general/container-icon.svg" | relative_url }}' alt="ideal for containers advantage icon">
+              </div>
+              <div class="advantages__title">
+                <h4>Compact Packaging</h4>
+              </div>
+              <div class="advantages__descrip">
+                <h5>Native executables are small and offer a range of linking options that make them easy to deploy in minimal container images.</h5>
+              </div>
+            </div>
+          </div>
+          <div class="advantages__row">
+            <div class="advantages__card">
+              <div class="advantages__icon">
+                <img src='{{ "/resources/img/icon-set-general/microservice-icon.svg" | relative_url }}' alt="microservices advantage icon">
+              </div>
+              <div class="advantages__title">
+                <h4>Supported by Frameworks</h4>
+              </div>
+              <div class="advantages__descrip">
+                <h5>Popular frameworks such as Spring Boot, Micronaut, Helidon, and Quarkus provide first-class support for GraalVM.</h5>
+              </div>
+            </div>
+            <div class="advantages__card">
+              <div class="advantages__icon">
+                <img src='{{ "/resources/img/icon-set-general/clouds.svg" | relative_url }}' alt="clouds advantage icon">
+              </div>
+              <div class="advantages__title">
+                <h4>Supported by Leading Cloud Platforms</h4>
+              </div>
+              <div class="advantages__descrip">
+                <h5>SDKs from leading cloud platforms such as AWS, Microsoft Azure, GCP, and Oracle Cloud Infrastructure integrate and support GraalVM.</h5>
+              </div>
+            </div>
+          </div>
+          {% comment %}
+          <div class="advantages__row">
+            <div class="advantages__card_01">
+              <div class="advantages__icon">
+                <img src='{{ "/resources/img/home/advantages/leader.svg" | relative_url }}' alt="ideal for containers advantage icon">
+              </div>
+              <div class="advantages__title">
+                <h4>Trusted by Industry Leaders</h4>
+              </div>
+              <div class="advantages__descrip">
+                <h5>Top microservices frameworks such as Spring, Micronaut, Helidon, and Quarkus, and top cloud platforms like Amazon Web Services, Microsoft Azure, Google Cloud Platform, and Oracle Cloud Infrastructure provide out-of-the-box support for GraalVM.
+                </h5>
+              </div>
+            </div>
+          </div>
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section nimain-blue">
+  <div class="wrapper">
+    <div class="nimain">
+      <div class="container">
+        <h3 class="homenew__title">Native Image</h3>
+        <div class="homenew__descrip">
+          <h5>Write efficient, more secure, and highly-scalable cloud native Java applications.</h5>
+        </div>
+        <div class="nimain__buttons">
+          <a href='{{ "/reference-manual/native-image/guides/" | relative_url }}'
+            class="btn btn-primary main-single">Guides</a>
+        </div>
+        <div class="nimain__divider"></div>
+        <h4 class="ni__title">Using GraalVM</h4>
+        <div class="ni__flowcard">
+          <div class="ni__flowcard-row">
+            <div class="ni__name">
+              <img src='{{ "/resources/img/icon-set-general/home-code.svg" | relative_url }}' class="ni__icon" alt="develop code icon">
+              <h2>Develop</h2>
+            </div>
+            <div class="ni__section">
+              <div class="ni__section-title">
+                <h4>IDE and Java Tool Support</h4>
+              </div>
+              <div class="ni__section-subtitle">
+                <h5>
+                  Use your favorite Java IDE and development tools, and then compile your application ahead-of-time into an executable with GraalVM Native Image.
+                  It's just a seamless extra step in your development process.
+                </h5>
+              </div>
+              <div class="ni__section-link ni__link-bot">
+                <a href="https://www.graalvm.org/latest/reference-manual/native-image/debugging-and-diagnostics/" target="_blank">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ni__flowcard">
+          <div class="ni__flowcard-row">
+            <div class="ni__name">
+              <img src='{{ "/resources/img/icon-set-general/home-code.svg" | relative_url }}' class="ni__icon" alt="build code icon">
+              <h2>Build</h2>
+            </div>
+            <div class="ni__section">
+              <div class="ni__section-title">
+                <h4>Maven and Gradle Plugins</h4>
+              </div>
+              <div class="ni__section-subtitle">
+                <h5>The <a href="https://graalvm.github.io/native-build-tools/latest/index.html" target="_blank">Native Build Tools</a> provide Maven and Gradle plugins that make it easy to compile your applications ahead-of-time as part of your build process.</h5>
+              </div>
+              <div class="ni__section-link ni__link-bot">
+                <a href="https://graalvm.github.io/native-build-tools/latest/index.html" target="_blank">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ni__flowcard">
+          <div class="ni__flowcard-row">
+            <div class="ni__name">
+              <img src='{{ "/resources/img/icon-set-general/home-code.svg" | relative_url }}' class="ni__icon" alt="test code icon">
+              <h2>Test</h2>
+            </div>
+            <div class="ni__section">
+              <div class="ni__section-title">
+                <h4>JUnit 5 Support</h4>
+              </div>
+              <div class="ni__section-subtitle">
+                <h5>Test your native applications with <a href="https://junit.org/junit5/docs/current/user-guide/" target="_blank">JUnit</a> test support compiled ahead-of-time.</h5>
+              </div>
+              <div class="ni__section-link ni__link-bot">
+                <a href="https://graalvm.github.io/native-build-tools/latest/maven-plugin.html#testing-support" target="_blank">Maven</a> |
+                <a href="https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#testing-support" target="_blank">Gradle</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ni__flowcard">
+          <div class="ni__flowcard-row">
+            <div class="ni__name">
+              <img src='{{ "/resources/img/icon-set-general/home-code.svg" | relative_url }}' class="ni__icon" alt="debug code icon">
+              <h2>Debug</h2>
+            </div>
+            <div class="ni__section">
+              <div class="ni__section-title">
+                <h4>Native Debugging with GDB</h4>
+              </div>
+              <div class="ni__section-subtitle">
+                <h5>Set breakpoints, step through Java sources line-by-line, and inspect variables in a native executable with GDB and in supported IDEs.</h5>
+              </div>
+              <div class="ni__section-link ni__link-bot">
+                <a href="https://www.graalvm.org/latest/reference-manual/native-image/debugging-and-diagnostics/" target="_blank">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% comment %}
+        <div class="ni__flowcard">
+          <div class="ni__flowcard-row">
+            <div class="ni__name">
+              <img src='{{ "/resources/img/icon-set-general/home-code.svg" | relative_url }}' class="ni__icon" alt="debug code icon">
+              <h2>Debug</h2>
+            </div>
+            <div class="ni__section">
+              <div class="ni__section-title">
+                <h4>Native Image IDE Support</h4>
+              </div>
+              <div class="ni__section-subtitle">
+                <h5>Develop Java applications with Native Image support in VS Code and IntelliJ or with your favorite IDE.</h5>
+              </div>
+              <div class="ni__section-link">
+                <a href="#">Read the blogpost</a>
+              </div>
+              <div class="ni__section-link ni__link-bot">
+                <a href="#">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endcomment %}
+        <div class="ni__flowcard">
+          <div class="ni__flowcard-row">
+            <div class="ni__name">
+              <img src='{{ "/resources/img/icon-set-general/home-code.svg" | relative_url }}' class="ni__icon" alt="package and deploy code icon">
+              <h2>Package & Deploy</h2>
+            </div>
+            <div class="ni__section">
+              <div class="ni__section-title">
+                <h4>Small and Efficient Containers</h4>
+              </div>
+              <div class="ni__section-subtitle">
+                <h5>
+                  Native executables are ideal for use with light-weight container images that minimize attack surface area to improve security.
+                  <a href="{{ '/reference-manual/native-image/guides/build-static-executables/' | relative_url }}">A statically-linked native executable</a> can even run in a scratch container image!
+                </h5>
+              </div>
+              <div class="ni__section-link ni__link-bot">
+                <a href="https://www.graalvm.org/latest/reference-manual/native-image/guides/containerise-native-executable-and-run-in-docker-container/" target="_blank">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ni__flowcard">
+          <div class="ni__flowcard-row">
+            <div class="ni__name">
+              <img src='{{ "/resources/img/icon-set-general/home-code.svg" | relative_url }}' class="ni__icon" alt="monitor code icon">
+              <h2>Monitor</h2>
+            </div>
+            <div class="ni__section">
+              <div class="ni__section-title">
+                <h4>Support for JFR, JMX, and more</h4>
+              </div>
+              <div class="ni__section-subtitle">
+                <h5>
+                  Monitor native executables with the same tools you use for applications deployed on the JVM.
+                  Native executables can optionally include support for JFR, JMX, heap dumps, jvmstat, and more.
+                </h5>
+              </div>
+              <div class="ni__section-link ni__link-bot">
+                <a href="{{ '/guides' | relative_url }}/?topic=monitor" target="_blank">Take a Guide</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="wrapper">
+    <div class="maincases">
+      <div class="container">
+        <h3 class="homenew__title">GraalVM Adoption</h3>
+        <div class="maincases__logos">
+          <div class="maincases__row">
+            <a href="https://aws.amazon.com/blogs/opensource/improving-developer-productivity-at-disney-with-serverless-and-open-source/" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/disney.svg" | relative_url }}' alt="GraalVM Disney usecase">
+            </a>
+            <a href="https://medium.com/helidon/oracle-cx-industry-framework-a-helidon-flight-with-aerobatic-stunts-4666683d5176" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/oracle.svg" | relative_url }}' alt="GraalVM Oracle usecase">
+            </a>
+            <a href="https://www.youtube.com/watch?v=NxVyvZ3k7XE" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/picnic.svg" | relative_url }}' alt="GraalVM picnic usecase">
+            </a>
+            <a href="https://pkl-lang.org/" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/pkl-logo.svg" | relative_url }}' alt="GraalVM Pkl usecase">
+            </a>
+            <a href="https://medium.com/graalvm/alibaba-becomes-a-member-of-graalvm-advisory-board-dd3e99d5c702" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/alibaba.svg" | relative_url }}' alt="GraalVM Alibaba usecase">
+            </a>
+            <a href="https://medium.com/graalvm/graalvm-at-facebook-af09338ac519" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/facebook.svg" | relative_url }}' alt="GraalVM Facebook usecase">
+            </a>
+            <a href="https://www.jetbrains.com/idea/whatsnew/2024-2/" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/intellij-logo.svg" | relative_url }}' alt="GraalVM IntelliJ usecase">
+            </a>
+            <a href="https://dev.mysql.com/doc/refman/9.0/en/mle-component.html" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/mysql-logo.svg" | relative_url }}' alt="GraalVM mySQL usecase">
+            </a>
+            {% comment %}
+            <a href="https://medium.com/graalvm/mle-executing-javascript-in-oracle-database-c545feb1a010#5c13" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/oracle-db.svg" | relative_url }}' alt="GraalVM Oracle database usecase">
+            </a>
+            {% endcomment %}
+            {% comment %}
+            <a href="https://medium.com/graalvm/optimizing-machine-learning-performance-at-netsuite-with-graalvm-and-nvidia-gpus-d0d40f0b0cf1" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/netsuite.svg" | relative_url }}' alt="GraalVM Oracle Netsuite usecase">
+            </a>
+            {% endcomment %}
+            {% comment %}
+            <a href="https://blogs.oracle.com/cloud-infrastructure/post/graalvm-powers-oracle-cloud-infrastructure" target="_blank">
+              <img src='{{ "/resources/img/home/case-logos/oci.svg" | relative_url }}' alt="GraalVM Oracle Cloud Infrastructure usecase">
+            </a>
+            {% endcomment %}
+          </div>
+        </div>
+        <div class="maincases__button">
+          <a href='{{ "/use-cases/" | relative_url }}' class="btn btn-primary main-single">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="wrapper">
+    <div class="mainmore">
+      <div class="container">
+        <h3 class="homenew__title">More GraalVM Technologies</h3>
+          <div class="mainmore__row">
+            <div class="mainmore__card">
+              <div class="mainmore__icon">
+                <img src='{{ "/resources/img/icon-set-general/jit-compilation-icon.svg" | relative_url }}' alt="JIT compilation icon">
+              </div>
+              <div class="mainmore__title">
+                <h4>Graal JIT Compiler</h4>
+              </div>
+              <div class="mainmore__descrip">
+                <h5>Use the GraalVM JDK with the optimizing Graal just-in-time (JIT) compiler to increase your Java application performance.</h5>
+              </div>
+              <div class="maincases__button">
+                <a href='{{ "/reference-manual/java/compiler/" | relative_url }}' class="btn btn-primary main-single">Learn More</a>
+              </div>
+            </div>
+            <div class="mainmore__card">
+              <div class="mainmore__icon">
+                <img src='{{ "/resources/img/icon-set-general/polyglot-icon.svg" | relative_url }}' alt="polyglot programming icon">
+              </div>
+              <div class="mainmore__title">
+                <h4>Graal Languages</h4>
+              </div>
+              <div class="mainmore__descrip">
+                <h5>Extend your Java applications with code written in other languages or accelerate other languages with GraalVM.</h5>
+              </div>
+              <div class="mainmore__lang-icons">
+                <a href='{{ "/python/" | relative_url }}' class="active-area">
+                  <img src='{{ "/resources/img/home/Languages-icons-bottom-section/Python.svg" | relative_url }}' alt="Python icon">
+                </a>
+                <a href='{{ "/javascript/" | relative_url }}' class="active-area">
+                  <img src='{{ "/resources/img/home/Languages-icons-bottom-section/JS.svg" | relative_url }}' alt="JavaScript icon">
+                </a>
+                <a href='{{ "/java/" | relative_url }}' class="mainmore__logos">
+                  <img src='{{ "/resources/img/home/Languages-icons-bottom-section/Java.svg" | relative_url }}' alt="Java icon">
+                </a>
+                <a href='{{ "/webassembly/" | relative_url }}' class="active-area">
+                  <img src='{{ "/resources/img/home/Languages-icons-bottom-section/wasm.svg" | relative_url }}' alt="WebAssembly icon">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

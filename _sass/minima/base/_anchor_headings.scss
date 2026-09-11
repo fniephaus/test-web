@@ -1,0 +1,13 @@
+a.anchor_heading {
+    visibility: hidden;
+    color: #171F26;
+}
+
+h1:hover > a.anchor_heading,
+h2:hover > a.anchor_heading,
+h3:hover > a.anchor_heading,
+h4:hover > a.anchor_heading,
+h5:hover > a.anchor_heading,
+h6:hover > a.anchor_heading {
+    visibility: visible;
+}

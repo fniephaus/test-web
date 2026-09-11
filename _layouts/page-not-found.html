@@ -1,0 +1,43 @@
+---
+layout: page_content
+---
+
+<section class="content-section docs-landing__screenback versions">
+  <div class="wrapper">
+    <div class="docs-landing__homescreen">
+      <div class="container">
+        <h2 class="docs-landing__title">Page not found</h2>
+        <div class="ni-libs-frameworks__subtitle">
+          <h5>This page does not exist for the selected version. Check the <a href="/latest/docs/">latest GraalVM documentation</a>.</h5>
+        </div>
+        <div class="docs-landing__dropdown">
+          <div class="col-sm tab dropdown">
+            <div class="d-flex ml-auto align-items-center version-dropdown-landing">
+              {% include version-dropdown.html %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% comment %}
+<section class="content-section-min versions">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row align-items-center">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row align-items-center">
+          <!-- Search field -->
+          <div class="tab search additional-search">
+            <form class="form-inline" action="/docs/search" autocomplete="on" method="get">
+              <input class="input-search" type="text" id="search-box" name="query" placeholder="Search Documentation">
+              <button type="submit" class="search-button"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endcomment %}
+

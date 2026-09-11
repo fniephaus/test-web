@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+// Bootstrap 4.5.0
+@import "minima/plugins/bootstrap-4.5.0/bootstrap";
+@import "minima/plugins/bootstrap-4.5.0/bootstrap-grid";
+
+// Import partials.
+@import "minima/utilities/variables",
+"minima/utilities/mixins",
+
+"minima/base/base",
+"minima/base/typography",
+"minima/base/buttons",
+"minima/base/anchor_headings",
+
+"minima/layout/header",
+"minima/layout/footer",
+"minima/layout/sidebar",
+"minima/layout/content",
+"minima/layout/row",
+"minima/layout/container",
+"minima/layout/display",
+"minima/layout/home",
+"minima/layout/docs-landing",
+"minima/layout/docs-alert",
+"minima/layout/usecases",
+"minima/layout/downloads",
+"minima/layout/downloads-thanks",
+"minima/layout/java",
+"minima/layout/announcement",
+"minima/layout/brand-guidelines",
+"minima/layout/ni-guides-page",
+"minima/layout/ni-libs-and-frameworks-page",
+"minima/layout/meetup",
+"minima/layout/internship",
+"minima/layout/quick-references",
+
+"minima/modules/menu",
+"minima/modules/icons",
+"minima/modules/titles",
+"minima/modules/copyright",
+"minima/modules/card",
+"minima/modules/modal",
+"minima/modules/toc-bullets",
+"minima/modules/tabs",
+"minima/modules/tables",
+"minima/modules/alert",
+"minima/modules/events-map",
+"minima/modules/info-tooltip",
+"minima/modules/videos",
+"minima/modules/version-dropdown",
+"minima/modules/breadcrumbs",
+"minima/modules/old-version-note",
+
+"minima/plugins/syntax-highlighting",
+"minima/plugins/slick",
+"minima/plugins/slick-theme",
+"minima/plugins/extra"
+;

@@ -1,0 +1,267 @@
+let currentMajorJavaVersion = "25.3";
+let currentPlatform = "empty-choice";
+let currentDownloadLink = null;
+
+$(window).on("load", async function () {
+  $("body").removeClass("preload");
+  await detectPlatform();
+  installTabSwitcher();
+
+  $("#selector-platform").on("change", function () {
+    const selected = $(this).val();
+    if (platforms[selected]) {
+      currentPlatform = selected;
+      changeVersion(currentMajorJavaVersion, selected);
+    }
+  });
+
+  changeVersion(currentMajorJavaVersion, currentPlatform);
+});
+
+async function detectPlatform() {
+  const detectedPlatform = `${getOS()}-${await getCPUArchitecture()}`;
+  if (platforms[detectedPlatform]) {
+    currentPlatform = detectedPlatform;
+  } else {
+    currentPlatform = "empty-choice";
+  }
+
+  updateDownloadButton(currentMajorJavaVersion);
+}
+
+function installTabSwitcher() {
+  $(".download-tab").click(function () {
+		$(".download-tab").removeClass("active");
+		$(this).addClass("active");
+		const selectedIndex = $(this).index();
+		$("#dl-tab-gha").toggle(selectedIndex === 0);
+		$("#dl-tab-containers").toggle(selectedIndex === 1);
+		$("#dl-tab-sdkman").toggle(selectedIndex === 2);
+		$("#dl-tab-script-friendly-urls").toggle(selectedIndex === 3);
+		$("#dl-tab-buildpacks").toggle(selectedIndex === 4);
+	});
+}
+
+function getOS() {
+  const userAgent = navigator.userAgent;
+  if (userAgent.indexOf("Win") !== -1) {
+      return "windows";
+  } else if (userAgent.indexOf("Mac") !== -1) {
+      return "macos";
+  } else if (userAgent.indexOf("Linux") !== -1) {
+      return "linux";
+  }
+  return "Unknown OS";
+}
+
+async function getCPUArchitecture() {
+  if (navigator.userAgent.indexOf("Mac") !== -1) {
+    try {
+      const platformInfo = await navigator.userAgentData.getHighEntropyValues(["architecture"]);
+      if (platformInfo.architecture === "arm") {
+        return "aarch64";
+      }
+      // x86 macOS - not supported
+    } catch (error) {
+    }
+    // Fallback: assume aarch64 for Mac if detection fails
+    return "aarch64";
+  }
+
+  const platform = navigator.platform.toLowerCase();
+  if (platform.indexOf("win32") !== -1 || platform.indexOf("wow64") !== -1 || platform.indexOf("x86_64") !== -1) {
+    return "x64";
+  } else if (platform.indexOf("arm") !== -1) {
+    return "aarch64";
+  }
+
+  return "Unknown Architecture";
+}
+
+const platforms = {
+  "empty-choice": "Choose a platform",
+  "macos-aarch64": "macOS M1/AArch64",
+  "linux-aarch64": "Linux AArch64",
+  "linux-x64": "Linux x64",
+  "windows-x64": "Windows x64",
+};
+
+const fullJavaVersions = {
+  "17": "17.0.12",
+  "21": "21.0.12.1",
+  "25": "25.0.4.1",
+  "25.3": "25.3.4.1",
+}
+
+const sdkmanJavaVersions = {
+  "25.3": "25.3.4+1.r25",
+}
+
+const downloadArtifacts = {
+  "25.3": {
+    baseUrl: "https://gds.oracle.com/download/graal/25i3",
+    latestVersion: "25i3-25",
+    archiveVersion: "25i3-25.0.4.1",
+  },
+}
+
+function updateGHASnippet(majorJavaVersion) {
+  const usesGraalVMVersion = majorJavaVersion === "25" || majorJavaVersion === "25.3";
+  const versionInput = usesGraalVMVersion ? "version" : "java-version";
+  const selectedVersion = majorJavaVersion === "25" ? "25.0" :
+    usesGraalVMVersion ? majorJavaVersion : fullJavaVersions[majorJavaVersion] || majorJavaVersion;
+  $("#dl-snippet-gha").text(`- uses: graalvm/setup-graalvm@v1
+  with:
+    ${versionInput}: '${selectedVersion}'
+    distribution: 'graalvm'
+    github-token: \$\{\{ secrets.GITHUB_TOKEN \}\}`);
+}
+
+function updateContainerSnippet(majorJavaVersion) {
+  const imageTag = majorJavaVersion === "25.3" ? "25i3" : majorJavaVersion;
+  $("#dl-snippet-containers").text(`# GraalVM JDK with Native Image
+docker pull container-registry.oracle.com/graalvm/native-image:${imageTag}
+
+# GraalVM JDK without Native Image
+docker pull container-registry.oracle.com/graalvm/jdk:${imageTag}`);
+}
+
+function updateSDKMANSnippet(majorJavaVersion) {
+  const fullJavaVersion = fullJavaVersions[majorJavaVersion];
+  const sdkmanVersion = sdkmanJavaVersions[majorJavaVersion] || fullJavaVersion;
+  $("#dl-snippet-sdkman").html(`sdk install java ${sdkmanVersion}-graal`);
+}
+
+
+function updateScriptFriendlyURLsSnippet(majorJavaVersion, platform, fileExtension) {
+  const artifact = downloadArtifacts[majorJavaVersion];
+  const baseUrl = artifact ? artifact.baseUrl : `https://download.oracle.com/graalvm/${majorJavaVersion}`;
+  const latestVersion = artifact ? artifact.latestVersion : majorJavaVersion;
+  const archiveVersion = artifact ? artifact.archiveVersion : majorJavaVersion;
+  $("#dl-snippet-script-friendly-urls").text(`# Download with wget
+wget ${baseUrl}/latest/graalvm-jdk-${latestVersion}_${platform}_bin.${fileExtension}
+
+# Download with curl
+curl -LO ${baseUrl}/latest/graalvm-jdk-${latestVersion}_${platform}_bin.${fileExtension}
+
+# Download from archive
+curl -LO ${baseUrl}/archive/graalvm-jdk-${archiveVersion}_${platform}_bin.${fileExtension}`);
+}
+
+
+function updateDownloadButton(majorJavaVersion) {
+  let versionLabel = '';
+  if (majorJavaVersion === "25.3") {
+    versionLabel = "25.3 (Innovation)";
+  } else if (majorJavaVersion === "25") {
+    versionLabel = "25.0 (LTS)";
+  } else if (majorJavaVersion === "21") {
+    versionLabel = "JDK 21 (LTS)";
+  } else if (majorJavaVersion === "17") {
+    versionLabel = "JDK 17 (LTS)";
+  } else {
+    versionLabel = `Java ${majorJavaVersion}`;
+  }
+  $("#selector-java-version").html(versionLabel);
+  $("#selector-platform").html(platforms[currentPlatform])
+  .toggleClass("dropdown--empty", currentPlatform === "empty-choice")
+  .attr("aria-invalid", currentPlatform === "empty-choice" ? "true" : "false");
+
+  const isValid = currentPlatform !== "empty-choice";
+
+  if (isValid) {
+    const fileExtension = currentPlatform.indexOf("windows") === 0 ? "zip" : "tar.gz";
+    const artifact = downloadArtifacts[majorJavaVersion];
+    const baseUrl = artifact ? artifact.baseUrl : `https://download.oracle.com/graalvm/${majorJavaVersion}`;
+    const latestVersion = artifact ? artifact.latestVersion : majorJavaVersion;
+    currentDownloadLink = `${baseUrl}/latest/graalvm-jdk-${latestVersion}_${currentPlatform}_bin.${fileExtension}`;
+
+    $("#download-main-btn")
+      .attr("href", currentDownloadLink)
+      .removeClass("download-inactive btn-secondary");
+  } else {
+    currentDownloadLink = null;
+    $("#download-main-btn")
+      .attr("href", "#")
+      .addClass("download-inactive btn-secondary");
+  }
+}
+
+
+function toggleDownloadBanners(majorJavaVersion) {
+  const entitledBanner = document.getElementById("entitled-banner");
+  const jdk17Banner = document.getElementById("jdk17-banner");
+  const allJdkBanner = document.getElementById("all-jdk-banner");
+  const optionTabs = document.querySelector(".downloads__option-tabs");
+
+  entitledBanner.style.display = "none";
+  entitledBanner.classList.remove("visible");
+  allJdkBanner.style.display = "none";
+  allJdkBanner.classList.remove("visible");
+  jdk17Banner.style.display = "none";
+  jdk17Banner.classList.remove("visible");
+
+  if (majorJavaVersion === "25.3" || majorJavaVersion === "25" || majorJavaVersion === "21") {
+    allJdkBanner.style.display = "block";
+    setTimeout(() => allJdkBanner.classList.add("visible"), 10);
+    optionTabs.style.display = "";
+  } else if (majorJavaVersion === "17") {
+    allJdkBanner.style.display = "block";
+    jdk17Banner.style.display = "block";
+    setTimeout(() => {
+      allJdkBanner.classList.add("visible");
+      jdk17Banner.classList.add("visible");
+    }, 10);
+    optionTabs.style.display = "none";
+  } else {
+    optionTabs.style.display = "";
+  }
+}
+
+function toggleInteractivityForJava17(majorJavaVersion) {
+  const platformSelector = document.getElementById("selector-platform");
+  const downloadButton = document.getElementById("download-main-btn");
+
+  if (majorJavaVersion === "17") {
+    platformSelector.disabled = true;
+    platformSelector.classList.add("disabled");
+  } else {
+    platformSelector.disabled = false;
+    platformSelector.classList.remove("disabled");
+  }
+}
+
+function changeVersion(majorJavaVersion, platform) {
+  currentMajorJavaVersion = majorJavaVersion;
+  currentPlatform = platform;
+  const fileExtension = platform.indexOf("windows") === 0 ? "zip" : "tar.gz";
+  currentDownloadLink = `https://download.oracle.com/graalvm/${majorJavaVersion}/latest/graalvm-jdk-${majorJavaVersion}_${platform}_bin.${fileExtension}`;
+
+  updateDownloadButton(majorJavaVersion);
+  updateGHASnippet(majorJavaVersion);
+  updateContainerSnippet(majorJavaVersion);
+  updateSDKMANSnippet(majorJavaVersion);
+  updateScriptFriendlyURLsSnippet(majorJavaVersion, platform, fileExtension);
+
+  toggleDownloadBanners(majorJavaVersion);
+  toggleInteractivityForJava17(majorJavaVersion);
+}
+
+
+function downloadGraalVMJDK() {
+  // Special handling for Java 17 - redirect to Oracle support
+  if (currentMajorJavaVersion === "17") {
+    window.open("https://www.oracle.com/downloads/graalvm-downloads.html", "_blank");
+    return;
+  }
+
+  if (!currentDownloadLink) {
+    return;
+  }
+
+  window.open(currentDownloadLink, "_blank");
+
+  // Redirect to success page
+  window.location="/downloads-thanks/";
+  window.focus();
+}

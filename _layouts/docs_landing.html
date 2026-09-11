@@ -1,0 +1,206 @@
+---
+layout: page_content
+---
+
+<section class="content-section docs-landing__screenback versions">
+  <div class="wrapper">
+    <div class="docs-landing__homescreen">
+      <div class="container">
+        <h2 class="docs-landing__title">GraalVM Documentation</h2>
+        <div class="docs-landing__dropdown">
+          <div class="col-sm tab dropdown">
+            <div class="d-flex ml-auto align-items-center version-dropdown-landing">
+              {% include version-dropdown.html %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% comment %}
+<section class="content-section-min versions">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row align-items-center">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row align-items-center">
+          <!-- Search field -->
+          <div class="tab search additional-search">
+            <form class="form-inline" action="/docs/search" autocomplete="on" method="get">
+              <input class="input-search" type="text" id="search-box" name="query" placeholder="Search Documentation">
+              <button type="submit" class="search-button"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endcomment %}
+<section>
+  <div class="wrapper">
+    <div class="graal-docs">
+      <div class="container">
+        <div class="graal-docs__title">Overview</div>
+        <div class="graal-docs__row">
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="introduction docs icon">
+              <a href='{{ "/docs/introduction/" | relative_url }}'>
+                <div class="graal-docs__topics">Introduction</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="security guide docs icon">
+              <a href='{{ "/security-guide/" | relative_url }}'>
+                <div class="graal-docs__topics">Security Guide</div>
+              </a>
+            </div>
+          </div>
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="installation docs icon">
+              <a href='{{ "/docs/getting-started/" | relative_url }}'>
+                <div class="graal-docs__topics">Installation</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="support docs icon">
+              <a href='{{ "/support/" | relative_url }}'>
+                <div class="graal-docs__topics">Support</div>
+              </a>
+            </div>
+          </div>
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="container images docs icon">
+              <a href='{{ "/docs/getting-started/container-images/" | relative_url }}' target="_blank">
+                <div class="graal-docs__topics">Container Images</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrapper">
+    <div class="graal-docs">
+      <div class="container">
+        <div class="graal-docs__title">Native Image</div>
+        <div class="graal-docs__row">
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="getting started docs icon">
+              <a href='{{ "/reference-manual/native-image/" | relative_url }}'>
+                <div class="graal-docs__topics">Getting Started</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="optimizations docs icon">
+              <a href='{{ "/reference-manual/native-image/optimizations-and-performance/" | relative_url }}'>
+                <div class="graal-docs__topics">Optimizations and Performance</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="security docs icon">
+              <a href='{{ "/security-guide/native-image/" | relative_url }}'>
+                <div class="graal-docs__topics">Security</div>
+              </a>
+            </div>
+          </div>
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="guides docs icon">
+              <a href='{{ "/guides/" | relative_url }}' target="_blank">
+                <div class="graal-docs__topics">Guides</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="gradle plugin docs icon">
+              <a href="https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html" target="_blank">
+                <div class="graal-docs__topics">Gradle Plugin</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="libraries and frameworks docs icon">
+              <a href="https://www.graalvm.org/native-image/libraries-and-frameworks/" target="_blank">
+                <div class="graal-docs__topics">Libraries and Frameworks</div>
+              </a>
+            </div>
+          </div>
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="reference manuals docs icon">
+              <a href='{{ "/reference-manual/native-image/basics/" | relative_url }}'>
+                <div class="graal-docs__topics">Reference Manuals</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="maven plugin docs icon">
+              <a href="https://graalvm.github.io/native-build-tools/latest/maven-plugin.html" target="_blank">
+                <div class="graal-docs__topics">Maven Plugin</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="web image docs icon">
+              <a href='{{ "/reference-manual/web-image/" | relative_url }}'>
+                <div class="graal-docs__topics">Web Image</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrapper">
+    <div class="graal-docs">
+      <div class="container">
+        <div class="graal-docs__title">More GraalVM Technologies</div>
+        <div class="graal-docs__row">
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="graal compiler docs icon">
+              <a href='{{ "/reference-manual/java/compiler/" | relative_url }}'>
+                <div class="graal-docs__topics">Graal Compiler</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="embedding languages in java docs icon">
+              <a href='{{ "/reference-manual/embed-languages/" | relative_url }}'>
+                <div class="graal-docs__topics">Embedding Languages in Java</div>
+              </a>
+            </div>
+          </div>
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="graalvm language runtimes docs icon">
+              <a href='{{ "/reference-manual/languages/" | relative_url }}'>
+                <div class="graal-docs__topics">Graal Languages</div>
+              </a>
+            </div>
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="tools for graalvm languages docs icon">
+              <a href='{{ "/tools/" | relative_url }}'>
+                <div class="graal-docs__topics">Tools for Graal Languages</div>
+              </a>
+            </div>
+          </div>
+          <div class="graal-docs__column">
+            <div class="graal-docs__card">
+              <img src='{{ "/resources/img/downloads-new/miscellaneous-book.svg" | relative_url }}' alt="truffle framework docs icon">
+              <a href='{{ "/graalvm-as-a-platform/language-implementation-framework/" | relative_url }}'>
+                <div class="graal-docs__topics">Truffle Framework</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

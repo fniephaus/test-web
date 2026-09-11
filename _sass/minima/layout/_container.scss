@@ -1,0 +1,43 @@
+.container-fluid {
+  &--custom-sm {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+}
+
+//Custom style for docs-experimental layout only
+.col-sm-9.no-padding {
+  @include media-breakpoint-up(md) {
+    padding: 0;
+  }
+}
+
+.docs-experimental h1 {
+  margin-top: 0;
+  @include media-breakpoint-up(md) {
+    margin-top: -50px;
+  }
+}
+
+.label {
+  margin-left: 26px;
+  margin-top: 36px;
+  top: 60px;
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 480px) {
+      margin-top: 2px;
+    }
+    @media only screen
+      and (min-width: 414px)
+      and (max-width: 736px) {
+        margin-top: 2px;
+    }
+}
+
+.label img {
+  width: 15%;
+  @include media-breakpoint-up(sm) {
+    width: 15%;
+  }
+}

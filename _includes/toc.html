@@ -1,0 +1,109 @@
+{% if include.floating == true %}
+<div class="toc-floating">
+{% else %}
+<div>
+{% endif %}
+
+<script>
+var sidebar = document.currentScript.parentElement;
+
+{% if include.focus %}
+$(document).ready(function(){
+  var header = $('.header').height();
+  var invisibleBlock;
+
+  $("#{{ include.focus }} h1, #{{ include.focus }} h2").each(function() {
+    invisibleBlock = $(this).before("<div class='anchor' id="+ $(this).attr("id") +"></div>");
+  });
+
+  $(window).scroll(function() {
+    var lastitem = null;
+    $("#{{ include.focus }} h1, #{{ include.focus }} h2").each(function() {
+      var heading = $(this);
+      var position = (heading.position().top - heading.height()) - $(window).scrollTop();
+      var listitem = $(sidebar).find("li").filter(function() {
+        return $(this).find("a").attr("href") == "#" + heading.attr("id");
+      });
+      listitem.removeClass("toc-bullets-focused");
+      if (position <= 0) {
+        lastitem = listitem;
+      }
+    });
+    if (lastitem != null) lastitem.addClass("toc-bullets-focused");
+  });
+});
+{% endif %}
+</script>
+
+<!-- Docs version dropdown -->
+<section class="versions">
+  <div class="dropdown">
+    <div class="d-flex align-items-center version-dropdown">
+      <input name="select_value" type="hidden" id="selectedValue">
+      <div class="display-value display-version" id="displayValue" onclick="toggleOptions(event)">
+        <span class="value-text" id="valueText">Version</span>
+      </div>
+      <ul tabindex="0" class="select-container" id="selectContainer" onblur="toggleOptions(event)">
+        <li class="select-option" onclick="selected('GraalVM 25.3 (Innovation)', 'latest');">GraalVM 25.3 (Innovation)</li>
+        <li class="select-option" onclick="selected('GraalVM 25.0 (LTS)', 'jdk25');">GraalVM 25.0 (LTS)</li>
+        <li class="select-option" onclick="selected('GraalVM for JDK 21 (LTS)', 'jdk21');">GraalVM for JDK 21 (LTS)</li>
+        <li class="select-option" onclick="selected('GraalVM for JDK 17 (LTS)', 'jdk17');">GraalVM for JDK 17 (LTS)</li>
+        <li class="select-option" onclick="selected('Archives'); location='/docs/archives/'">Archives</li>
+        <li class="select-option" onclick="window.open('https://github.com/oracle/graal/tree/master/docs', '_blank').focus()">Dev Build</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<ul class="toc-bullets">
+{% for path in site.tables_of_contents %}
+  {% if path["toc_group"] == page.toc_group %}
+    {% if path["top_level_link"] %}
+      <li class="toc-bullets-main">
+        {% assign curr_pg = site.pages | where: "path", path["top_level_link"] | first %}
+        <a href="{{ curr_pg.url | relative_url }}">
+          {{ curr_pg.link_title }}
+        </a>
+      </li>
+    {% endif %}
+
+    {% for sub in path["subgroups"] %}
+      {% if page.path == sub.main_link or sub["links"] contains page.path or page.short_toc == %}
+        {% if page.path == sub.main_link %}
+          <li class="toc-bullets-main toc-bullets-highlight">
+        {% else %}
+          <li class="toc-bullets-main">
+        {% endif %}
+          {% assign curr_pg = site.pages | where: "path", sub["main_link"] | first %}
+          <a href="{{ curr_pg.url | relative_url }}">
+            {{ curr_pg.link_title | escape }}
+          </a>
+        </li>
+
+        {% comment %} Only display h2 links of a page if there are no sub-pages {% endcomment %}
+        {% if page.path == sub.main_link and include.dynamic == true and sub["links"] == nil %}
+          {% include toc-dynamic.html %}
+        {% endif %}
+
+        {% comment %} List sub-pages and h2 links of the active sub-page {% endcomment %}
+        {% for link in sub["links"] %}
+          {% if page.path == link %}
+          <li class="toc-bullets-sub toc-bullets-highlight">
+          {% else %}
+          <li class="toc-bullets-sub">
+          {% endif %}
+            {% assign curr_pg = site.pages | where: "path", link | first %}
+            <a href="{{ curr_pg.url | relative_url }}">
+              {{ curr_pg.link_title | escape }}
+            </a>
+          </li>
+
+          {% if page.path == link and include.dynamic == true %}
+            {% include toc-dynamic-3.html %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+</div>

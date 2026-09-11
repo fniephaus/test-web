@@ -1,0 +1,332 @@
+// Announcement page layout and Home page banner
+.announcement_page_banner {
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  box-shadow: 6px 6px 6px #00000029;
+  opacity: 0.95;
+  background: linear-gradient(180deg, #002E38 18.26%, #00758F 100.15%);
+  z-index: 1;
+}
+
+.announcement_additional_banner {
+  background: url("{{ '/resources/img/announcements/java-duke.png' | relative_url }}") 80% 60%/280px 225px no-repeat, linear-gradient(180deg, #002E38 18.26%, #00758F 100.15%);
+  @media only screen
+  and (min-device-width: 1920px)
+  and (max-device-width: 2600px) {
+    background: url("{{ '/resources/img/announcements/java-duke.png' | relative_url }}") 75% 60%/280px 225px no-repeat, linear-gradient(180deg, #002E38 18.26%, #00758F 100.15%);
+  }
+  @media only screen
+  and (min-device-width: 481px)
+  and (max-device-width: 768px) {
+    background: url("{{ '/resources/img/announcements/java-duke.png' | relative_url }}") 90% 80%/280px 225px no-repeat, linear-gradient(180deg, #002E38 18.26%, #00758F 100.15%);
+  }
+  @media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 480px) {
+    background: linear-gradient(180deg, #002E38 18.26%, #00758F 100.15%);
+  }
+}
+
+.announcement_home_page_banner {
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  margin-top: 24px;
+}
+
+p.announce-title {
+  font-style: normal;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 62px;
+  color: #FFFFFF;
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 760px;
+  @media only screen
+  and (min-device-width: 769px)
+  and (max-device-width: 1024px) {
+    font-size: 40px;
+    max-width: 600px;
+  }
+  @media only screen
+  and (min-device-width: 481px)
+  and (max-device-width: 768px) {
+    max-width: 550px;
+  }
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px) {
+    font-size: 32px;
+    line-height: 48px;
+  }
+}
+
+.announcement-description p {
+  font-style: normal;
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: 400;
+  color: #003C4A;
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 32px;
+  padding-left: 24px;
+  max-width: 760px;
+  @media only screen
+  and (min-device-width: 769px)
+  and (max-device-width: 1024px) {
+    font-size: 20px;
+    max-width: 600px;
+  }
+  @media only screen
+  and (min-device-width: 481px)
+  and (max-device-width: 768px) {
+    max-width: 450px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px) {
+    font-size: 18px;
+    line-height: 28px;
+    max-width: 320px;
+  }
+}
+
+p.announcement-type {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: #F29111;
+  padding-top: 24px;
+  padding-left: 24px;
+  margin-bottom: 10px;
+}
+
+.tagline-announcement p { 
+  color: #FFFFFF;
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.03em;
+  font-feature-settings: 'pnum' on, 'lnum' on, 'case' on;
+  color: #171F26;
+  padding-left: 24px;
+  max-width: 820px;
+  @media only screen
+  and (min-device-width: 769px)
+  and (max-device-width: 1024px) {
+    max-width: 550px;
+    font-size: 28px;
+    line-height: 40px;
+  }
+  @media only screen
+  and (min-device-width: 640px)
+  and (max-device-width: 768px) {
+    max-width: 400px;
+  }
+}
+
+.announcement-time p {
+  color: #FFFFFF;
+  margin-top: 24px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  color: #00758F;
+  padding-left: 24px;
+}
+
+.home-java-duke-logo {
+  float: right;
+  margin-top: -140px;
+  max-width: 25%;
+  padding-bottom: 24px;
+  @media only screen
+  and (min-device-width: 480px)
+  and (max-device-width: 768px) {
+    max-width: 40%;
+  }
+}
+
+.home.banner__content {
+  padding-top: 48px;
+}
+
+.java-duke-logo{
+  float: right;
+  margin-top: -100px;
+  @media only screen
+  and (min-device-width: 480px)
+  and (max-device-width: 768px) {
+    max-width: 40%;
+  }
+}
+
+img.java-duke-logo{ 
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px) {
+    max-width: 40%;
+  }
+  @media only screen
+  and (min-device-width: 769px)
+  and (max-device-width: 1024px) {
+    margin-left: 160px;
+  }
+}
+
+.announcement-card {
+  background: #D3EFF5 url("{{ '/resources/img/announcements/framework.png' | relative_url }}") 94% 60%/130px 130px no-repeat;
+  border-radius: 12px;
+  @media only screen
+  and (min-device-width: 769px)
+  and (max-device-width: 1024px) {
+    background: #D3EFF5 url("{{ '/resources/img/announcements/framework.png' | relative_url }}") 95% 80%/125px 125px no-repeat;
+  }
+  @media only screen
+  and (min-device-width: 480px)
+  and (max-device-width: 768px) {
+    background: #D3EFF5 url("{{ '/resources/img/announcements/framework.png' | relative_url }}") 94% 80%/110px 110px no-repeat;
+  }
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 479px) {
+    background: #D3EFF5;
+  }
+}
+
+.announce-btn {
+  padding-left: 24px;
+  padding-bottom: 24px;
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 479px) {
+    align-items: flex-start;
+  }
+}
+
+.btn-primary-announcement {
+  background-color: #f29110;
+  color: #ffffff;
+  padding: 4px 24px 4px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  &:hover {
+    color: #ffffff;
+    background-color: #003C4A;
+  }
+}
+
+//OpenJDK-announcement page
+
+.announcepage {
+  background: url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 70% -38%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 120% 60%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 80px 0px 60px 0px;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 480px) {
+    padding: 80px 0px 0px 0px;
+}
+}
+
+.announcepage__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.announcepage__body {
+  font-family: Oracle Sans, sans-serif;
+  color: #FFFFFF;
+  padding: 0px 0px 0px 0px;
+}
+
+.announcepage__title {
+  font-size: 48px;
+  line-height: 72px;
+  font-weight: 400;
+  margin-top: 30px;
+  margin-bottom: 0;
+  max-width: 700px;
+  color: #ffffff;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 480px) {
+    text-align: center;
+    font-size: 40px;
+    line-height: 64px;
+    margin-bottom: 40px;
+  }
+}
+
+.announcepage__date h5 {
+  text-align: left;
+  color: #C0DBE9;
+  max-width: 700px;
+}
+
+.announcepage__image img {
+  max-width: 90%;
+  padding-top: 30px;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.announcepage__section {
+  background: radial-gradient(45.76% 45.76% at 50% 50%, rgba(46, 79, 115, 0.8) 0%, rgba(20, 36, 53, 0.088) 100%);
+  padding: 80px 0px 80px 0px;
+  display: flex;
+}
+
+.announcepage__text h5 {
+  text-align: left;
+  color: #ffffff;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  ul li {
+    position: relative;
+    padding-left: 15px;
+    list-style: disc;
+    color: #ffffff;
+    padding-top: 8px;
+  }
+}
+.announcepage-mod {
+  padding-bottom: 20px;
+}
+
+.announcepage__topics {
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  padding-bottom: 60px;
+  padding-top: 80px;
+  text-align: center;
+  line-height: 48px;
+}

@@ -1,0 +1,43 @@
+.tabs-below {
+  display: flex;
+  flex-direction: column;
+
+  .tab-pane {
+    display: none;
+    &.active { display: block; }
+  }
+
+  .nav-tabs {
+    order: -1;
+    display: flex;
+    padding: 7px 15px;
+    border-radius: 8px 8px 0 0;
+    background: #C0DBE9;
+    margin-bottom: -10px;
+
+    li {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+      &:before { display: none; }
+      & + li { margin-left: 16px; }
+      a {
+        color: #171F26;
+        font-size: 14px;
+        &:hover { color: $oracle-oragne; }
+      }
+      a.active {
+        font-weight: 700;
+        color: $oracle-oragne;
+      }
+    }
+  }
+}
+
+.fade {
+  opacity: 1;
+  transition: opacity .3s;
+  &.in {
+    opacity: 1;
+  }
+}

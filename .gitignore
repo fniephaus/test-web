@@ -1,0 +1,19 @@
+.DS_Store
+.sass-cache/
+
+# Documentation is copied from public source repositories during a build.
+docs/
+truffle/
+espresso/
+web-image/
+repos/
+_graalvm-reachability-metadata/
+
+# Generated Jekyll output and intermediate versioned sites.
+_site/
+jdk25.3/
+jdk25/
+jdk21/
+jdk17/
+dev/
+*.tar.gz

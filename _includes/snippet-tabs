@@ -1,0 +1,54 @@
+<div class="tabs-below">
+
+<div class="tab-content">
+  {% if include.tab1type %}
+  <div id="{{ include.tab1id }}" class="tab-pane fade in active">
+    {% include snippet-highlight tabtype=include.tab1type path=include.tab1path %}
+  </div>
+  {% endif %}
+  {% if include.tab2type %}
+  <div id="{{ include.tab2id }}" class="tab-pane fade">
+    {% include snippet-highlight tabtype=include.tab2type path=include.tab2path %}
+  </div>
+  {% endif %}
+  {% if include.tab3type %}
+  <div id="{{ include.tab3id }}" class="tab-pane fade">
+    {% include snippet-highlight tabtype=include.tab3type path=include.tab3path %}
+  </div>
+  {% endif %}
+  {% if include.tab4type %}
+  <div id="{{ include.tab4id }}" class="tab-pane fade">
+    {% include snippet-highlight tabtype=include.tab4type path=include.tab4path %}
+  </div>
+  {% endif %}
+  {% if include.tab5type %}
+  <div id="{{ include.tab5id }}" class="tab-pane fade">
+    {% include snippet-highlight tabtype=include.tab5type path=include.tab5path %}
+  </div>
+  {% endif %}
+</div>
+
+<ul class="nav nav-tabs">
+  {% if include.tab1type %}
+  <li><a class="active" data-toggle="tab" href="#{{ include.tab1id }}">{{ include.tab1name}}</a></li>
+  {% endif %}
+  {% if include.tab2type %}
+  <li><a data-toggle="tab" href="#{{ include.tab2id }}">{{ include.tab2name }}</a></li>
+  {% endif %}
+  {% if include.tab3type %}
+  <li><a data-toggle="tab" href="#{{ include.tab3id }}">{{ include.tab3name }}</a></li>
+  {% endif %}
+  {% if include.tab4type %}
+  <li><a data-toggle="tab" href="#{{ include.tab4id }}">{{ include.tab4name }}</a></li>
+  {% endif %}
+  {% if include.tab5type %}
+  <li><a data-toggle="tab" href="#{{ include.tab5id }}">{{ include.tab5name }}</a></li>
+  {% endif %}
+  {% if include.title %}
+    <div style="width:100%; text-align:right; padding-left:10px">
+    <li>{{ include.title}}</li>
+    </div>
+  {% endif %}
+</ul>
+
+</div>

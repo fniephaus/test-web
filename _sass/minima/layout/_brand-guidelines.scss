@@ -1,0 +1,449 @@
+//Homescreen section
+.brand__homescreen {
+  background: url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 122% 30%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 80px 0px 60px 0px;
+}
+
+.brand__screenback {
+  background: radial-gradient(45.76% 45.76% at 50% 50%, rgba(46, 79, 115, 0.8) 0%, rgba(20, 36, 53, 0.088) 100%);
+}
+
+h2.brand__home-title {
+  font-weight: 400;
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.brand__home-subtitle h5 {
+  text-align: center;
+  color: #C0DBE9;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+//GraalVM logo and icon section
+
+.brand_top {
+  background: #171E25;
+  padding: 80px 0px 20px 0px;
+  display: flex;
+}
+
+.brand__title {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 400;
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  padding-bottom: 40px;
+}
+
+.brand__card {
+  background-color: #3e516c70;
+  border: 0.4px solid #ffffff39;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  @media only screen and (min-width: 320px) and (max-width: 480px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.brand__card-row {
+  display: flex;
+  // justify-content: space-between;
+  @media only screen and (min-width: 320px) and (max-width: 480px) {
+    display: block;
+  }
+}
+
+.brand__logo-img {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+}
+
+.brand__logo-row {
+  width: 70%;
+  @media only screen and (min-width: 320px) and (max-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+
+.brand__logo-title h4 {
+  width: fit-content;
+  color: #FFFFFF;
+  padding: 20px;
+  margin: 0px;
+}
+
+.brand__logo-subtitle h6 {
+  color: #ffffff;
+  width: fit-content;
+  padding: 0px 20px 20px 20px;
+  margin: 0px;
+  max-width: 63%;
+  font-weight: 400;
+  @media only screen
+  and (min-width: 768px)
+  and (max-width: 991px) {
+    display: flex;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 991px) {
+    max-width: 100%;
+  }
+}
+
+.brand__logo-link {
+  padding: 0px 20px 10px 20px;
+  a {
+    color: #8EC9E6;
+    text-decoration: underline;
+  }
+}
+
+.brand__logo-link-bot {
+  padding-bottom: 20px;
+}
+
+ul.brand__load-toc {
+  padding-left: 0px;
+  margin: 0px 0px 0px 0px;
+  @media only screen and (min-device-width: 480px) and (max-device-width: 768px) {
+    margin: 0px 0px 0px -8px;
+  }
+}
+
+.brand__load a.load-option {
+  font-size: 16px;
+  line-height: 28px;
+  color: #F29111;
+  font-weight: 400;
+  border: 1px solid #F29111;
+  text-decoration: none;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 4px 16px;
+  cursor: pointer;
+  &:hover {
+    color: #8EC9E6;
+    border: 1px solid #8EC9E6;
+  }
+}
+
+li.brand__load {
+  float: left;
+  padding: 0px 0px 0 0px;
+  margin: 16px 8px 16px 0px;
+  &::before {
+    content: none;
+  }
+  @media only screen and (min-device-width: 320px) and (max-device-width: 479px) {
+    float: inherit;
+    margin: 0 8px 28px 0px;
+  }
+  @media only screen and (min-device-width: 480px) and (max-device-width: 768px) {
+    margin: 0 8px 32px 8px;
+  }
+}
+
+//Guidelines for use section
+
+.brand_bot {
+  background: #171E25;
+  padding: 60px 0px 80px 0px;
+  display: flex;
+}
+
+.brand__text h5 {
+  display: flex;
+  text-align: left;
+  margin: 0 auto;
+  color: #ffffff;
+  justify-content: center;
+  ul li {
+    position: relative;
+    padding-left: 15px;
+    list-style: disc;
+    color: #ffffff;
+    padding-top: 8px;
+  }
+}
+
+.brand__guides-file {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.brand__textmod {
+  padding-bottom: 0px;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.brand__pdf {
+  max-width: 24px;
+  padding-bottom: 8px;
+  margin-left: 16px;
+}
+
+.brand__list {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+ul.brand__guidelines-list {
+  margin-bottom: 8px;
+  li::before {
+    background-color: #ffffff
+  }
+}
+
+.brand__subtitle h4 {
+  width: fit-content;
+  color: #FFFFFF;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.brand__color-image {
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.brand__color-card-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.brand__color-card {
+  background-color: #20283370;
+  border: 0.4px solid #ffffff39;
+  width: 48%;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.mbottom__homescreen {
+  background: url('/resources/img/brand-mascot/mascot-homescreen.svg') 80% 60%/320px no-repeat, url('/resources/img/home/grain.png') repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 40px 0px 20px 0px;
+  @media only screen
+  and (min-width: 560px)
+  and (max-width: 769px) {
+    background: url('/resources/img/brand-mascot/mascot-section.svg') 90% 60%/280px no-repeat, url('/resources/img/home/grain.png') repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  }
+  @media only screen
+  and (min-width: 559px)
+  and (max-width: 768px) {
+    background: url('/resources/img/brand-mascot/mascot-section.svg') 80% 60%/220px no-repeat, url('/resources/img/home/grain.png') repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 560px) {
+    background: url('/resources/img/brand-mascot/mascot-section.svg') 55% 60%/220px no-repeat, url('/resources/img/home/grain.png') repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  }
+}
+
+h3.mbottom-title {
+  font-weight: 400;
+  width: fit-content;
+  color: #FFFFFF;
+  @media only screen
+  and (min-width: 561px)
+  and (max-width: 768px) {
+    font-size: 24px;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 560px) {
+    text-align: center;
+    font-size: 24px;
+    margin: 0 auto;
+  }
+}
+
+h5.mbottom-tagline {
+  color: #ffffff;
+  margin-top: 20px;
+  font-weight: 400;
+  max-width: 700px;
+  @media only screen
+  and (min-width: 992px)
+  and (max-width: 1260px) {
+    max-width: 500px;
+  }
+  @media only screen
+  and (min-width: 768px)
+  and (max-width: 991px) {
+    max-width: 300px;
+  }
+  @media only screen
+  and (min-width: 561px)
+  and (max-width: 767px) {
+    max-width: 300px;
+    font-size: 14px;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 560px) {
+    text-align: center;
+    max-width: 500px;
+    font-size: 14px;
+    margin-bottom: 190px;
+  }
+}
+
+.mbottom-btn {
+  padding: 50px 0px 30px 0px;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 560px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  @media only screen
+  and (min-width: 561px)
+  and (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: row;
+    margin-bottom: 0px;
+  }
+}
+
+//Additional mascot page styles
+
+.mascot__homescreen {
+  background: url('/resources/img/brand-mascot/mascot-homescreen.svg') 80% 60%/320px no-repeat, url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 122% 30%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 80px 0px 60px 0px;
+  @media only screen
+  and (min-width: 600px)
+  and (max-width: 991px) {
+    background: url('/resources/img/brand-mascot/mascot-homescreen.svg') 80% 35%/320px no-repeat, url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 122% 30%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  }
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 599px) {
+    background: url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 122% 30%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  }
+}
+
+h2.mascot__home-title {
+  display: flex;
+  font-weight: 400;
+  width: fit-content;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 40px;
+  @media only screen and (min-width: 561px) and (max-width: 767px) {
+    max-width: 360px;
+    text-align: left;
+  }
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    max-width: 500px;
+    text-align: left;
+  }
+}
+
+.mascot-intro {
+  background-color: #1C2732;
+}
+
+h5.mascot-intro-text {
+  max-width: 1108px;
+  color: #ffffff;
+  width: fit-content;
+  padding: 20px 0px;
+  margin: 0px;
+}
+
+.mascot__pic-img {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: left;
+  margin-left: 60px;
+  width: 30%;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    margin: 20px;
+  }
+}
+
+.gallery__pic-img {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: left;
+  margin-left: 20px;
+}
+
+.mascot-card {
+  display: flex;
+  flex-direction: row;
+  @media only screen and (min-width: 320px) and (max-width: 991px) {
+    flex-wrap: wrap;
+  }
+}
+
+.mascot__card-row {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 65%;
+  @media only screen and (min-width: 320px) and (max-width: 991px) {
+    width: 100%;
+  }
+}
+
+.gallery__load a.load-option {
+  font-size: 16px;
+  line-height: 28px;
+  color: #F29111;
+  font-weight: 400;
+  border: 1px solid #F29111;
+  text-decoration: none;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 4px 16px;
+  cursor: pointer;
+  &:hover {
+    color: #8EC9E6;
+    border: 1px solid #8EC9E6;
+  }
+}
+
+li.gallery__load {
+  float: left;
+  padding: 0px 0px 0 0px;
+  margin: 16px 8px 0px 0px;
+  &::before {
+    content: none;
+  }
+  @media only screen and (min-device-width: 320px) and (max-device-width: 479px) {
+    float: inherit;
+    margin: 0 8px 28px 0px;
+  }
+  @media only screen and (min-device-width: 480px) and (max-device-width: 768px) {
+    margin: 0 8px 32px 8px;
+  }
+}
+
+.gallery-card {
+  padding: 20px;
+}

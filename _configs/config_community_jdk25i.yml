@@ -1,0 +1,471 @@
+environment: community
+theme: minima
+title: GraalVM
+email: graal-users@oss.oracle.com
+description: GraalVM is an advanced JDK with ahead-of-time Native Image compilation.
+url: "https://www.graalvm.org"
+baseurl: ""
+version: jdk25.3
+header_links: []
+
+tables_of_contents:
+  - toc_group: community
+    subgroups:
+      - main_link: pages/community/community.md
+        links:
+          [
+            pages/community/community.md,
+            pages/community/meetup.md,
+            pages/community/opensource.md,
+            pages/why-graalvm/why-graalvm.md,
+            pages/community/advisory-board.md,
+            pages/community/internship.md,
+            pages/community/publications.md,
+            pages/community/contributors.md,
+            pages/community/conduct.md,
+            pages/support/support.md,
+            pages/faq/faq.md
+          ]
+
+  - toc_group: docs
+    subgroups:
+      - main_link: docs/getting-started/get-started.md
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/reference-manuals.md
+      - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
+      - main_link: docs/security/security-guide.md
+      - main_link: pages/javadocs/jdk25.3.md
+  - toc_group: getting-started
+    subgroups:
+      - main_link: docs/getting-started/get-started.md
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/reference-manuals.md
+      - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
+      - main_link: docs/security/security-guide.md
+      - main_link: pages/javadocs/jdk25.3.md
+  - toc_group: container-images
+    subgroups:
+      - main_link: docs/getting-started/get-started.md
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/reference-manuals.md
+      - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
+      - main_link: docs/security/security-guide.md
+      - main_link: pages/javadocs/jdk25.3.md
+  - toc_group: reference-manual
+    subgroups:
+      - main_link: docs/getting-started/get-started.md
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/reference-manuals.md
+        links: [
+          docs/reference-manual/java/README.md,
+          docs/reference-manual/languages.md,
+          docs/reference-manual/embedding/embed-languages.md,
+          docs/reference-manual/polyglot-programming.md,
+          docs/tools/tools.md
+        ]
+      - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
+      - main_link: docs/security/security-guide.md
+      - main_link: pages/javadocs/jdk25.3.md
+  - toc_group: embedding
+    subgroups:
+      - main_link: docs/getting-started/get-started.md
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/reference-manuals.md
+        links: [
+          docs/reference-manual/java/README.md,
+          docs/reference-manual/languages.md,
+          docs/reference-manual/embedding/embed-languages.md,
+          docs/reference-manual/polyglot-programming.md,
+          docs/tools/tools.md
+        ]
+      - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
+      - main_link: docs/security/security-guide.md
+      - main_link: pages/javadocs/jdk25.3.md
+  - toc_group: graalvm-as-a-platform
+    subgroups:
+      - main_link: docs/getting-started/get-started.md
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/reference-manuals.md
+      - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
+        links: [
+          truffle/docs/README.md,
+          docs/graalvm-as-a-platform/implement-language.md,
+          docs/graalvm-as-a-platform/implement-instrument.md
+        ]
+      - main_link: docs/security/security-guide.md
+      - main_link: pages/javadocs/jdk25.3.md
+  - toc_group: security-guide
+    subgroups:
+      - main_link: docs/getting-started/get-started.md
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/reference-manuals.md
+      - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
+      - main_link: docs/security/security-guide.md
+        links: [
+          docs/security/native-image.md,
+          docs/security/Obfuscation.md,
+          docs/security/SBOM.md,
+          docs/security/polyglot-sandbox.md
+        ]
+      - main_link: pages/javadocs/jdk25.3.md
+  - toc_group: release-notes
+    subgroups:
+      - main_link: release-notes/community/release-notes.md
+        links: [
+          release-notes/community/release-calendar.md,
+          release-notes/vulnerability-advisories.md,
+          release-notes/community/graalvm-ce-25.3.md,
+          release-notes/community/graalvm-ce-25.2.md,
+          release-notes/community/graalvm-ce-25.1.md,
+          release-notes/community/graalvm-ce-25.md,
+          release-notes/community/graalvm-for-jdk-24.md,
+          release-notes/community/graalvm-for-jdk-23.md,
+          release-notes/community/graalvm-for-jdk-22.md,
+          release-notes/community/graalvm-for-jdk-21.md,
+          release-notes/community/graalvm-for-jdk-20.md,
+          release-notes/community/graalvm-for-jdk-17.md,
+          release-notes/community/22_3.md,
+          release-notes/community/22_2.md,
+          release-notes/community/22_1.md,
+          release-notes/community/22_0.md,
+          release-notes/community/21_3.md,
+          release-notes/community/21_2.md,
+          release-notes/community/21_1.md,
+          release-notes/community/21_0.md,
+          release-notes/community/20_3.md,
+          release-notes/community/20_2.md,
+          release-notes/community/20_1.md,
+          release-notes/community/20_0.md,
+          release-notes/community/19_3.md
+        ]
+
+  # GraalVM Tools
+  - toc_group: tools
+    subgroups:
+      - main_link: docs/tools/tools.md
+        links:
+          [
+            docs/tools/visualvm.md,
+            docs/tools/insight/README.md,
+            docs/tools/profiling.md,
+            docs/tools/code-coverage.md,
+            docs/tools/chrome-debugger.md,
+            docs/tools/dap.md,
+            docs/tools/ideal-graph-visualizer.md,
+            compatibility/compatibility.md,
+          ]
+  - toc_group: insight
+    subgroups:
+      - main_link: docs/tools/tools.md
+      - main_link: docs/tools/insight/README.md
+        links:
+          [
+            docs/tools/insight/Insight-Manual.md,
+            docs/tools/insight/Insight-Tracing.md,
+            docs/tools/insight/Insight-Embedding.md,
+          ]
+      - main_link: docs/tools/profiling.md
+      - main_link: docs/tools/code-coverage.md
+      - main_link: docs/tools/chrome-debugger.md
+      - main_link: docs/tools/dap.md
+      - main_link: docs/tools/ideal-graph-visualizer.md
+      - main_link: compatibility/compatibility.md
+
+# Languages References
+  - toc_group: java
+    subgroups:
+      - main_link: docs/reference-manual/java/README.md
+        links: [
+          docs/reference-manual/java/compiler.md,
+          docs/reference-manual/java/Options.md,
+          docs/reference-manual/java/Operations.md
+        ]
+  - toc_group: espresso
+    subgroups:
+      - main_link: docs/reference-manual/java-on-truffle/README.md
+        links: [
+          docs/reference-manual/java-on-truffle/Interoperability.md,
+          docs/reference-manual/java-on-truffle/ImplementationDetails.md,
+          docs/reference-manual/java-on-truffle/HotSwap.md,
+          espresso/docs/continuations.md,
+          espresso/docs/serialization.md,
+          espresso/docs/generators.md,
+          docs/reference-manual/java-on-truffle/Demos.md,
+          docs/reference-manual/java-on-truffle/FAQ.md
+        ]
+  - toc_group: js
+    subgroups:
+      - main_link: docs/reference-manual/js/README.md
+        links: [
+          docs/reference-manual/js/NodeJS.md,
+          docs/reference-manual/js/JavaInteroperability.md,
+          docs/reference-manual/js/JavaScriptCompatibility.md,
+          docs/reference-manual/js/Modules.md,
+          docs/reference-manual/js/Multithreading.md,
+          docs/reference-manual/js/NashornMigrationGuide.md,
+          docs/reference-manual/js/RhinoMigrationGuide.md,
+          docs/reference-manual/js/NodeJSVSJavaScriptContext.md,
+          docs/reference-manual/js/Options.md,
+          docs/reference-manual/js/RunOnJDK.md,
+          docs/reference-manual/js/ScriptEngine.md,
+          docs/reference-manual/js/FAQ.md
+        ]
+  - toc_group: llvm
+    subgroups:
+      - main_link: docs/reference-manual/llvm/README.md
+        links: [
+          docs/reference-manual/llvm/Compiling.md,
+          docs/reference-manual/llvm/NativeExecution.md,
+          docs/reference-manual/llvm/Interoperability.md,
+          docs/reference-manual/llvm/Debugging.md,
+          docs/reference-manual/llvm/Options.md,
+          docs/reference-manual/llvm/Compatibility.md
+        ]
+
+# Truffle Framework
+  - toc_group: truffle
+    subgroups:
+      - main_link: truffle/docs/README.md
+        links: [
+          truffle/docs/BranchInstrumentation.md,
+          truffle/docs/DynamicObjectModel.md,
+          truffle/docs/StaticObjectModel.md,
+          truffle/docs/HostCompilation.md,
+          truffle/docs/Inlining.md,
+          truffle/docs/Profiling.md,
+          truffle/docs/InteropMigration.md,
+          truffle/docs/Languages.md,
+          truffle/docs/LanguageTutorial.md,
+          truffle/docs/ModuleMigration.md,
+          truffle/docs/NFI.md,
+          truffle/docs/Optimizing.md,
+          truffle/docs/Options.md,
+          truffle/docs/OnStackReplacement.md,
+          truffle/docs/TruffleStrings.md,
+          truffle/docs/SpecializationHistogram.md,
+          truffle/docs/SpecializationTesting.md,
+          truffle/docs/TCK.md,
+          truffle/docs/TraversingCompilationQueue.md,
+          truffle/docs/TruffleLibraries.md,
+          truffle/docs/AOTOverview.md,
+          truffle/docs/AOT.md,
+          truffle/docs/AuxiliaryEngineCachingEnterprise.md,
+          truffle/docs/Safepoints.md,
+          truffle/docs/splitting/Monomorphization.md,
+          truffle/docs/splitting/Splitting.md,
+          truffle/docs/splitting/MonomorphizationUseCases.md,
+          truffle/docs/splitting/ReportingPolymorphism.md
+        ]
+
+# Native Image
+  - toc_group: native-image
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+      - main_link: web-image/docs/get-started.md
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+  - toc_group: build-overview
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+        links: [
+          docs/reference-manual/native-image/BuildOutput.md,
+          docs/reference-manual/native-image/BuildReport.md,
+          docs/reference-manual/native-image/BuildConfiguration.md,
+          docs/reference-manual/native-image/Bundles.md,
+          docs/reference-manual/native-image/BuildOptions.md
+        ]
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+      - main_link: web-image/docs/get-started.md
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+  - toc_group: metadata
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+        links: [
+          docs/reference-manual/native-image/Compatibility.md,
+          docs/reference-manual/native-image/AutomaticMetadataCollection.md,
+          docs/reference-manual/native-image/ExperimentalAgentOptions.md
+        ]
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+      - main_link: web-image/docs/get-started.md
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+  - toc_group: optimizations-and-performance
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+        links: [
+          docs/reference-manual/native-image/MemoryManagement.md,
+          docs/reference-manual/native-image/ObjectHeaderSize.md,
+          docs/reference-manual/native-image/ClassInitialization.md,
+          docs/reference-manual/native-image/PGO.md
+        ]
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+      - main_link: web-image/docs/get-started.md
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+  - toc_group: pgo
+    subgroups:
+      - main_link: docs/reference-manual/native-image/PGO.md
+        links: [
+          docs/reference-manual/native-image/PGO-Basic-Usage.md,
+          docs/reference-manual/native-image/PGO-Build-Report.md,
+          docs/reference-manual/native-image/PGO-LCOV.md,
+          docs/reference-manual/native-image/PGO-Merging-Profiles.md,
+          docs/reference-manual/native-image/PGO-Profile-Quality.md,
+          docs/reference-manual/native-image/PGO-IprofFileFormat.md,
+          docs/reference-manual/native-image/PGO-FAQ.md
+        ]
+  - toc_group: debugging-and-diagnostics
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+        links: [
+          docs/reference-manual/native-image/DebugInfo.md,
+          docs/reference-manual/native-image/InspectTool.md,
+          docs/reference-manual/native-image/JFR.md,
+          docs/reference-manual/native-image/NMT.md,
+          docs/reference-manual/native-image/JCmd.md,
+          docs/reference-manual/native-image/PerfProfiling.md,
+          docs/reference-manual/native-image/StaticAnalysisReports.md
+        ]
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+      - main_link: web-image/docs/get-started.md
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+  - toc_group: dynamic-features
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+        links: [
+          docs/reference-manual/native-image/CertificateManagement.md,
+          docs/reference-manual/native-image/JNI.md,
+          docs/reference-manual/native-image/JCASecurityServices.md,
+          docs/reference-manual/native-image/URLProtocols.md
+        ]
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+      - main_link: web-image/docs/get-started.md
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+  - toc_group: native-code-interoperability
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+        links: [
+          docs/reference-manual/native-image/C-API.md,
+          docs/reference-manual/native-image/JNIInvocationAPI.md,
+          docs/reference-manual/native-image/FFM-API.md
+        ]
+      - main_link: web-image/docs/get-started.md
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+  - toc_group: web-image
+    subgroups:
+      - main_link: docs/reference-manual/native-image/README.md
+      - main_link: docs/reference-manual/native-image/guides/guides.md
+      - main_link: docs/reference-manual/native-image/NativeImageBasics.md
+      - main_link: docs/reference-manual/native-image/BuildOverview.md
+      - main_link: docs/reference-manual/native-image/ReachabilityMetadata.md
+      - main_link: docs/reference-manual/native-image/OptimizationsAndPerformance.md
+      - main_link: docs/reference-manual/native-image/DebuggingAndDiagnostics.md
+      - main_link: docs/reference-manual/native-image/DynamicFeatures.md
+      - main_link: docs/reference-manual/native-image/InteropWithNativeCode.md
+      - main_link: web-image/docs/get-started.md
+        links: [
+          web-image/docs/web-image-api.md
+        ]
+      - main_link: docs/reference-manual/native-image/WorkshopsAndLabs.md
+
+# Build settings
+markdown: kramdown
+# theme: minima
+plugins:
+  - jekyll-redirect-from
+  - jekyll-relative-links
+  - jekyll-sitemap
+
+exclude:
+  - _site
+  - jdk25.3
+  - jdk25
+  - jdk21
+  - jdk17
+  - dev
+  - pages/native-image/libraries-and-frameworks-with-header.md
+  - ci.jsonnet
+  - release-notes/enterprise
+  - docs/getting-started/container-images/oracle-graalvm-container-images.md
+  - docs/oracle-graalvm
+  - docs/reference-manual.md
+  - docs/README.md
+  - robots-ohc.txt
+  - robots-original.txt
+  - original_website_index.md
+  - sp_common
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - repos
+  - vendor
+  - Dockerfile
+  - "*.sh"
+  - "*.rb"
+  - "*.py"
+  - "*.toml"
+
+kramdown:
+  input: GFM
+  syntax_highlighter: none
+  syntax_highlighter_opts:
+    disable: true
+
+plugins_dir:
+  - _plugins
+
+autoprefixer:
+  browsers:
+  - last 3 versions
+  only_production: true
+
+defaults:
+  sitemap: false

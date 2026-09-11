@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {% include head.html %}
+  <body class="preload">
+    <div class="wrapper{% if page.url != '/' %} wrapper--nofooter{% endif %}">
+      {% include header.html %}
+      <main class="content{% if page.url == '/' %} content--home{% endif %}" aria-label="Content">
+        {{ content }}
+      </main>
+      {% include footer.html %}
+    </div>
+    <div class="overlay"></div>
+    <script src='{{ "/resources/lib/slick-slider/slick.min.js" | relative_url }}'></script>
+    <script src='{{ "/resources/js/main.js" | relative_url }}'></script>
+    <script src='{{ "/resources/js/download.js" | relative_url }}'></script>
+    <script src='{{ "/resources/js/sidebar.js" | relative_url }}'></script>
+    <script src='{{ "/resources/js/favicon.js" | relative_url }}'></script>
+  </body>
+</html>

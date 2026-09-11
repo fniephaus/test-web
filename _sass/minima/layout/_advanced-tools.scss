@@ -1,0 +1,77 @@
+.tools_page_banner {
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    box-shadow: 6px 6px 6px #00000029;
+    opacity: 0.95;
+    background: linear-gradient(180deg, #002E38 18.26%, #00758F 100.15%);
+    z-index: 1;
+}
+
+.tools_page_banner .slogan p {
+    font-style: normal;
+    line-height: 30px;
+    font-size: 20px;
+    color: #FFFFFF;
+    display: flex;
+    text-align: inherit;
+    margin-top: 24px;
+    @media only screen
+      and (min-device-width: 480px)
+      and (max-device-width: 768px) {
+        max-width: 500px;
+    }
+    @media only screen
+      and (min-device-width: 769px)
+      and (max-device-width: 1024px) {
+       max-width: 600px;
+    }
+}
+
+.tools_page_banner .tagline p {
+  line-height: 60px;
+  font-size: 52px;
+  @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 479px) {
+      margin-top: 40px;
+  }
+  @media only screen
+    and (min-device-width: 480px)
+    and (max-device-width: 768px) {
+      line-height: 64px;
+      font-size: 48px;
+      max-width: 500px;
+  }
+  @media only screen
+    and (min-device-width: 769px)
+    and (max-device-width: 1024px) {
+      line-height: 80px;
+      font-size: 52px;
+      max-width: 500px;
+  }
+}
+
+.adv-resize-logo-lang {
+  max-width: 60%;
+  margin: 0 0 32px 80px;
+  @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 479px) {
+    display: none;
+  }
+  @media only screen
+    and (min-device-width: 480px)
+    and (max-device-width: 768px) {
+      max-width: 80%;
+      margin: 24px 0 0px 32px;
+  }
+  @media only screen
+    and (min-device-width: 769px)
+    and (max-device-width: 1024px) {
+    max-width: 100%;
+    margin: 32px 0 32px 80px;
+  }
+}

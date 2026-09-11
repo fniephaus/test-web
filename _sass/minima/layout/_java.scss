@@ -1,0 +1,355 @@
+// Java Page Layout
+// Showcase row
+.javapage__homescreen {
+  background: url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-02.svg') 50% -32%/1750px no-repeat, url('/resources/img/home/metaimage-main-01.svg') 122% 30%/550px no-repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 80px 0px 60px 0px;
+}
+
+.javapage__screenback {
+  background: radial-gradient(45.76% 45.76% at 50% 50%, rgba(46, 79, 115, 0.8) 0%, rgba(20, 36, 53, 0.088) 100%);
+}
+
+.javapage__logo {
+  display: flex;
+  max-width: 50%;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    max-width: 100%;
+  }
+}
+
+.javapage__subtitle h5 {
+  text-align: center;
+  color: #C0DBE9;
+  max-width: 700px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.javapage__button {
+  padding: 30px 0px 0px 0px;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+a.btn.btn-primary.javapage-single {
+  font-family: Oracle Sans, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 6px 32px 6px 32px;
+  text-transform: none;
+  margin-left: 20px;
+}
+
+// New innovation for the Java platform
+.javapage__title-02 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 400;
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  padding-bottom: 40px;
+}
+
+.javainn-top {
+  background:#171E25;
+  padding: 80px 0px 40px 0px;
+  display: flex;
+}
+
+.javainn {
+  background:#171E25;
+  padding: 80px 0px 80px 0px;
+  display: flex;
+}
+
+.javainn__row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.javainn__card {
+  flex-wrap: wrap;
+  width: 33%;
+  padding: 30px 20px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: fit-content;
+    width: 100%;
+  }
+}
+
+.javainn__icon {
+  width: 48px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.javainn__title h4 {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 400;
+  width: fit-content;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.javainn__button {
+  padding: 30px 0px 20px 0px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+//GraalVM is good for
+.javagood-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.javagood__card {
+  background-color: #20283370;
+  background: url('/resources/img/home/grain.png') repeat, url('/resources/img/java/metaimage-java-01.svg') 870% 0%/500px no-repeat, #20283370;
+  border: 0.4px solid #ffffff39;
+  width: 48%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 320px) and (max-width: 1199px) {
+    background: url('/resources/img/home/grain.png') repeat, #20283370;
+  }
+}
+
+.javagood__section {
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.javagood__title h4 {
+  width: fit-content;
+  color: #FFFFFF;
+  padding: 20px;
+  margin: 0px;
+}
+
+.javagood__subtitle h5 {
+  color: #ffffff;
+  width: fit-content;
+  padding: 0px 20px 20px 20px;
+  margin: 0px;
+}
+
+.javagood__link{
+  padding: 0px 20px 10px 20px;
+  a {
+    color: #8EC9E6;
+    text-decoration: underline;
+  }
+}
+
+.javagood__link-bot{
+  padding-bottom: 20px;
+}
+
+// Testimonial
+.quote {
+  background: url('/resources/img/home/grain.png') repeat, linear-gradient(77.37deg, rgba(99, 67, 107, 0.344) 1.85%, rgba(99, 67, 107, 0) 33.09%, rgba(28, 36, 45, 0) 67.31%, rgba(30, 52, 75, 0.552) 97.07%), #171E25;
+  padding: 80px 0px 40px 0px;
+  display: flex;
+}
+
+.quote__icon {
+  display: flex;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.quote__text p {
+  font-size: 16px;
+  line-height: 24px;
+  font-style: italic;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  max-width: 800px;
+  color: #ffffff;
+}
+
+.quote__author {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.autor {
+    display: flex;
+}
+
+h5.author {
+    color: #ffffff;
+    margin: 0 auto;
+    padding-top: 20px;
+    font-weight: 500;
+}
+
+.author-image {
+  display: flex;
+  justify-content: center;
+  width: 64px;
+  border: 1px solid #d7dae1;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+h6.position {
+    font-style: normal;
+    font-weight: normal;
+    color: #ffffff;
+    margin: 0 auto;
+    padding-top: 4px;
+}
+
+//Relentless innovation
+.innjava {
+  padding: 80px 0px 40px 0px;
+}
+
+.innjava__title {
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  padding-bottom: 60px;
+}
+
+.innjava__text h5 {
+  text-align: left;
+  color: #ffffff;
+  margin: 0 auto;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    text-align: center;
+  }
+}
+
+.innjava-mod {
+  padding-bottom: 20px;
+}
+
+.innjava__card {
+  background-color: #20283370;
+  border: 0.4px solid #ffffff39;
+  width: 47%;
+  border-radius: 10px;
+  margin: 10px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.innjava__section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.innjava__card-title h4 {
+  width: fit-content;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 20px;
+  margin: 0px;
+}
+
+.innjava__card-subtitle h5 {
+  color: #ffffff;
+  width: fit-content;
+  text-align: center;
+  padding: 0px 20px 20px 20px;
+  margin: 0px;
+}
+
+.innjava__button {
+  padding: 30px 0px 0px 0px;
+  width: fit-content;
+}
+
+a.btn.btn-primary.innjava-single {
+  font-family: Oracle Sans, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 8px 24px 8px 24px;
+  text-transform: none;
+  margin-left: 20px;
+}
+
+//Advantages pages
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+  display: none;
+}
+
+blockquote {
+    background: #c3ebff91;
+    border-left: 10px solid #a1dbf8;
+    margin: 1.5em 0px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D";
+    border-radius: 8px;
+    p {
+      font-size: 16px;
+      line-height: 24px;
+    }
+}
+
+a.game-changer.btn.btn-primary {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  text-transform: uppercase;
+  padding: 8px;
+  width: 160px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+//Espresso page
+img.espresso {
+  width: 40%;
+  margin: auto;
+  display: block;
+}
+
+.relentless-innovation img.innovation {
+  width: 50%;
+}
+
+.relentless-innovation .col-sm.inner-box {
+  background: none;
+  box-shadow: none;
+}
+
+.relentless-innovation h4 {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #193e47;
+}

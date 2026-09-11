@@ -1,0 +1,83 @@
+// Version dropdown in sidebar
+.sidebar .version-dropdown {
+  width: 280px;
+  height: 36px;
+  left: 0;
+  top: 0;
+  background: url('/resources/img/docs-home/arrow-down.svg') 94% 50% no-repeat, #F29111;
+  border-radius: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.sidebar .display-value {
+  position: absolute;
+  display: flex;
+  width: 250px;
+}
+
+.sidebar .arrow.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #FFFFFF;
+  position: absolute;
+  top: 10px;
+}
+
+.sidebar .version-dropdown .value-text {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-left: 10px;
+  color: #FFFFFF;
+}
+
+.sidebar ul#selectContainer {
+  visibility: hidden;
+}
+
+.sidebar .select-container {
+  width: 280px;
+  padding: 0px;
+  position: absolute;
+  visibility: hidden;
+  margin: 0px;
+  max-height: 220px;
+  overflow: auto;
+  list-style-type: none;
+  display: block;
+  z-index: 1;
+  top: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #A2CDD7;
+  box-sizing: border-box;
+  backdrop-filter: blur(6px);
+  border-radius: 12px 12px 12px 12px;
+  outline: none;
+  margin-top: 13px;
+}
+
+.sidebar li.select-option {
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #171F26;
+  height: 36px;
+  &:hover {
+    background: #8EC9E6;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 12px;
+  }
+  &:before {
+    content: none;
+  }
+}

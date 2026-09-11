@@ -1,0 +1,253 @@
+.ni-libs {
+  background: url('/resources/img/home/grain.png') repeat, url('/resources/img/home/metaimage-main-ni-03.svg') 113% -16%/800px no-repeat, radial-gradient(47.27% 58.56% at 76.67% -21.87%, rgba(145, 94, 156, 0.8) -28%, rgba(72, 54, 76, 0) 93%), radial-gradient(40.76% 42.76% at 38% 26%, rgba(46, 79, 115, 0.5) 0%, rgba(20, 36, 53, 0.028) 48%), #171E25;
+  padding: 40px 0px 80px 0px;
+  display: flex;
+}
+
+.ni-libs-frameworks {
+  background: url('/resources/img/home/grain.png') repeat, radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%), #171E25;
+  padding: 70px 0px 20px 0px;
+}
+
+h2.ni-libs-frameworks__title {
+  font-weight: 400;
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.ni-libs-frameworks__subtitle h5 {
+  text-align: center;
+  color: #C0DBE9;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.ni-libs-frameworks__divider{
+  margin: 60px 0px 20px 0px;
+  width: 100%;
+  align-items: center;
+  border-top: 1px solid #ffffff;
+}
+
+.ni-libs-frameworks__text h5 {
+  text-align: center;
+  color: #ffffff;
+  margin: 0 auto;
+  ul li {
+    position: relative;
+    padding-left: 15px;
+    list-style: disc;
+    color: #ffffff;
+    padding-top: 8px;
+    text-align: left;
+  }
+}
+
+.ni-libs-frameworks__topics {
+  width: fit-content;
+  margin: 0 auto;
+  color: #FFFFFF;
+  padding-bottom: 60px;
+  padding-top: 80px;
+}
+
+.ni-libs-frameworks__card-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ni-plugins__card-row {
+  display: block;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ni-libs-frameworks__card {
+  background-color: #20283370;
+  border: 0.4px solid #ffffff39;
+  width: 47%;
+  border-radius: 10px;
+  margin: 10px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.ni-plugins__card {
+  width: 47%;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.ni-libs-frameworks__section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  padding: 20px;
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.ni-libs-frameworks__section h3 {
+  width: fit-content;
+  color: #FFFFFF;
+  padding-left: 20px;
+  margin: 4px 0px 0px 0px;
+}
+
+img.ni-libs-frameworks__icon{
+  margin: 0px;
+}
+
+.ni-libs-frameworks__section-link{
+  padding: 4px 20px 4px 40px;
+  @media only screen and (min-width: 320px) and (max-width: 991px) {
+    padding: 4px 30px 4px 30px;
+  }
+  @media only screen and (min-width: 320px) and (max-width: 480px) {
+    font-size: 12px;
+  }
+  a {
+    color: #F29111;
+    text-decoration: underline;
+    &:hover {
+      color: #8EC9E6;
+    }
+  }
+}
+
+.link-invis {
+  visibility: hidden;
+}
+
+.ni-libsfram-mod {
+  padding-bottom: 20px;
+}
+
+.ni-libs-frameworks__section_01 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.ni-libs-frameworks__section_02 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 70%;
+  padding: 20px;
+}
+
+// Frameworks Tested for Native Image
+table.tg.libs-table {
+  table-layout: inherit;
+  width: 100%;
+  display: inline-table;
+}    
+
+table.libs-table tr th {
+  background: #1d2835;
+  text-align: left;
+  border-top: solid 0.4px #72787d;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 48px;
+}
+
+table.libs-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 350px;
+}
+
+table.libs-table tr th,
+table.libs-table tr td {
+  border-right: 0.4px solid #72787d;
+  border-bottom: 0.4px solid #72787d;
+  color: #ffffff;
+}
+
+table.libs-table tr th:first-child,
+table.libs-table tr td:first-child {
+  border-left: 0.4px solid #72787d;
+}
+
+table.libs-table tr th:first-child,
+table.libs-table tr td:first-child {
+  border-left: 0.4px solid #72787d;
+}
+
+/* top-left border-radius */
+table.libs-table tr:first-child th:first-child {
+  border-top-left-radius: 8px;
+}
+
+/* top-right border-radius */
+table.libs-table tr:first-child th:last-child {
+  border-top-right-radius: 8px;
+}
+
+/* bottom-left border-radius */
+table.libs-table tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+/* bottom-right border-radius */
+table.libs-table tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+table.libs-table thead .test-level {
+  text-align: center;
+}
+
+table.libs-table code {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+table.libs-table td.tg.test-level {
+  text-align: center;
+}
+
+table.libs-table td.tg.test-level .details {
+  cursor: help;
+  color: #8EC9E6;
+}
+
+table.libs-table td.tg.artifact code {
+  background: transparent;
+}
+
+// How to Get Started with Reachability Metadata
+.card.card--hovered.box.plugin {
+  box-sizing: border-box;
+  height: inherit;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.card.card--hovered.box.plugin p {
+  margin-bottom: 5px;
+}
+
+.row.plugins {
+  padding-bottom: 60px;
+}

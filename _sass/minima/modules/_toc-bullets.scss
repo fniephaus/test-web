@@ -1,0 +1,199 @@
+.toc-bullets {
+  padding-left: 0px;
+  margin-bottom: 0;
+  margin-top: 24px;
+
+  li {
+    font-size: 14px;
+    list-style-type: none;
+    padding-left: 8px;
+    max-width: 300px;
+    @media only screen
+    and (min-width: 768px)
+    and (max-width: 1024px) {
+      max-width: 200px;
+    }
+    &:before { display: none; }
+
+    a {
+      text-decoration: none;
+      color: #FFFFFF;
+      padding: 4px 4px;
+      padding-top: 6px;
+      padding-left: 10px;
+      display: block;
+      min-width: 260px;
+    @media only screen
+    and (min-width: 320px)
+    and (max-width: 736px) {
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 18px;
+      margin-top: 8px;
+    }
+      &:hover {
+        text-decoration: none;
+        color: #171F26;
+        background: #8EC9E6;
+        font-weight: 500;
+        border-radius: 12px;
+      }
+    }
+
+    &.toc-bullets-focused {
+      color: #FFFFFF;
+      font-weight: 600;
+      a {
+        color: #FFFFFF;
+        font-weight: 600;
+      }
+    }
+
+    &.toc-bullets-sub {
+      &:first-of-type { margin-top: 5px; }
+      a { padding-left: 24px; }
+    }
+
+    &.toc-bullets-sub-3 {
+      a { padding-left: 40px; }
+    }
+
+    &.toc-bullets-main {
+      &.toc-bullets-highlight a {
+        color: #8EC9E6;
+        font-weight: 600;
+        &:hover {
+          text-decoration: none;
+          color: #171F26;
+          background: #8EC9E6;
+        }
+      }
+    }
+
+    &.toc-bullets-highlight a {
+      color: #FFFFFF;
+      font-weight: 700;
+      &:hover {
+        text-decoration: none;
+        color: #171F26;
+        background: #8EC9E6;
+      }
+    }
+  }
+
+  &--horizontal {
+    position: relative;
+    padding: 5px 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(#000000, .15);
+    white-space: nowrap;
+    overflow-x: auto;
+    @include media-breakpoint-up(md) {
+      overflow: visible;
+    }
+
+    li {
+      border-bottom: 0;
+      display: inline-block;
+      & + li { margin-left: 30px; }
+
+      a {
+        color: #8e99a8;
+        font-size: 15px;
+        line-height: 32px;
+      }
+
+      &.toc-bullets-highlight {
+        a {
+          color: #505d6e;
+          font-weight: 600;
+        }
+      }
+    }
+
+    &.toc-bullets--horizontal-stiky {
+      position: fixed;
+      left: 0;
+      top: 72px;
+      width: 100%;
+      padding-top: 0;
+      z-index: 10;
+      background-color: #ffffff;
+      @include media-breakpoint-up(md) {
+        top: 74px;
+      }
+    }
+  }
+}
+
+// TOC for Advanced Tools page
+section.content-section.toc {
+    padding-bottom: 50px;
+    @media only screen
+      and (min-width: 320px)
+      and (max-width: 480px) {
+        padding-bottom: 0;
+        }
+    @media only screen
+      and (min-width: 414px)
+      and (max-width: 736px) {
+        padding-bottom: 0;
+      }
+}
+ul.tools-toc {
+    padding-left: 10px;
+    margin: 0px;
+}
+
+.tools a.menu__link {
+    font-size: 16px;
+    line-height: 28px;
+    color: #193e47;
+    font-weight: 400;
+    border: 2px solid #00758F;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    &:hover {
+      color: #d9810c;
+    }
+    @media only screen
+    and (min-width: 769px)
+    and (max-width: 1024px) {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 15px;
+  }
+}
+
+li.tools {
+  float: left;
+  padding: 0px 0px 0 0px;
+  margin: 0 8px 0 8px;
+    &::before {
+    content: none;
+  }
+  @media only screen
+    and (min-width: 320px)
+    and (max-width: 479px) {
+      float: inherit;
+      margin: 0 8px 28px 0px;
+      }
+    @media only screen
+    and (min-width: 480px)
+    and (max-width: 768px) {
+      margin: 0 8px 32px 8px;
+  }
+}
+
+.toc-floating {
+  margin-top: 15px;
+  background: linear-gradient(191.1deg, rgba(33, 61, 102, 0) 15.92%, #213D66 43.24%, #213D66 47.85%, rgba(33, 61, 102, 0) 78.22%), #171F26;
+  @media only screen
+  and (min-width: 320px)
+  and (max-width: 565px) {
+    background: transparent;
+    margin-top: 70px;
+}
+}

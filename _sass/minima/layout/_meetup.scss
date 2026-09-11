@@ -1,0 +1,38 @@
+h2.meetup, h3.meetup, h4.meetup, h5.meetup {
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+}
+
+h4.meetup {
+  background: linear-gradient(90deg, rgba(44, 64, 86, 0.00) 0%, rgba(44, 64, 86, 0.50) 24.78%, #2C4056 49.53%, rgba(44, 64, 86, 0.50) 75.26%, rgba(44, 64, 86, 0.00) 100%);
+}
+
+p.meetup {
+  color: #C0DBE9;
+  margin-bottom: 0;
+}
+
+li.meetup {
+  color: #C0DBE9;
+  list-style: circle;
+}
+
+.meetup__homescreen {
+  background:
+    url('/resources/img/home/grain.png') repeat,
+    url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat,
+    url('/resources/img/meetup/summit-banner-wide.png') center 18% / cover no-repeat,
+    radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%),
+    #171E25;
+  padding: 80px 0;
+  @media only screen and (max-width: 1024px) {
+    background:
+      url('/resources/img/home/grain.png') repeat,
+      url('/resources/img/home/metaimage-main-02.svg') 70% -16%/1750px no-repeat,
+      url('/resources/img/meetup/summit-banner.png') center 35% / cover no-repeat,
+      radial-gradient(142.83% 143.5% at 0.12% 128.91%, #264d6d 0%, rgba(38, 84, 107, 0) 100%),
+      #171E25;
+    padding: 20px 0 60px 0;
+  }
+}
