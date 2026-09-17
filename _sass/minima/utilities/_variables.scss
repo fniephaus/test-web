@@ -6,21 +6,6 @@
 //      url("{{ '/resources/fonts/open-sans/OpenSans-Light.ttf');
 // }
 
-@font-face {
-  font-family: "OracleSans";
-  src: url('../resources/fonts/oracle-sans/OracleSans_Bd.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_BdIt.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_It.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_Lt.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_LtIt.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_SBd.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_SBdIt.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_ULt.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_ULtIt.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_XBd.ttf'),
-  url('../resources/fonts/oracle-sans/OracleSans_XBdIt.ttf');
-}
-
 $oracle-blue: #00758F !default;
 $oracle-oragne: #f29110 !default;
 

@@ -34,7 +34,7 @@
 }
 
 a.btn.btn-primary.javapage-single {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -284,7 +284,7 @@ h6.position {
 }
 
 a.btn.btn-primary.innjava-single {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

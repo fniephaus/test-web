@@ -15,7 +15,7 @@
 }
 
 .hi__body {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   color: #FFFFFF;
   padding: 0px 0px 0px 0px;
 }
@@ -70,7 +70,7 @@ h4.tagline {
 }
 
 a.btn.btn-primary.start {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -406,7 +406,7 @@ img.ni__icon{
 }
 
 a.btn.btn-primary.main-single {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;

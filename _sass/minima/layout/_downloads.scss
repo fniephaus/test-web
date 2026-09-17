@@ -34,7 +34,7 @@
 }
 
 a.btn.btn-primary.download {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -312,7 +312,7 @@ button.select {
 }
 
 a.btn.load-learn {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -376,7 +376,7 @@ p.part2__text {
 }
 
 .instoptions__body_01 {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   color: #ffffff;
   padding: 0px 0px 0px 0px;
   width: 50%;
@@ -386,7 +386,7 @@ p.part2__text {
 }
 
 .instoptions__body_02 {
-  font-family: Oracle Sans, sans-serif;
+  font-family: $base-font-family;
   color: #ffffff;
   padding: 0px 0px 0px 0px;
   width: 50%;
