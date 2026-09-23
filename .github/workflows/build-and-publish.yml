@@ -28,7 +28,64 @@ jobs:
 
       - name: Build website
         working-directory: source
+        env:
+          GRAAL_REPOSITORY: https://github.com/oracle/graal.git
         run: ./_scripts/build-website.sh
+
+      - name: Check out Javadoc 25.4
+        uses: actions/checkout@v4
+        with:
+          ref: javadoc/25.4
+          path: 25.4/javadoc
+          fetch-depth: 1
+
+      - name: Check out Javadoc 25.0
+        uses: actions/checkout@v4
+        with:
+          ref: javadoc/25.0
+          path: 25.0/javadoc
+          fetch-depth: 1
+
+      - name: Check out Javadoc 23.1
+        uses: actions/checkout@v4
+        with:
+          ref: javadoc/23.1
+          path: 23.1/javadoc
+          fetch-depth: 1
+
+      - name: Check out Javadoc 23.0
+        uses: actions/checkout@v4
+        with:
+          ref: javadoc/23.0
+          path: 23.0/javadoc
+          fetch-depth: 1
+
+      - name: Add Javadocs to generated site
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for version in 25.4 25.0 23.1 23.0; do
+            checkout_directory="${GITHUB_WORKSPACE}/${version}/javadoc"
+            destination="_site/${version}/javadoc"
+
+            if [[ -d "${checkout_directory}/${version}/javadoc" ]]; then
+              javadoc_directory="${checkout_directory}/${version}/javadoc"
+            elif [[ -d "${checkout_directory}/javadoc" ]]; then
+              javadoc_directory="${checkout_directory}/javadoc"
+            else
+              javadoc_directory="${checkout_directory}"
+            fi
+
+            if ! find "${javadoc_directory}" -mindepth 1 -maxdepth 1 ! -name .git -print -quit | grep -q .; then
+              echo "No Javadoc content found for ${version} in javadoc/${version}." >&2
+              exit 1
+            fi
+
+            mkdir -p "${destination}"
+            rsync --archive --delete --exclude='.git/' "${javadoc_directory}/" "${destination}/"
+          done
 
       - name: Upload generated site
         uses: actions/upload-artifact@v4

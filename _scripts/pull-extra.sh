@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Pull the public GraalVM documentation used to build this site.
+# Pull the GraalVM documentation used to build this site.
 set -euo pipefail
 
-readonly GRAAL_REPOSITORY="https://github.com/oracle/graal.git"
+readonly GRAAL_REPOSITORY="${GRAAL_REPOSITORY:-ssh://git@ol-bitbucket-mirror1.oraclecorp.com:7999/g/graal.git}"
 readonly GRAAL_CHECKOUT="${GRAAL_CHECKOUT:-$PWD/repos/graal}"
-release_branch="${1:?Usage: $0 <graal-ref>}"
+graal_branch="${1:?Usage: $0 <graal-branch>}"
 
 copy_docs() {
   local source="$1"
@@ -21,9 +21,13 @@ mkdir -p "$(dirname "$GRAAL_CHECKOUT")"
 
 if [[ ! -d "$GRAAL_CHECKOUT/.git" ]]; then
   git clone --no-checkout "$GRAAL_REPOSITORY" "$GRAAL_CHECKOUT"
+elif git -C "$GRAAL_CHECKOUT" remote get-url origin >/dev/null 2>&1; then
+  git -C "$GRAAL_CHECKOUT" remote set-url origin "$GRAAL_REPOSITORY"
+else
+  git -C "$GRAAL_CHECKOUT" remote add origin "$GRAAL_REPOSITORY"
 fi
 
-git -C "$GRAAL_CHECKOUT" fetch --depth 1 origin "$release_branch"
+git -C "$GRAAL_CHECKOUT" fetch --depth 1 origin "$graal_branch"
 git -C "$GRAAL_CHECKOUT" checkout --detach --force FETCH_HEAD
 
 copy_docs "$GRAAL_CHECKOUT/docs" docs
