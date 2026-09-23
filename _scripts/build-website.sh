@@ -2,38 +2,29 @@
 set -ex
 export JEKYLL_ENV=production
 
-# Public, immutable source refs in https://github.com/oracle/graal.
-readonly GRAAL_25_3_REF="vm-25.3.4.1"
-readonly GRAAL_25_0_REF="vm-25.0.4.1"
-readonly GRAAL_23_1_REF="vm-23.1.5"
-readonly GRAAL_23_0_REF="vm-23.0.6"
-
 # index.md is the public website home page.  Do not copy the Enterprise-only
 # Oracle Help Center index into this public-source build.
 cp pages/native-image/libraries-and-frameworks-with-header.md pages/native-image/libraries-and-frameworks.md
 
-# Do not allow an interrupted or earlier build to become Jekyll source input.
-rm -rf _site jdk25.3 jdk25 jdk21 jdk17 dev
-
 # Build LATEST version documentation from the current development branch.
 # Build non-versioned site and the redirects for non-versioned URLs.
-./_scripts/pull-extra.sh "$GRAAL_25_3_REF"
+./_scripts/pull-extra.sh docs/graal-vm/25.4
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-version-to-permalinks --add-versioned-redirects docs truffle/docs espresso/docs web-image/docs pages/redirects
 bundle exec jekyll build --config _configs/config_community_latest.yml
 
-# Build JDK 25.3 documentation
-./_scripts/pull-extra.sh "$GRAAL_25_3_REF"
+# Build JDK 25.4 documentation
+./_scripts/pull-extra.sh docs/graal-vm/25.4
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-version-to-permalinks --add-versioned-redirects docs truffle/docs espresso/docs web-image/docs pages/redirects
-bundle exec jekyll build --destination jdk25.3 --config _configs/config_community_jdk25i.yml
-./_scripts/merge_sitemaps.rb _site/sitemap.xml jdk25.3/sitemap.xml https://www.graalvm.org/jdk25.3/
-rsync -av jdk25.3/jdk25.3 _site/
-rsync -av --exclude "*.html" jdk25.3/docs _site/
-rm -rf jdk25.3
+bundle exec jekyll build --destination jdk25.4 --config _configs/config_community_jdk25i.yml
+./_scripts/merge_sitemaps.rb _site/sitemap.xml jdk25.4/sitemap.xml https://www.graalvm.org/jdk25.4/
+rsync -av jdk25.4/jdk25.4 _site/
+rsync -av --exclude "*.html" jdk25.4/docs _site/
+rm -rf jdk25.4
 
 # Build JDK 25.0 documentation
-./_scripts/pull-extra.sh "$GRAAL_25_0_REF"
+./_scripts/pull-extra.sh docs/graal-vm/25.0
 # JDK 25 docs use the same source tree as latest, so rebuild the processed front matter.
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-version-to-permalinks --add-versioned-redirects docs truffle/docs espresso/docs web-image/docs pages/redirects
@@ -44,7 +35,7 @@ rsync -av --exclude "*.html" jdk25/docs _site/
 rm -rf jdk25
 
 # Build JDK 21 documentation
-./_scripts/pull-extra.sh "$GRAAL_23_1_REF"
+./_scripts/pull-extra.sh docs/graal-vm/23.1
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-latest-canonical-url --add-version-to-permalinks docs truffle/docs pages/redirects
 bundle exec jekyll build --destination jdk21 --config _configs/config_community_jdk21.yml
@@ -54,7 +45,7 @@ rsync -av --exclude "*.html" jdk21/docs _site/
 rm -rf jdk21
 
 # Build JDK 17 documentation
-./_scripts/pull-extra.sh "$GRAAL_23_0_REF"
+./_scripts/pull-extra.sh docs/graal-vm/23.0
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-latest-canonical-url --add-version-to-permalinks docs truffle/docs pages/redirects
 bundle exec jekyll build --destination jdk17 --config _configs/config_community_jdk17.yml

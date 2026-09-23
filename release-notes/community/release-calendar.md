@@ -30,7 +30,6 @@ All active releases receive patch updates.
 
 | Date               | Type          | Oracle GraalVM                   | GraalVM Community Edition | GraalPy (Python version) |
 |--------------------|---------------|----------------------------------|---------------------------|--------------------------|
-| September 22, 2026 | Feature       | 25.4.4                           | 25.4.4                    | 25.4.4 (3.13)            |
 | October 20, 2026   | CPU           | 17.0.21, 21.0.13, 25.0.5         | -                         | -                        |
 | October 27, 2026   | Feature + CPU | 25.5.5                           | 25.5.5                    | 25.5.5 (3.14*)           |
 | November 24, 2026  | Feature       | 25.6.5                           | 25.6.5                    | 25.6.5 (3.14*)           |
@@ -52,6 +51,7 @@ For example, GraalVM 25.1.**3**, released on June 25, 2026, corresponds to the t
 
 | Date               | Type          | Oracle GraalVM           | GraalVM Community Edition | Graal Languages |
 |--------------------|---------------|--------------------------|---------------------------|-----------------|
+| September 22, 2026 | Feature       | 25.4.4.1.1              | 25.4.4.1.1                | 25.4.4.1.1 (3.13) |
 | August 25, 2026    | Feature       | 25.3.4.1                 | 25.3.4.1                  | 25.3.4.1 (3.13) |
 | July 28, 2026      | Feature + CPU | 25.2.4                   | 25.2.4                    | 25.2.4 (3.12)   |
 | July 21, 2026      | CPU           | 17.0.20, 21.0.12, 25.0.4 | -                         | -               |

@@ -20,6 +20,7 @@ Here you can find information about changes to GraalVM Community Edition between
 GraalVM Community is comprised of different components, changes to which are listed separately.
 Release notes are grouped in descending order for usability reasons.
 
+- [GraalVM 25.4.4.1.1](graalvm-ce-25.4.md)
 - [GraalVM 25.3.4.1](graalvm-ce-25.3.md)
 - [GraalVM 25.2.4](graalvm-ce-25.2.md)
 - [GraalVM 25.1.3](graalvm-ce-25.1.md)

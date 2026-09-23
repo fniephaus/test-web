@@ -403,7 +403,7 @@ plugins:
 
 exclude:
   - _site
-  - jdk25.3
+  - jdk25.4
   - jdk25
   - jdk21
   - jdk17

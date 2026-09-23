@@ -5,7 +5,7 @@ email: graal-users@oss.oracle.com
 description: GraalVM is an advanced JDK with ahead-of-time Native Image compilation.
 url: "https://www.graalvm.org"
 baseurl: ""
-version: jdk25.3
+version: jdk25.4
 header_links: []
 
 tables_of_contents:
@@ -34,7 +34,7 @@ tables_of_contents:
       - main_link: docs/reference-manual/reference-manuals.md
       - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
       - main_link: docs/security/security-guide.md
-      - main_link: pages/javadocs/jdk25.3.md
+      - main_link: pages/javadocs/jdk25.4.md
   - toc_group: getting-started
     subgroups:
       - main_link: docs/getting-started/get-started.md
@@ -42,7 +42,7 @@ tables_of_contents:
       - main_link: docs/reference-manual/reference-manuals.md
       - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
       - main_link: docs/security/security-guide.md
-      - main_link: pages/javadocs/jdk25.3.md
+      - main_link: pages/javadocs/jdk25.4.md
   - toc_group: container-images
     subgroups:
       - main_link: docs/getting-started/get-started.md
@@ -50,7 +50,7 @@ tables_of_contents:
       - main_link: docs/reference-manual/reference-manuals.md
       - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
       - main_link: docs/security/security-guide.md
-      - main_link: pages/javadocs/jdk25.3.md
+      - main_link: pages/javadocs/jdk25.4.md
   - toc_group: reference-manual
     subgroups:
       - main_link: docs/getting-started/get-started.md
@@ -65,7 +65,7 @@ tables_of_contents:
         ]
       - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
       - main_link: docs/security/security-guide.md
-      - main_link: pages/javadocs/jdk25.3.md
+      - main_link: pages/javadocs/jdk25.4.md
   - toc_group: embedding
     subgroups:
       - main_link: docs/getting-started/get-started.md
@@ -80,7 +80,7 @@ tables_of_contents:
         ]
       - main_link: docs/graalvm-as-a-platform/graalvm-as-a-platform.md
       - main_link: docs/security/security-guide.md
-      - main_link: pages/javadocs/jdk25.3.md
+      - main_link: pages/javadocs/jdk25.4.md
   - toc_group: graalvm-as-a-platform
     subgroups:
       - main_link: docs/getting-started/get-started.md
@@ -93,7 +93,7 @@ tables_of_contents:
           docs/graalvm-as-a-platform/implement-instrument.md
         ]
       - main_link: docs/security/security-guide.md
-      - main_link: pages/javadocs/jdk25.3.md
+      - main_link: pages/javadocs/jdk25.4.md
   - toc_group: security-guide
     subgroups:
       - main_link: docs/getting-started/get-started.md
@@ -107,13 +107,14 @@ tables_of_contents:
           docs/security/SBOM.md,
           docs/security/polyglot-sandbox.md
         ]
-      - main_link: pages/javadocs/jdk25.3.md
+      - main_link: pages/javadocs/jdk25.4.md
   - toc_group: release-notes
     subgroups:
       - main_link: release-notes/community/release-notes.md
         links: [
           release-notes/community/release-calendar.md,
           release-notes/vulnerability-advisories.md,
+          release-notes/community/graalvm-ce-25.4.md,
           release-notes/community/graalvm-ce-25.3.md,
           release-notes/community/graalvm-ce-25.2.md,
           release-notes/community/graalvm-ce-25.1.md,
@@ -426,7 +427,7 @@ plugins:
 
 exclude:
   - _site
-  - jdk25.3
+  - jdk25.4
   - jdk25
   - jdk21
   - jdk17
