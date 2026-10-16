@@ -17,7 +17,7 @@ gem "minima", "~> 2.5"
 
 gem "jekyll-sitemap", "~> 1.4"
 
-gem "jekyll-redirect-from", "~> 0.16"
+gem "jekyll-redirect-from", "~> 0.17"
 
 # Jekyll plugin to convert relative links to Markdown files to their rendered equivalents.
 gem "jekyll-relative-links", "~> 0.8"
