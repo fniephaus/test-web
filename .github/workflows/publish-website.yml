@@ -65,7 +65,7 @@ jobs:
           # _rsync-excluded lists all deployment-owned paths and protects them from --delete.
           rsync --archive --verbose --delete \
             --exclude-from="${{ github.workspace }}/source/_rsync-excluded" \
-            "${{ github.workspace }}/site/" "$${{ github.workspace }}/gh-pages/"
+            "${{ github.workspace }}/site/" "${{ github.workspace }}/gh-pages/"
 
           cd "${{ github.workspace }}/gh-pages"
           git add --all
