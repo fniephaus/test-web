@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/resources/img/og-image.jpg' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      21.3.3.1
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  
+  <link rel="canonical" href="https://www.graalvm.org/release-notes/21_3/">
+  
+
+  <link rel="icon" id="favicon" href='/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/assets/main.css'>
+  <script src='/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/resources/lib/sticky-sidebar/resizeSensor.js'></script>
+  <script src='/resources/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
+  <script src='/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/resources/lib/purl/purl.js'></script>
+  <script src='/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+
+
+
+  <body class="preload">
+    <div class="wrapper wrapper--nofooter">
+      <header  class="header header--content" 
+  role="banner">
+
+  
+  
+
+
+
+
+  <div class="d-flex">
+    <nav class="menu">
+      <div class="menu__logo">
+        <a class="menu__logojs" href="/">
+          <img src='/resources/img/home/logo_mobile_openmenu.svg' alt="GraalVM logo">
+        </a>
+      </div>
+      <ul class="menu__list">
+        <li class="menu__item">
+          <a href='/latest/docs/' class="menu__link">Docs</a>
+        </li>
+        <li class="menu__item">
+          <a href='/guides/' class="menu__link">Guides</a>
+        </li>
+        <li class="menu__item">
+          <a href="https://medium.com/graalvm" class="menu__link" target="_blank">Blog</a>
+        </li>
+        <li class="menu__item">
+          <a href="https://www.youtube.com/graalvm" class="menu__link" target="_blank">Videos</a>
+        </li>
+        <li class="menu__item">
+          <a href='/community/' class="menu__link">Community</a>
+        </li>
+        <li class="menu__item">
+          <div class="stack-container">
+            <a href="#" class="menu__link stack__header">Graal Projects</a>
+            <div class="stack-menu">
+              <div class="stack-row">
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/graalstack.svg">
+                    <a href="https://graal.cloud/" class="item-line">Graal Stack</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/gdk.svg">
+                    <a href="https://graal.cloud/gdk/" class="item-line">Graal Dev Kit for Micronaut</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/graalos.svg">
+                    <a href="https://graal.cloud/graalos/" class="item-line">GraalOS</a>
+                  </div>
+                </div>
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/js-navi.svg">
+                    <a href="/javascript/" class="item-line">GraalJS</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/python-navi.svg">
+                    <a href="https://graalpy.org/" class="item-line" target="_blank">GraalPy</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/wasm-navi.svg">
+                    <a href="/webassembly/" class="item-line">GraalWasm</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/java-navi.svg">
+                    <a href='/reference-manual/java-on-truffle/' class="item-line">Espresso</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <div class="menu__item icons githubstar" tabindex="0">
+          <span class="github-widget">
+            <a tabindex="-1" class="github-button" href="https://github.com/oracle/graal" data-icon="octicon-star"
+              data-show-count="true" aria-label="Star oracle/graal on GitHub">Star</a>
+          </span>
+        </div>
+        <div class="menu__downloads">
+          <a href='/downloads/' class="btn btn-try btn-primary">Download</a>
+        </div>
+      </ul>
+      <div role="button" class="menu-btn menu-btn--menu js-show-menu" tabindex="-1" title="sweet hamburger">
+        <div class="hamburger">
+          <div class="inner"></div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+</header>
+      <main class="content" aria-label="Content">
+        <div class="wrapper wrapper-content">
+  <article>
+  <div class="row d-flex flex-wrap">
+    <div class="col-sm-3 docsimpro col-bg">
+      <div class="sidebar-wrap">
+        <div class="sidebar">
+          <div class="menuabout">
+            <img id="sidebarClose" src='/resources/img/docs-sidebar/arrow-sidebar(close).svg'
+              alt="Expand or collapse sidebar" class="btn-color no-display">
+            <img id="sidebarOpen" src='/resources/img/docs-sidebar/arrow-sidebar.svg' alt="Expand or collapse sidebar">
+          </div>
+          <div class="toc-floating">
+            <ul class="toc-bullets">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-calendar/">
+                  GraalVM Release Calendar
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/vulnerability-advisories/">
+                  Vulnerability Advisories
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/25.4/">
+                  GraalVM 25.4
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/25.3/">
+                  GraalVM 25.3
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/25.2/">
+                  GraalVM 25.2
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/25.1/">
+                  GraalVM 25.1
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/JDK_25/">
+                  GraalVM 25
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/JDK_24/">
+                  GraalVM for JDK 24
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/JDK_23/">
+                  GraalVM for JDK 23
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/JDK_22/">
+                  GraalVM for JDK 22
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/JDK_21/">
+                  GraalVM for JDK 21
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/JDK_20/">
+                  GraalVM for JDK 20
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/JDK_17/">
+                  GraalVM for JDK 17
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/22_3/">
+                  GraalVM 22.3.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/22_2/">
+                  GraalVM 22.2.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/22_1/">
+                  GraalVM 22.1.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/22_0/">
+                  GraalVM 22.0.x
+                </a>
+              </li>
+              
+              
+              <li class="toc-bullets-highlight">
+                
+
+                
+                <a href="/release-notes/21_3/">
+                  GraalVM 21.3.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/21_2/">
+                  GraalVM 21.2.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/21_1/">
+                  GraalVM 21.1.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/21_0/">
+                  GraalVM 21.0.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/20_3/">
+                  GraalVM 20.3.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/20_2/">
+                  GraalVM 20.2.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/20_1/">
+                  GraalVM 20.1.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/20_0/">
+                  GraalVM 20.0.x
+                </a>
+              </li>
+              
+              
+              <li>
+                
+
+                
+                <a href="/release-notes/19_3/">
+                  GraalVM 19.3.x
+                </a>
+              </li>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9 docsmod">
+      <div id="content-wrapper" class="docs-content docs-content--with-sidebar">
+        <h2 id="21331">21.3.3.1</h2>
+<p>(2022-09-20)</p>
+
+<p>This is a patch release for the GraalVM 21.3.3 branch which includes the following:</p>
+
+<ul>
+  <li>Platform updates:
+    <ul>
+      <li><strong>11.0.16.1</strong> for Java 11-based GraalVM</li>
+      <li><strong>17.0.4.1</strong> for Java 17-based GraalVM</li>
+    </ul>
+  </li>
+  <li>Prevent the Truffle file system sandbox from checking host files while parsing paths using alternative file system providers.</li>
+  <li>The <code>hashCode()</code> and <code>equals(</code>) methods of <code>InsightFilter</code> are corrected and context management is fixed.</li>
+  <li>Corrected the depth in insight heap dumps: it does not apply to primitives and is applied to variables, not the frame.</li>
+  <li>Fixed the <code>PolyglotFunction</code> to not treat null argument as zero arguments.</li>
+</ul>
+
+<h2 id="2133">21.3.3</h2>
+<p>(2022-07-26)</p>
+
+<p>This is July 2022 Critical Patch Update (CPU) for GraalVM Community Edition.
+It is a full distribution and supersedes the previous release of GraalVM Community Edition 21.3.x.
+It is based on OpenJDK CPU and includes all the OpenJDK security fixes released as part of that CPU, and platform updates.</p>
+
+<ul>
+  <li>Updated the OpenJDK release on which GraalVM Community Edition is built to:
+    <ul>
+      <li><strong>11.0.16</strong> for Java 11-based GraalVM Community. See <a href="https://wiki.openjdk.java.net/display/JDKUpdates/JDK11u" title="OpenJDK 11.0.16 Updates">OpenJDK 11.0.16 Updates</a></li>
+      <li><strong>17.0.4</strong> for Java 17-based GraalVM Community. See <a href="https://jdk.java.net/17/" title="OpenJDK 17 Updates">OpenJDK 17 Updates</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2132">21.3.2</h2>
+<p>(2022-04-26)</p>
+
+<p>This is April 2022 Critical Patch Update (CPU) for GraalVM Community Edition.
+It is a full distribution and supersedes the previous release of GraalVM Community Edition 21.3.x.
+It is based on OpenJDK CPU and includes all the OpenJDK security fixes released as part of that CPU, and platform updates.</p>
+
+<ul>
+  <li>Updated the OpenJDK release on which GraalVM Community Edition is built to:
+    <ul>
+      <li><strong>11.0.15</strong> for Java 11-based GraalVM Community. See <a href="https://wiki.openjdk.java.net/display/JDKUpdates/JDK11u" title="OpenJDK 11.0.15 Updates">OpenJDK 11.0.15 Updates</a></li>
+      <li><strong>17.0.3</strong> for Java 17-based GraalVM Community. See <a href="https://jdk.java.net/17/" title="OpenJDK 17 Updates">OpenJDK 17 Updates</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2131">21.3.1</h2>
+<p>(2022-01-18)</p>
+
+<p>This is January 2022 Critical Patch Update (CPU) for GraalVM Community Edition.
+It is a full distribution and supersedes the previous release of GraalVM Community Edition 21.3.x.
+It is based on OpenJDK CPU and includes all the OpenJDK security fixes released as part of that CPU, and platform updates.</p>
+
+<ul>
+  <li>The OpenJDK release that GraalVM Community Edition is built on was updated to:
+    <ul>
+      <li><strong>11.0.14</strong> for Java 11-based GraalVM Community. See <a href="https://wiki.openjdk.java.net/display/JDKUpdates/JDK11u" title="OpenJDK 11.0.14 Updates">OpenJDK 11.0.14 Updates</a></li>
+      <li><strong>17.0.2</strong> for Java 17-based GraalVM Community. See <a href="https://jdk.java.net/17/" title="OpenJDK 17 Updates">OpenJDK 17 Updates</a></li>
+    </ul>
+  </li>
+  <li>Removed support for JDK versions 12, 13, 14, 15, and 16.</li>
+  <li>Updated Node.js to version 14.18.1.</li>
+</ul>
+
+<h2 id="2130">21.3.0</h2>
+<p>(2021-10-19)</p>
+
+<ul>
+  <li><a href="#java-and-compiler-updates">Java and Compiler Updates</a></li>
+  <li><a href="#platform-updates">Platform Updates</a></li>
+  <li><a href="#native-image">Native Image</a></li>
+  <li><a href="#polyglot-runtime">Polyglot Runtime</a></li>
+  <li><a href="#java-on-truffle">Java on Truffle</a></li>
+  <li><a href="#javascript">JavaScript</a></li>
+  <li><a href="#ruby">Ruby</a></li>
+  <li><a href="#python">Python</a></li>
+  <li><a href="#r">R</a></li>
+  <li><a href="#llvm-runtime">LLVM Runtime</a></li>
+  <li><a href="#webassembly">WebAssembly</a></li>
+  <li><a href="#tools">Tools</a></li>
+  <li><a href="#polyglot-embedding">Polyglot Embedding</a></li>
+  <li><a href="#trufflelanguage-and-toolimplementations">Truffle Language and Tool Implementations</a></li>
+</ul>
+
+<h3 id="platform-updates">Platform Updates</h3>
+
+<ul>
+  <li>Java 17 support: The GraalVM distributions based on Oracle Java 17 and OpenJDK 17 are <a href="https://www.graalvm.org/downloads/">available for download</a>.</li>
+  <li>As of this release and further, there will be GraalVM Community distributions based on OpenJDK 11 and 17 only (no distributions based on OpenJDK 8).</li>
+  <li>
+    <p>The 21.3 release line will be the last one to contain GraalVM Enterprise based on Oracle JDK 8. 22.x and further will only contain distributions based on Oracle Java 11 and 17.</p>
+  </li>
+  <li>The OpenJDK release that GraalVM Community Edition is built on was updated to:
+    <ul>
+      <li><strong>11.0.13</strong> for Java 11-based GraalVM Community. See <a href="https://wiki.openjdk.java.net/display/JDKUpdates/JDK11u" title="OpenJDK 11.0.13 Updates">OpenJDK 11.0.13 Updates</a></li>
+      <li><strong>17.0.1</strong> for Java 17-based GraalVM Community. See <a href="https://jdk.java.net/17/" title="OpenJDK 17 Updates">OpenJDK 17 Updates</a></li>
+    </ul>
+  </li>
+  <li>The Oracle JDK release that GraalVM Enterprise Edition is built on was updated to:
+    <ul>
+      <li><strong>8u311</strong> for Java 8-based GraalVM Enterprise. See <a href="https://www.oracle.com/java/technologies/javase/8u311-relnotes.html" title="Java SE 8 Release Notes">Java SE 8 release notes</a></li>
+      <li><strong>11.0.13</strong> for Java 11-based GraalVM Enterprise. See <a href="https://www.oracle.com/java/technologies/javase/11-0-13-relnotes.html" title="Java SE 11 Release Notes">Java SE 11 release notes</a></li>
+      <li><strong>17.0.1</strong> for Java 17-based GraalVM Enterprise. See <a href="https://www.oracle.com/java/technologies/javase/17-relnotes.html" title="Java SE 17 Release Notes">Java SE 17 release notes</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="java-and-compiler-updates">Java and Compiler Updates</h3>
+
+<ul>
+  <li>Improved the Strip Mining optimization for non-counted loops (only available in GraalVM Enterprise), which includes:
+    <ul>
+      <li>Enabled Strip Mining for non-counted loops by default.</li>
+      <li>Improved counted loop detection for inequality checked loops. Now more uncounted loops are converted to counted loops, becoming subject to further optimization such as vectorization and partial unrolling. This extra optimization adds to better performance. Take this loop as an example:
+        <pre><code class="language-java">for (int i = start; i != end; i++){
+ // body
+}
+</code></pre>
+        <p>The compiler cannot statically prove that <code>start &lt; end</code> and so this loop may have to overflow <code>i</code> before it terminates.
+The compiler now inserts a <code>start &lt; end</code> check before the loop.
+If this check fails, the compiled code will deoptimize and the next time it is compiled,
+the check will be omitted and the loop will be treated as uncounted.</p>
+      </li>
+    </ul>
+  </li>
+  <li>Added a new Infeasible Path Correlation optimization to eliminate infeasible paths (only available in GraalVM Enterprise). Have a look at this snippet:
+    <pre><code class="language-java">class A { ... }
+class B extends A { ... }
+
+if (x &gt; 5) {
+    if (y instanceof A) {
+        throw Error();
+    }
+}
+loop {
+    int foo = &lt;expensive computation&gt;;
+    if (x &gt; 10) {
+        if (y instanceof B) {
+            bar(foo);
+        }
+    }
+}
+</code></pre>
+    <p>The <code>bar(foo)</code> call will only be executed if <code>x &gt; 10 &amp;&amp; y instanceof B</code>.
+However, that condition implies <code>x &gt; 5 &amp;&amp; y instanceof A</code> which means <code>throw Error()</code> will be executed.
+That is, the call to <code>bar</code> can never actually be executed.
+The Graal compiler now recognizes this and eliminates both the call to <code>bar</code> as well as the computation of <code>foo</code> if it is only used as an argument to <code>bar</code>.
+This optimization is enabled by default and can be disabled with <code>-Dgraal.InfeasiblePathCorrelation=false</code>.</p>
+  </li>
+  <li>Implemented support for Constant Blinding to defend against JIT spraying attacks. In a JIT spraying attack, an attacker uses the JIT compiler to inject machine instructions in executable memory by using operations with immediate values. Given an existing memory corruption vulnerability, the attacker can then redirect control flow to the injected code. (Only available in GraalVM Enterprise.)
+The constant blinding phase encrypts user supplied constants in the code with a randomly generated key, so that the attacker cannot rely on the immediate value being present in executable memory:
+    <pre><code class="language-bash">mov reg, $0xF5952C
+xor reg, $0xABCDEF // reg = 0x5E58C3
+</code></pre>
+    <p>Constant Blinding is an experimental feature disabled by default. Enable it with <code>-Dgraal.BlindConstants=true</code>.
+Configure with <code>-Dgraal.MinimumBlindedConstantSize</code> the size of constants (in bytes) above which constant blinding will be applied.</p>
+  </li>
+  <li>Improved the SIMD (Single Instruction Multiple Data) vectorization optimization for sequential code (only available in GraalVM Enterprise):
+    <ul>
+      <li>SIMD Vectorization and Partial Loop Unrolling can now be enabled at the same time. It is no longer necessary to specify <code>-Dgraal.PartialUnroll=false</code> to maximize the benefit achieved from SIMD Vectorization. This optimization is now enabled by default.</li>
+      <li>SIMD Vectorization can now create groups of operations which do not completely fill a vector register. This increases the number of acceleration opportunities SIMD Vectorization is able to realize and so improves overall throughput performance.</li>
+      <li>Improved grouping and pattern matching in SIMD Vectorization to increase the number of SIMD opportunities the optimization can find and successfully exploit.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Added a new optimization that prevents inlining from negatively impacting register allocation and code size for certain caller/callee combinations. This can improve performance because fewer values may be existing concurrently in a program. (Only available in GraalVM Enterprise.)</p>
+  </li>
+  <li>Added compiler intrinsics for following methods in both JVM and Native Image mode: <code>Math.signum</code>, <code>Math.copySign</code>, <code>Reference.refersTo</code> and <code>PhantomReference.refersTo</code>.
+The way intrinsics operate is to replace a native method with direct machine code. Thus intrinsification of the above Java methods removes the overhead of native calls, which is considerable and improves the overall performance. For example, intrinsifying <code>Reference.refersTo</code> and <code>PhantomReference.refersTo</code> fixed the performance regression reported in <a href="https://github.com/oracle/graal/issues/3349">this GitHub issue</a>.</li>
+</ul>
+
+<p>A full list of compiler changes in GraalVM Community Edition can be found in the <a href="https://github.com/oracle/graal/blob/master/compiler/CHANGELOG.md">compiler changelog</a>.</p>
+
+<h3 id="native-image">Native Image</h3>
+
+<ul>
+  <li>Improved the Native Image configuration: configuration file entries that are necessary at image build time for Reflection, JNI, class path resources, and Dynamic Proxy objects, can now be conditional based on the reachability of a class. This allows a more precise configuration, which can reduce the size of a native image. See the <a href="https://www.graalvm.org/jdk21/reference-manual/native-image/dynamic-features/Reflection/#conditional-configuration">documentation</a> and find there an example for a conditional reflection configuration.</li>
+  <li>Improved gathering the reflection metadata by the <code>native-image</code> builder: Native Image now distinguishes between queried and invoked reflection methods. Calling <code>Class.getDeclaredMethods</code> (and all the other variants to look up methods and constructors) now returns all reachable methods for all classes. Previously, only methods that were explicitly registered for reflective invocation were returned. This new feature allows significant reduction of the manual reflection configuration: only methods that need to be invoked via <code>Method.invoke</code>, or methods that would not be seen as reachable based on reachability, need to be registered manually. This distinction between queried and invoked reflection methods reduces the filesize of a native image.</li>
+  <li>
+    <p>Added several new optimizations to reduce the image size as well as the image build time for large applications. This has been an ongoing effort for several releases. The following table shows the image size and image build time for <a href="https://github.com/spring-petclinic/spring-petclinic-data-jdbc">Spring petclinic-jdbc</a>, a well-known large application. The numbers are measured on a developer laptop with Linux, AMD64, JDK 11, GraalVM Enterprise, spring-native 0.10.3:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>GraalVM Version</th>
+          <th>Image Build Time</th>
+          <th>Image Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GraalVM 21.1</td>
+          <td>170 sec.</td>
+          <td>138 MByte</td>
+        </tr>
+        <tr>
+          <td>GraalVM 21.2</td>
+          <td>163 sec.</td>
+          <td>133 MByte</td>
+        </tr>
+        <tr>
+          <td>GraalVM 21.3</td>
+          <td>133 sec.</td>
+          <td>119 MByte</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Added initial support for the Java Platform Module System: The <code>native-image</code> builder now accepts the module-related arguments known from the <code>java</code> launcher like <code>-m</code>, <code>-p</code>, and <code>--add-opens</code>. When such a module-related argument is used, the image generator itself is used as a module too. This is a major change in how the image generator works, and development is still ongoing to support more aspects of the module system. Please provide feedback and bug reports when you try out this new feature.</li>
+  <li>Changed the way the compiler is looked up when creating static, <code>musl</code>-based native images to use the <code>musl</code> toolchain from <a href="https://musl.cc/">musl.cc</a>. The <code>musl</code> toolchain greatly simplifies the creation of static native images. Using a toolchain also ensures minimum changes will be needed on users’ side to create a dynamically linked <code>musl</code> based image. See the <a href="https://www.graalvm.org/reference-manual/native-image/guides/build-static-executables/">documentation</a>.</li>
+  <li>Added a new policy for the <a href="https://www.graalvm.org/jdk21/reference-manual/native-image/optimizations-and-performance/MemoryManagement/">Serial GC</a> reducing the memory footprint of applications at run time. The new policy enables survivor spaces for the young generation, a feature that has been present in the codebase for a while but was not enabled by default. In addition, a full GC no longer scans the whole image heap for root pointers, but only parts of the image heap that have been written to. The new policy is not enabled by default (this is planned for the next release) but can be enabled using <code>-H:InitialCollectionPolicy=Adaptive</code>. Please test the new policy and report any regressions so that they can be addressed before the next release.</li>
+  <li>Improved the precision of the static analysis: small methods are now inlined before the static analysis. This improves constant folding and reduces surprises. For example, previously code that accessed a static final field directly was optimized differently from code that accessed a static final field via an accessor method:
+    <pre><code class="language-java">void foo() {
+   if (MyConfiguration.WINDOWS) {
+     // The static analysis does not see this code as reachable on non-Windows platforms.
+  }
+}
+
+static boolean isWindows() {
+  return MyConfiguration.WINDOWS;
+}
+void bar() {
+  if (isWindows()) {
+    // The static analysis marked this code as reachable because the method invocation prevented constant folding before the static analysis. With method inlining before static analysis enabled now, this code is no longer seen as reachable on non-Windows platforms.
+  }
+}
+</code></pre>
+  </li>
+  <li>Arguments to the native image generator can now be passed in a separate file that is provided with the <code>@argument</code> option. This is a necessary workaround for platforms like Windows where the length of the command line is limited.</li>
+  <li>Root certificates can now be configured at image run time. Previously, the root certificates present at image build time were the only root certificates available at run time. See the <a href="https://www.graalvm.org/jdk21/reference-manual/native-image/dynamic-features/CertificateManagement/#runtime-options">documentation</a> for details, and to find a list of system properties that are now read at run time to configure the root certificates.</li>
+  <li>Crash dumps, which are printed when segfault or fatal VM errors happen, now include more details to aid diagnostics. Also, the beginning of the image heap is now protected memory so that null pointer accesses produce a segfault instead of accessing random memory. Internal VM errors, where an illegal virtual method table entry is accessed, produce a better crash dump.</li>
+  <li>On Linux, the processor count reported at run time now takes limitations set via <code>cpuset</code> into account.</li>
+  <li>Improved Dwarf debug info generation now includes information about inlined methods (contributed by Red Hat).</li>
+  <li>JDK Flight Recorder (JFR) support is now also available for JDK 17 based GraalVM (contributed by Red Hat).</li>
+</ul>
+
+<h3 id="polyglot-runtime">Polyglot Runtime</h3>
+
+<ul>
+  <li>Improved stability and performance of the experimental engine caching feature. See the <a href="https://www.graalvm.org/jdk21/graalvm-as-a-platform/language-implementation-framework/AuxiliaryEngineCachingEnterprise/">documentation</a> for more details. (Only available in GraalVM Enterprise.)</li>
+  <li>Improved builtin CPU sampler tool usability with all polyglot languages (see <code>--cpusampler</code> option).
+    <ul>
+      <li>Increased precision of the sampling output by using the new guest language safepoint mechanism. The sampling output now shows inlined methods in addition to compilation units by default.</li>
+      <li>Simplified the default sampling histogram output and added the <code>--cpusampler.ShowTiers</code> option to show time spent in each optimization tier.</li>
+      <li>
+        <p>Added the SVG flamegraph output format to the CPUSampler. To enable it, use option <code>--cpusampler.OutputFormat=flamegraph</code>.</p>
+
+        <p><img src="/release-notes/img/profiler_flamegraph.png" alt="Profiler Flamegraph" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="java-on-truffle">Java on Truffle</h3>
+
+<ul>
+  <li>Added Java 17 guest and host support.</li>
+  <li>Enabled support using interop buffer-like object as <code>byte[]</code> in Java on Truffle. See “buffer elements” in the <a href="https://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/interop/InteropLibrary.html">Interop API javadoc</a>.</li>
+  <li>Added support for buffer interop messages to the explicit Interop API.</li>
+  <li>The Polyglot API is not enabled by default anymore. When needed, contexts should be created with the <code>java.Polyglot</code> option set to <code>true</code>.</li>
+  <li>The HotSwap API is not auto-enabled by debugging anymore. When needed, contexts should be created with the <code>java.HotSwapAPI</code> option set to <code>true</code>.</li>
+  <li>Added optimization to avoid illegal reflective access warnings with the host Java 11 or higher.</li>
+</ul>
+
+<p>The project <a href="https://github.com/oracle/graal/blob/master/espresso/CHANGELOG.md#version-2130">changelog</a> is available on GitHub.</p>
+
+<h3 id="javascript">JavaScript</h3>
+
+<ul>
+  <li>Updated Node.js to version 14.17.6.</li>
+  <li>Implemented the <a href="https://github.com/tc39/proposal-error-cause">Error Cause</a> proposal. It is available behind the experimental option <code>--js.error-cause</code>.</li>
+  <li>Implemented the <a href="https://tc39.es/proposal-import-assertions">Import Assertions</a> proposal. It is available behind the experimental option <code>--js.import-assertions</code>.</li>
+  <li>Implemented <code>Object.hasOwn</code> (<a href="https://github.com/tc39/proposal-accessible-object-hasownproperty">Accessible Object.hasOwnProperty</a> proposal). It is available in ECMAScript 2022 (<code>--js.ecmascript-version=2022</code>).</li>
+  <li>Implemented support for <a href="https://github.com/tc39/proposal-class-static-block">class static initialization blocks</a> and <a href="https://tc39.es/proposal-private-fields-in-in">private fields in <code>in</code></a>. Available in ECMAScript 2022 (<code>--js.ecmascript-version=2022</code>).</li>
+  <li>Added an experimental polyglot <code>Context</code> option <code>--js.esm-eval-returns-exports</code> (disabled by default). When enabled, <code>eval()</code> of an ES module will return a polyglot <code>Value</code> containing the exports.</li>
+  <li>Added several WebAssembly completeness and performance fixes, including the <a href="https://github.com/WebAssembly/JS-BigInt-integration">JavaScript BigInt to WebAssembly i64 integration</a> proposal.</li>
+</ul>
+
+<p>The <a href="https://github.com/oracle/graaljs/blob/master/CHANGELOG.md#version-2130">changelog</a> is available in the project repository.</p>
+
+<h3 id="ruby">Ruby</h3>
+
+<ul>
+  <li>TRegex is now used by default, which provides large speedups for matching regular expressions.</li>
+  <li>Fully integrated support for foreign objects traits (arrays, hashes, iterables, etc.) in polyglot mode, which now behave like their Ruby counterpart.</li>
+  <li>Added support for transparent inner contexts as used in the <a href="https://rubygems.org/gems/execjs/versions/2.7.0">ExecJS gem</a>.</li>
+  <li>Updated to Ruby 2.7.4 to fix <a href="https://www.ruby-lang.org/en/news/2021/07/07/trusting-pasv-responses-in-net-ftp/">CVE-2021-31810</a>, <a href="https://www.ruby-lang.org/en/news/2021/07/07/starttls-stripping-in-net-imap/">CVE-2021-32066</a> and <a href="https://www.ruby-lang.org/en/news/2021/05/02/os-command-injection-in-rdoc/">CVE-2021-31799</a>.</li>
+</ul>
+
+<p>A full list of changes is available in the <a href="https://github.com/oracle/truffleruby/blob/master/CHANGELOG.md#2130">changelog</a>.</p>
+
+<h3 id="python">Python</h3>
+
+<ul>
+  <li>Removed <code>PYPY_VERSION</code> from our C extension emulation layer. This means we no longer pretend to be PyPy for C extensions and can avoid PyPy specific hacks, which enables the PyGame package to work out of the box.</li>
+  <li>Intrinsified and optimized more of the core language for better startup and reduced footprint.</li>
+  <li>Implemented a binary compatible backend for <a href="https://hpyproject.org/">HPy 0.0.3</a>, which allows HPy packages to run unmodified on CPython and GraalVM Python. This is part of an ongoing effort to make more packages available to users without them having to compile them for GraalPython specifically.</li>
+  <li>Added support for the <code>multiprocessing</code> module via in-process nested contexts. This allows execution on multiple cores within the same process using the common Python facilities for multiprocessing.</li>
+  <li>Added support for the <code>ctypes</code> module, enabling more native extensions to run that use the ctypes API.</li>
+  <li>Fixed multiple REPL issues reported on Github. Users can now properly paste blocks of code and use the numpad in the REPL.</li>
+  <li>Made our marshal format compatible with CPython, so objects can now be exchanged between CPython and GraalVM Python processes.</li>
+  <li>Made most <code>socket</code> module tests pass in native mode, allowing usage of all POSIX socket APIs where before only those supported with Java facilities could be used. This includes, for example, Unix domain sockets and the message APIs for sockets.</li>
+  <li>Added various compatibility fixes to make the <code>psutil</code> package work.</li>
+</ul>
+
+<p>The project <a href="https://github.com/oracle/graalpython/blob/master/CHANGELOG.md#version-2130">changelog</a> is available on GitHub.</p>
+
+<h3 id="r">R</h3>
+
+<ul>
+  <li>Upgraded from <a href="https://www.pcre.org/">PCRE</a> to PCRE2 version 10.37. Some Unicode patterns and texts are still not supported. See <a href="https://cran.r-project.org/doc/manuals/r-devel/NEWS.html">GNU-R changelog</a> (section MIGRATION TO PCRE2) for more details on potentially user visible differences between PCRE and PCRE2.</li>
+  <li>Added some usability improvements and bug fixes:
+    <ul>
+      <li>Fixed implicit make rule parameters used when building <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html">R extensions</a>.</li>
+      <li>Fixed unexpected garbage collection of <code>CHARSXP</code> objects in <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html">R extensions</a>. FastR did not materialize its internal representation of character vectors to GNU-R compatible <code>CHARSXP</code> objects, which caused unexpected collection of CHARSXP objects returned by <code>STRING_ELT</code>.</li>
+      <li>The option to ignore the user’s profile at startup, <code>--no-init-file</code>, works as expected now.</li>
+      <li>Fixed functions <code>approx</code> and <code>approxfun</code> from the <code>stats</code> package to prevent them failing with error message “Incorrect number of arguments”.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The project <a href="https://github.com/oracle/fastr/blob/master/CHANGELOG.md#2130">changelog</a> is available on GitHub.</p>
+
+<h3 id="llvm-runtime">LLVM Runtime</h3>
+
+<ul>
+  <li>Updated the LLVM toolchain for compiling C/C++ to version 12.0.1.</li>
+  <li>Improved modularization of the codebase around “managed mode” and “native mode” code. This reduces static build dependencies between these two modes, at the same time making the managed mode codebase more robust by removing all unmanaged memory accesses.</li>
+</ul>
+
+<p>The project <a href="https://github.com/oracle/graal/blob/master/sulong/CHANGELOG.md#version-2130">changelog</a> is available on GitHub.</p>
+
+<h3 id="webassembly">WebAssembly</h3>
+
+<ul>
+  <li>Improved internal implementation of GraalVM WebAssembly to make JS-WebAssembly Interface API more compliant.</li>
+  <li>Added support for importing and exporting mutable globals to GraalVM WebAssembly, as defined by the <a href="https://github.com/WebAssembly/mutable-global/blob/master/proposals/mutable-global/Overview.md">Import/Export mutable globals proposal</a>.</li>
+  <li>Moved the module-validation checks to the earlier stage, so that a module is completely validated during parsing, instead of being validated during linking and instantiation. All validation errors are now properly reported when <code>Context#eval</code> from the Polyglot API is invoked, and similarly when invoking <code>WebAssembly.validate</code> from the JS-WebAssembly Interface API.</li>
+  <li>Added notifications to JavaScript when the memory grows (i.e., when <code>mem_grow</code> instruction executes). This improves the compliance of the JS-WebAssembly Interface API.</li>
+  <li>Changed the Interop objects in GraalVM WebAssembly to allow <a href="https://webassembly.github.io/spec/js-api/index.html#object-caches">object-caching in the JS-WebAssembly Interface</a>.</li>
+  <li>Added support for <code>BigInt</code>-to-<code>i64</code> conversion in the <a href="https://github.com/WebAssembly/JS-BigInt-integration">JS-WebAssembly Interface API</a>.</li>
+</ul>
+
+<p>A full list of changes can be found in the <a href="https://github.com/oracle/graal/blob/master/wasm/CHANGELOG.md">changelog</a>.</p>
+
+<h3 id="tools">Tools</h3>
+
+<h4 id="visual-studio-code">Visual Studio Code</h4>
+
+<p>Added a number of refractorings to the <a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm-pack">GraalVM Extension Pack for Java</a>. These are:</p>
+<ul>
+  <li>Convert to static import</li>
+  <li>Extract interface or method</li>
+  <li>Extract local variable</li>
+  <li>Assign to variable</li>
+  <li>Generate <code>hashCode</code> and <code>equals</code></li>
+  <li>Generate <code>toString()</code></li>
+  <li>Change method signature</li>
+  <li>Rename</li>
+  <li>Pull member up</li>
+  <li>Move class</li>
+  <li><code>for</code> cycle, <code>while()</code> cycle, <code>try-catch</code>, <code>switch()</code>statement refactorings</li>
+</ul>
+
+<h4 id="graalvm-tools-for-java-extension">GraalVM Tools for Java Extension</h4>
+
+<ul>
+  <li>
+    <p>Native Image debugging in VS Code, enabled with <a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm">GraalVM Tools for Java extension</a>, was significantly improved. Now you can attach the debugger to Native Image processes and step over the image “real” code:
+<img src="/release-notes/img/attaching_ni_process.png" alt="VS Code: Native Image Debugging" /></p>
+  </li>
+  <li>Implemented the ability to add GraalVM installed by a host OS utility like <code>yum</code>. Then components must be managed from a terminal by the same utility.</li>
+  <li>
+    <p>Enabled utilizing VS Code Native Test Explorer API and UI extensions.
+<img src="/release-notes/img/test_explorer.png" alt="VS Code: Native Test Explorer API" /></p>
+  </li>
+  <li>
+    <p>Enabled setting conditional breakpoints:
+<img src="/release-notes/img/conditional_breakpoints.png" alt="VS Code: Setting Conditional Breakpoint" /></p>
+  </li>
+  <li>Groovy language features are now available for Java projects which contain some Groovy files or Spock tests. For example, <code>CodeCompletion</code> is working, Spock tests can be debugged and run. The execution of standalone Groovy scripts is not supported.</li>
+</ul>
+
+<h4 id="graalvm-tools-for-micronaut-extension">GraalVM Tools for Micronaut Extension</h4>
+
+<p>Added support for Kubernetes: now you can deploy, run and debug Micronaut applications in a Kubernetes cluster directly from VS Code.</p>
+
+<ul>
+  <li>
+    <p>Enabled “Create Kubernetes Deployment Resource”, “Run in Kubernetes” and “Deploy in Kubernetes” quick actions for Micronaut support:
+<img src="/release-notes/img/K8s-deployment-commands.png" alt="VS Code: Create Kubernetes Deployment Resource" /></p>
+  </li>
+  <li>
+    <p>Enabled selecting what Docker image will be used when creating a Kubernetes deployment:
+<img src="/release-notes/img/select-docker-image.png" alt="VS Code: Select Docker Image" /></p>
+  </li>
+  <li>
+    <p>Enabled selecting a secret for a Docker registry:
+<img src="/release-notes/img/select-docker-registry-secret.png" alt="VS Code: Select Docker Registry Secret" /></p>
+  </li>
+</ul>
+
+<p>When you invoke the “Micronaut: Deploy to Kubernetes” action, your Java project is packaged, Docker image is built and pushed to the container registry. Deployment is created in the Kubernetes Cluster and local port is forwarded to an application running in a Pod.</p>
+
+<h3 id="polyglot-embedding">Polyglot Embedding</h3>
+
+<ul>
+  <li>Added the ability to share values between contexts. Please see <a href="https://www.graalvm.org/sdk/javadoc/org/graalvm/polyglot/Context.Builder.html#allowValueSharing-boolean-"><code>Context.Builder.allowValueSharing(boolean)</code></a> for further details. The update addressed <a href="https://github.com/oracle/graal/issues/631">this GitHub issue</a>.</li>
+  <li>Improved the <a href="https://www.graalvm.org/sdk/javadoc/org/graalvm/polyglot/package-summary.html">Polyglot API</a> by adding support for scoped values in guest-to-host callbacks. Scoped values are automatically released when the callback returns. They can be configured in <code>HostAccess</code>.</li>
+</ul>
+
+<p>A full list of changes can be found in the <a href="https://github.com/oracle/graal/blob/master/sdk/CHANGELOG.md#version-2130">changelog</a>.</p>
+
+<h3 id="trufflelanguage-and-toolimplementations">Truffle Language and Tool Implementations</h3>
+
+<ul>
+  <li>Added new <a href="https://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/staticobject/package-summary.html">Static Object Model</a> APIs to represent the layout of objects that, once defined, do not change the number and the type of their properties. It is particularly well suited for, but not limited to, the implementation of the object model of static programming languages. For more information, read the <a href="https://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/staticobject/package-summary.html">Javadoc</a> and the <a href="/latest/graalvm-as-a-platform/language-implementation-framework/StaticObjectModel/">tutorial</a>.</li>
+  <li>Added <code>BytecodeOSRNode</code> interface to support on-stack replacement (OSR) for bytecode interpreters. OSR can improve start-up performance by switching from interpreted code to compiled code in the middle of execution. It is especially effective for targets with long-running loops, which can get “stuck” running in the interpreter without OSR. Refer to the <a href="https://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/nodes/BytecodeOSRNode.html">Javadoc</a> and the <a href="/latest/graalvm-as-a-platform/language-implementation-framework/OnStackReplacement/">OSR guide</a> for more details.</li>
+  <li>Language and context references can now be stored in static final fields. See the <a href="https://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/TruffleLanguage.ContextReference.html">javadoc</a> for the new intended usage. All thread local lookups have an efficient implementation on HotSpot and SubstrateVM, interpreted and compiled, eliminating the need to ever cache the value in the AST.</li>
+  <li>Added <a href="http://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/frame/FrameInstance.html#getCompilationTier--">FrameInstance#getCompilationTier</a> and <a href="https://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/frame/FrameInstance.html#isCompilationRoot--">FrameInstancel#isCompilationRoot</a></li>
+  <li>Added <code>TruffleContext.evalPublic(Node, Source)</code> and <code>TruffleContext.evalInternal(Node, Source)</code> that allow the evaluation of sources in an inner context and access values of the inner context safely.</li>
+  <li>Added <code>--engine.TraceDeoptimizeFrame</code> to trace frame deoptimizations due to <code>FrameInstance#getFrame(READ_WRITE|MATERIALIZE)</code>.</li>
+  <li>Added <code>TruffleContext.evalPublic(Node, Source)</code> and <code>TruffleContext.evalInternal(Node, Source)</code> that allow to evaluate sources in an inner context and access values of the inner context safely.</li>
+  <li>Added <code>TruffleContext.Builder.initializeCreatorContext(boolean)</code> that allows users to disable initialization of the language that created the inner context.</li>
+  <li>Added <code>ExecuteTracingSupport</code> interface that allows tracing the calls to <code>execute</code> methods of a <code>Node</code>.</li>
+</ul>
+
+<p>A full list of changes can be found in the <a href="https://github.com/oracle/graal/blob/master/truffle/CHANGELOG.md#version-2130">changelog</a>.</p>
+
+      </div>
+      <div role="button" class="menu-btn menu-btn--sidebar js-show-sidebar" title="sweet hamburger">
+        <div class="hamburger"><div class="inner"></div></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+</div>
+
+      </main>
+      <!-- Connect with us -->
+<section class="content-section socials">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row-socials">
+      <div class="title">
+        <h2 class="title-section">Connect with us</h2>
+      </div>
+      <div class="social-icons">
+        <div class="wider-logo">
+          <a href="https://github.com/oracle/graal" target="_blank" title="github social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="github social media icon">
+              <path
+                d="M12 0C5.374 0 0 5.373 0 12C0 17.302 3.438 21.8 8.207 23.387C8.806 23.498 9 23.126 9 22.81V20.576C5.662 21.302 4.967 19.16 4.967 19.16C4.421 17.773 3.634 17.404 3.634 17.404C2.545 16.659 3.717 16.675 3.717 16.675C4.922 16.759 5.556 17.912 5.556 17.912C6.626 19.746 8.363 19.216 9.048 18.909C9.155 18.134 9.466 17.604 9.81 17.305C7.145 17 4.343 15.971 4.343 11.374C4.343 10.063 4.812 8.993 5.579 8.153C5.455 7.85 5.044 6.629 5.696 4.977C5.696 4.977 6.704 4.655 8.997 6.207C9.954 5.941 10.98 5.808 12 5.803C13.02 5.808 14.047 5.941 15.006 6.207C17.297 4.655 18.303 4.977 18.303 4.977C18.956 6.63 18.545 7.851 18.421 8.153C19.191 8.993 19.656 10.064 19.656 11.374C19.656 15.983 16.849 16.998 14.177 17.295C14.607 17.667 15 18.397 15 19.517V22.81C15 23.129 15.192 23.504 15.801 23.386C20.566 21.797 24 17.3 24 12C24 5.373 18.627 0 12 0Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://x.com/graalvm" target="_blank" title="x social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg" alt="X social media icon">
+              <path d="M714.2 507.9L1167 0H1060.1L661.8 460.4L343.9 0H0L475.4 690.3L0 1227H106.9L531.8 738.5L875.6 1227H1219.5L714.2 507.9ZM582.6 675.5L537.9 611.2L144.6 80.6H288.5L598.8 530.5L643.5 594.8L1048.5 1146.4H904.6L582.6 675.5Z" fill="#171F26"/>
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://www.linkedin.com/company/graalvm/" target="_blank" title="linkedin social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="linkedin social media icon">
+              <path
+                d="M12 0C5.3736 0 0 5.3736 0 12C0 18.6264 5.3736 24 12 24C18.6264 24 24 18.6264 24 12C24 5.3736 18.6264 0 12 0ZM8.51294 18.1406H5.59039V9.34808H8.51294V18.1406ZM7.05176 8.14746H7.03271C6.052 8.14746 5.41772 7.47235 5.41772 6.6286C5.41772 5.76581 6.07141 5.10938 7.07117 5.10938C8.07092 5.10938 8.68616 5.76581 8.7052 6.6286C8.7052 7.47235 8.07092 8.14746 7.05176 8.14746ZM19.051 18.1406H16.1288V13.4368C16.1288 12.2547 15.7057 11.4485 14.6483 11.4485C13.8409 11.4485 13.3601 11.9923 13.1488 12.5173C13.0715 12.7051 13.0527 12.9677 13.0527 13.2305V18.1406H10.1303C10.1303 18.1406 10.1686 10.173 10.1303 9.34808H13.0527V10.593C13.441 9.9939 14.1359 9.14172 15.6865 9.14172C17.6093 9.14172 19.051 10.3984 19.051 13.099V18.1406Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://medium.com/graalvm" target="_blank" title="medium social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="medium social media icon">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12 0C5.374 0 0 5.372 0 12C0 18.627 5.374 24 12 24C18.627 24 24 18.627 24 12C24 5.372 18.627 0 12 0ZM18.974 17.557V17.322L17.882 16.25C17.786 16.177 17.738 16.056 17.758 15.937V8.063C17.738 7.944 17.786 7.823 17.882 7.75L19 6.678V6.443H15.131L12.373 13.323L9.235 6.443H5.176V6.678L6.484 8.253C6.612 8.368 6.678 8.538 6.66 8.71V14.898C6.698 15.121 6.628 15.349 6.471 15.512L5 17.296V17.531H9.17V17.296L7.699 15.512C7.541 15.349 7.466 15.123 7.497 14.898V9.546L11.157 17.531H11.582L14.725 9.546V15.911C14.725 16.081 14.725 16.113 14.614 16.224L13.484 17.322V17.557H18.974Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://bsky.app/profile/graalvm.org" target="_blank" title="blue sky social media link">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_2442_17265)">
+              <path d="M6.6075 3.99362C9.59982 6.25419 12.8184 10.8377 14.0001 13.2975C15.1819 10.8379 18.4003 6.25415 21.3927 3.99362C23.5518 2.36248 27.0501 1.1004 27.0501 5.11641C27.0501 5.91846 26.5931 11.8541 26.3251 12.8177C25.3935 16.1679 21.9986 17.0224 18.9789 16.5052C24.2574 17.4093 25.6002 20.4037 22.7002 23.3982C17.1927 29.0853 14.7843 21.9713 14.1669 20.1484C14.0537 19.8143 14.0008 19.6579 14 19.7909C13.9992 19.6579 13.9463 19.8143 13.8332 20.1484C13.216 21.9713 10.8077 29.0855 5.29983 23.3982C2.39985 20.4037 3.74261 17.4091 9.0212 16.5052C6.00134 17.0224 2.60645 16.1679 1.67495 12.8177C1.40692 11.854 0.949951 5.91837 0.949951 5.11641C0.949951 1.1004 4.44834 2.36248 6.60735 3.99362H6.6075Z" fill="#171F26"/>
+              </g>
+              <defs>
+              <clipPath id="clip0_2442_17265">
+              <rect width="27" height="24" fill="white" transform="translate(0.5 2)"/>
+              </clipPath>
+              </defs>
+              </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="/slack-invitation/" title="slack social media link">
+            <svg class="social-icon" width="40" height="40" viewBox="0 0 40 40" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="slack social media icon">
+              <path
+                d="M13.0009 23.1698C12.9989 23.6678 12.8495 24.154 12.5714 24.5671C12.2933 24.9802 11.899 25.3017 11.4384 25.4909C10.9777 25.6801 10.4714 25.7285 9.98319 25.6302C9.49502 25.5318 9.04693 25.291 8.6955 24.9382C8.34408 24.5854 8.10506 24.1363 8.00863 23.6478C7.91221 23.1592 7.96269 22.6531 8.15371 22.1932C8.34474 21.7333 8.66773 21.3403 9.08193 21.0638C9.49612 20.7874 9.98294 20.6398 10.4809 20.6398H13.0009V23.1698ZM14.2709 29.4798C14.3636 30.0763 14.6665 30.6201 15.125 31.0128C15.5835 31.4055 16.1672 31.6214 16.7709 31.6214C17.3746 31.6214 17.9584 31.4055 18.4168 31.0128C18.8753 30.6201 19.1782 30.0763 19.2709 29.4798V23.1698C19.327 22.8091 19.3043 22.4404 19.2044 22.0893C19.1045 21.7381 18.9299 21.4127 18.6923 21.1354C18.4548 20.8582 18.1601 20.6356 17.8284 20.483C17.4968 20.3304 17.136 20.2514 16.7709 20.2514C16.4058 20.2514 16.0451 20.3304 15.7134 20.483C15.3817 20.6356 15.087 20.8582 14.8495 21.1354C14.612 21.4127 14.4373 21.7381 14.3374 22.0893C14.2375 22.4404 14.2149 22.8091 14.2709 23.1698V29.4798ZM19.2709 13.0398V10.5198C19.2806 10.0137 19.1382 9.51621 18.8622 9.09184C18.5861 8.66746 18.1891 8.33567 17.7224 8.13936C17.2558 7.94305 16.741 7.89125 16.2445 7.99067C15.7481 8.09009 15.293 8.33615 14.9379 8.69703C14.5829 9.05791 14.3442 9.51701 14.2529 10.015C14.1616 10.5129 14.2217 11.0268 14.4256 11.4902C14.6295 11.9536 14.9677 12.3452 15.3965 12.6143C15.8253 12.8835 16.325 13.0177 16.8309 12.9998L19.2709 13.0398ZM10.4309 14.3098C9.8344 14.4025 9.29069 14.7054 8.89796 15.1639C8.50523 15.6224 8.28938 16.2061 8.28938 16.8098C8.28938 17.4135 8.50523 17.9973 8.89796 18.4557C9.29069 18.9142 9.8344 19.2171 10.4309 19.3098H16.7409C17.1017 19.3659 17.4703 19.3432 17.8215 19.2433C18.1726 19.1434 18.498 18.9688 18.7753 18.7312C19.0526 18.4937 19.2751 18.199 19.4278 17.8673C19.5804 17.5357 19.6594 17.1749 19.6594 16.8098C19.6594 16.4447 19.5804 16.084 19.4278 15.7523C19.2751 15.4206 19.0526 15.1259 18.7753 14.8884C18.498 14.6509 18.1726 14.4762 17.8215 14.3763C17.4703 14.2765 17.1017 14.2538 16.7409 14.3098H10.4309ZM26.8709 19.3098H29.3909C29.8984 19.3379 30.4027 19.2124 30.8378 18.9497C31.273 18.6871 31.619 18.2994 31.8307 17.8373C32.0424 17.3752 32.1099 16.86 32.0246 16.3589C31.9392 15.8578 31.7049 15.3941 31.3522 15.0281C30.9995 14.6621 30.5447 14.4108 30.0471 14.307C29.5495 14.2032 29.0322 14.2517 28.5626 14.4461C28.093 14.6406 27.6928 14.972 27.4142 15.3972C27.1357 15.8224 26.9916 16.3216 27.0009 16.8298L26.8709 19.3098ZM25.6009 10.4698C25.5605 9.82762 25.2769 9.22495 24.8078 8.78447C24.3387 8.34399 23.7194 8.0988 23.0759 8.0988C22.4324 8.0988 21.8131 8.34399 21.3441 8.78447C20.875 9.22495 20.5914 9.82762 20.5509 10.4698V16.7798C20.5292 17.1248 20.5784 17.4705 20.6955 17.7957C20.8125 18.1209 20.995 18.4187 21.2316 18.6707C21.4682 18.9226 21.7539 19.1234 22.0711 19.2607C22.3883 19.398 22.7303 19.4688 23.0759 19.4688C23.4216 19.4688 23.7635 19.398 24.0807 19.2607C24.3979 19.1234 24.6837 18.9226 24.9203 18.6707C25.1568 18.4187 25.3393 18.1209 25.4564 17.7957C25.5734 17.4705 25.6226 17.1248 25.6009 16.7798V10.4698ZM20.6409 26.9998V29.5198C20.6389 30.0206 20.7856 30.5108 21.0624 30.9281C21.3392 31.3455 21.7337 31.6713 22.1958 31.8644C22.6579 32.0574 23.1669 32.1089 23.6583 32.0124C24.1498 31.9159 24.6015 31.6758 24.9563 31.3223C25.3112 30.9689 25.5531 30.5181 25.6516 30.0271C25.75 29.536 25.7005 29.0268 25.5093 28.564C25.3181 28.1011 24.9938 27.7054 24.5775 27.4269C24.1613 27.1485 23.6717 26.9998 23.1709 26.9998H20.6409ZM29.4809 25.7298C30.1231 25.6894 30.7258 25.4058 31.1663 24.9367C31.6068 24.4676 31.8519 23.8483 31.8519 23.2048C31.8519 22.5613 31.6068 21.942 31.1663 21.473C30.7258 21.0039 30.1231 20.7203 29.4809 20.6798H23.1709C22.826 20.6581 22.4802 20.7073 22.155 20.8244C21.8298 20.9414 21.532 21.1239 21.2801 21.3605C21.0281 21.5971 20.8273 21.8828 20.69 22.2C20.5528 22.5172 20.4819 22.8592 20.4819 23.2048C20.4819 23.5505 20.5528 23.8924 20.69 24.2096C20.8273 24.5268 21.0281 24.8126 21.2801 25.0492C21.532 25.2858 21.8298 25.4682 22.155 25.5853C22.4802 25.7023 22.826 25.7515 23.1709 25.7298H29.4809Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://www.youtube.com/graalvm" target="_blank" title="youtube social media link">
+            <svg class="social-icon" width="35" height="24" viewBox="0 0 35 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="youtube social media icon">
+              <path
+                d="M18.1713 23.9692L11.0316 23.839C8.71989 23.7937 6.40246 23.8843 4.13616 23.4143C0.688425 22.7121 0.444187 19.2692 0.188588 16.3812C-0.163569 12.321 -0.0272501 8.18716 0.637305 4.16095C1.01218 1.90151 2.48897 0.553774 4.77232 0.406542C12.48 -0.125756 20.2388 -0.0634659 27.9295 0.185695C28.7417 0.208346 29.5597 0.332927 30.3605 0.474496C34.3138 1.16535 34.4103 5.06699 34.6659 8.35138C34.9215 11.6698 34.8136 15.0051 34.3251 18.3008C33.9332 21.0303 33.1835 23.318 30.0197 23.5389C26.0551 23.8277 22.1814 24.0599 18.2054 23.9862C18.2054 23.9692 18.1827 23.9692 18.1713 23.9692ZM13.9738 17.0607C16.9615 15.3505 19.8924 13.6687 22.863 11.9699C19.8696 10.2597 16.9445 8.57789 13.9738 6.87907V17.0607Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__getstarted">
+        <div class="rubber-footer">
+          <p class="title-footer quickstart">Get started with GraalVM</p>
+          <p class="footer-desc">Available for Linux, macOS, and Windows platforms</p>
+          <a href="/latest/docs/getting-started/" class="btn btn-primary">Get Started</a>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer" onclick="fadeInAndOut(this)">Learn</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item">
+                SDK Javadocs:
+                <a href="https://www.graalvm.org/23.1/javadoc/sdk/" class="javadoc" target="_blank">21</a> or
+                <a href="https://www.graalvm.org/25.4/javadoc/sdk/" class="javadoc" target="_blank">25.4</a>
+              </li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/workshops" target="_blank">Workshops</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos" target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer" onclick="fadeInAndOut(this)">Resources</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://docs.oracle.com/en/graalvm/index.html" target="_blank">Oracle Help Center</a></li>
+              <li class="footer-list__item"><a href="https://labs.oracle.com/" target="_blank">Oracle Labs</a></li>
+              <li class="footer-list__item"><a href="/graalvm-brand-guidelines/">Brand Guidelines</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer" onclick="fadeInAndOut(this)">More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="/release-notes/">Release Notes</a></li>
+              <li class="footer-list__item"><a href="/release-calendar/">Release Calendar</a></li>
+              <li class="footer-list__item"><a href="/community/contributors/">Contributors</a></li>
+              <li class="footer-list__item"><a href="/support/">Support</a></li>
+              <li class="footer-list__item"><a href="/faq/">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2018, 2026, Oracle and/or its affiliates. All rights reserved. Oracle and Java are
+            registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function fadeInAndOut(thz) {
+    var elmt = thz.nextElementSibling;//Get the element that is below the button that
+    //was just clicked
+    if (elmt.clientHeight) {
+      elmt.style.height = 0;
+    } else {
+      var wrapper = elmt.querySelector('ul');
+      elmt.style.height = wrapper.clientHeight + "px";
+    }
+  }
+</script>
+
+    </div>
+    <div class="overlay"></div>
+    <script src='/resources/lib/slick-slider/slick.min.js'></script>
+    <script src='/resources/js/main.js'></script>
+    <script src='/resources/js/download.js'></script>
+    <script src='/resources/js/sidebar.js'></script>
+    <script src='/resources/js/favicon.js'></script>
+  </body>
+</html>

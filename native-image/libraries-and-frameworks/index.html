@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/resources/img/og-image.jpg' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      Libraries and Frameworks Ready for GraalVM Native Image
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  
+  <link rel="canonical" href="https://www.graalvm.org/native-image/libraries-and-frameworks/">
+  
+
+  <link rel="icon" id="favicon" href='/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/assets/main.css'>
+  <script src='/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/resources/lib/sticky-sidebar/resizeSensor.js'></script>
+  <script src='/resources/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
+  <script src='/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/resources/lib/purl/purl.js'></script>
+  <script src='/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+
+
+
+  <body class="preload">
+    <div class="wrapper wrapper--nofooter">
+      <header  class="header header--content" 
+  role="banner">
+
+  
+  
+
+
+
+
+  <div class="d-flex">
+    <nav class="menu">
+      <div class="menu__logo">
+        <a class="menu__logojs" href="/">
+          <img src='/resources/img/home/logo_mobile_openmenu.svg' alt="GraalVM logo">
+        </a>
+      </div>
+      <ul class="menu__list">
+        <li class="menu__item">
+          <a href='/latest/docs/' class="menu__link">Docs</a>
+        </li>
+        <li class="menu__item">
+          <a href='/guides/' class="menu__link">Guides</a>
+        </li>
+        <li class="menu__item">
+          <a href="https://medium.com/graalvm" class="menu__link" target="_blank">Blog</a>
+        </li>
+        <li class="menu__item">
+          <a href="https://www.youtube.com/graalvm" class="menu__link" target="_blank">Videos</a>
+        </li>
+        <li class="menu__item">
+          <a href='/community/' class="menu__link">Community</a>
+        </li>
+        <li class="menu__item">
+          <div class="stack-container">
+            <a href="#" class="menu__link stack__header">Graal Projects</a>
+            <div class="stack-menu">
+              <div class="stack-row">
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/graalstack.svg">
+                    <a href="https://graal.cloud/" class="item-line">Graal Stack</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/gdk.svg">
+                    <a href="https://graal.cloud/gdk/" class="item-line">Graal Dev Kit for Micronaut</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/graalos.svg">
+                    <a href="https://graal.cloud/graalos/" class="item-line">GraalOS</a>
+                  </div>
+                </div>
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/js-navi.svg">
+                    <a href="/javascript/" class="item-line">GraalJS</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/python-navi.svg">
+                    <a href="https://graalpy.org/" class="item-line" target="_blank">GraalPy</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/wasm-navi.svg">
+                    <a href="/webassembly/" class="item-line">GraalWasm</a>
+                  </div>
+                  <div class="stack__item">
+                    <img src="/resources/img/header-navigation/java-navi.svg">
+                    <a href='/reference-manual/java-on-truffle/' class="item-line">Espresso</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <div class="menu__item icons githubstar" tabindex="0">
+          <span class="github-widget">
+            <a tabindex="-1" class="github-button" href="https://github.com/oracle/graal" data-icon="octicon-star"
+              data-show-count="true" aria-label="Star oracle/graal on GitHub">Star</a>
+          </span>
+        </div>
+        <div class="menu__downloads">
+          <a href='/downloads/' class="btn btn-try btn-primary">Download</a>
+        </div>
+      </ul>
+      <div role="button" class="menu-btn menu-btn--menu js-show-menu" tabindex="-1" title="sweet hamburger">
+        <div class="hamburger">
+          <div class="inner"></div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+</header>
+      <main class="content" aria-label="Content">
+        <section class="content-section nimain-blue">
+  <div class="wrapper">
+    <div class="ni-libs">
+      <div class="container">
+        <h3 class="ni-libs-frameworks__topics">Frameworks Ready for Native Image</h3>
+        <div class="ni-libs-frameworks__text">
+          <h5 class="ni-libsfram-mod">
+            The following frameworks are compatible with GraalVM Native Image. For more details, see their project launchers.
+          </h5>
+        </div>
+        <div class="row">
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='/resources/img/native-image/frameworks/01_micronaut.svg' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://micronaut.io/launch/">Project Launcher</a>
+                </div>
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://micronaut.io/learn/">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='/resources/img/native-image/frameworks/02_spring.svg' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://start.spring.io/">Project Launcher</a>
+                </div>
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://github.com/oracle/graalvm-reachability-metadata">Reachability Metadata</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='/resources/img/native-image/frameworks/03_quarkus.svg' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://code.quarkus.io/">Project Launcher</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ni-libs-frameworks__card">
+            <div class="ni-libs-frameworks__card-row">
+              <div class="ni-libs-frameworks__section">
+                <img src='/resources/img/native-image/frameworks/04_helidon.svg' class="ni-libs-frameworks__icon">
+              </div>
+              <div class="ni-libs-frameworks__section">
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://helidon.io/starter/">Project Launcher</a>
+                </div>
+                <div class="ni-libs-frameworks__section-link">
+                  <a href="https://github.com/oracle/graalvm-reachability-metadata">Reachability Metadata</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 class="ni-libs-frameworks__topics">Libraries and Frameworks Tested with Native Image</h3>
+        <div class="ni-libs-frameworks__text">
+          <h5 class="ni-libsfram-mod">The following table lists libraries and frameworks from the Java ecosystem that
+            are tested with GraalVM Native Image. To ensure your application is compatible with any of these libraries,
+            use the latest version of the <a href="https://graalvm.github.io/native-build-tools/latest/index.html" target="_blank">Native Build Tools</a>.
+            Each item in the table is annotated with a <i>test level</i>, as follows:
+          </h5>
+          <h5 class="ni-libsfram-mod">
+            <ul class="test-level">
+              <li><i>Tested (★★)</i>: The library or framework is continuously tested by its maintainers. (This is the
+                best test level.)</li>
+              <li><i>Community-tested (★)</i>: The library or framework is continuously tested as part of the <a
+                  href="https://github.com/oracle/graalvm-reachability-metadata">GraalVM Reachability Metadata
+                  Repository</a> or some other community-driven project.</li>
+            </ul>
+          </h5>
+          <h5 class="ni-libsfram-mod">If you would like to add your library and framework to this list, open a pull
+            request and add an entry to <a href="https://github.com/oracle/graalvm-reachability-metadata/blob/master/metadata/library-and-framework-list.json">
+            this file</a> according to <a href="https://github.com/oracle/graalvm-reachability-metadata/blob/master/metadata/schemas/library-and-framework-list-schema-v1.0.0.json">this schema</a>.
+          </h5>
+        </div>
+        <div class="row metadata-table ni-libs-frameworks__text">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="tg libs-table" style="width:100%">
+<caption class="visually-hidden">Libraries and Frameworks Tested with Native Image</caption>
+<thead>
+  <tr>
+    <th class="tg name" style="width:60%" title="Artifact in the groupId:artifactId format" scope="col">Name</th>
+    <th class="tg version" style="width:20%" title="Version" scope="col">Version</th>
+    <th class="tg test-level" style="width:20%" title="Test Level" scope="col">Test Level</th>
+  </tr>
+</thead>
+<tbody>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">berkeleydb:je</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/berkeleydb/je/3.2.76/jar" target="_blank" title="Minimum version">3.2.76</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">ch.qos.logback.contrib:logback-jackson</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/ch.qos.logback.contrib/logback-jackson/0.1.5/jar" target="_blank" title="Minimum version">0.1.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">ch.qos.logback.contrib:logback-json-classic</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/ch.qos.logback.contrib/logback-json-classic/0.1.5/jar" target="_blank" title="Minimum version">0.1.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">ch.qos.logback:logback-classic</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/ch.qos.logback/logback-classic/1.2.11/jar" target="_blank" title="Minimum version">1.2.11</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.atomikos:transactions</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.atomikos/transactions/6.0.0/jar" target="_blank" title="Minimum version">6.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="DataStax Java Driver for Apache Cassandra">com.datastax.oss:java-driver-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.datastax.oss/java-driver-core/4.1.5/jar" target="_blank" title="Minimum version">4.1.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.ecwid.consul:consul-api</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.ecwid.consul/consul-api/1.4.5/jar" target="_blank" title="Minimum version">1.4.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.fasterxml.jackson.core:jackson-databind</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.fasterxml.jackson.core/jackson-databind/2.15.2/jar" target="_blank" title="Minimum version">2.15.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.github.ben-manes.caffeine:caffeine</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.github.ben-manes.caffeine/caffeine/2.9.3/jar" target="_blank" title="Minimum version">2.9.3</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="ISBN core is a small library that contains a representation object of ISBN-10 and ISBN-13 and tools to parse, validate and format one">com.github.ladutsko:isbn-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.github.ladutsko/isbn-core/1.2.0/jar" target="_blank" title="Minimum version">1.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.github.luben:zstd-jni</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.github.luben/zstd-jni/1.5.2-5/jar" target="_blank" title="Minimum version">1.5.2-5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.google.protobuf:protobuf-java-util</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.google.protobuf/protobuf-java-util/3.21.12/jar" target="_blank" title="Minimum version">3.21.12</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.graphql-java:graphql-java</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.graphql-java/graphql-java/19.2/jar" target="_blank" title="Minimum version">19.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.graphql-java:graphql-java-extended-validation</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.graphql-java/graphql-java-extended-validation/19.1/jar" target="_blank" title="Minimum version">19.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.h2database:h2</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.h2database/h2/2.1.210/jar" target="_blank" title="Minimum version">2.1.210</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.hazelcast:hazelcast</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hazelcast/hazelcast/5.2.1/jar" target="_blank" title="Minimum version">5.2.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP classes. These classes are shared among the HTTP client and the HTTP server.">com.hexagontk.http:http</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP client supporting SSL, cookies, WebSockets, and HTTP/2. Requires an adapter to be used.">com.hexagontk.http:http_client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_client/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP client adapter for the JDK HTTP client.">com.hexagontk.http:http_client_jdk</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_client_jdk/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP client adapter for Jetty (without WebSockets support).">com.hexagontk.http:http_client_jetty</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_client_jetty/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP client adapter for Jetty (with WebSockets support).">com.hexagontk.http:http_client_jetty_ws</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_client_jetty_ws/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP handlers used to apply many callbacks to HTTP calls.">com.hexagontk.http:http_handlers</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_handlers/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server supporting SSL, cookies, WebSockets, and HTTP/2. Requires an adapter to be used.">com.hexagontk.http:http_server</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_server/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server adapter for Helidon (using Java Virtual Threads).">com.hexagontk.http:http_server_helidon</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_server_helidon/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server adapter for JDK HTTP server.">com.hexagontk.http:http_server_jdk</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_server_jdk/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server adapter for Jetty (using Servlets under the hood).">com.hexagontk.http:http_server_jetty</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_server_jetty/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server adapter for Netty.">com.hexagontk.http:http_server_netty</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_server_netty/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server adapter for Netty (using Linux Epoll).">com.hexagontk.http:http_server_netty_epoll</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/http_server_netty_epoll/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server extensions to ease the development of REST APIs.">com.hexagontk.http:rest</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/rest/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Tools to test and document REST services.">com.hexagontk.http:rest_tools</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/rest_tools/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="HTTP server extensions to ease the development of dynamic Web applications.">com.hexagontk.http:web</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.http/web/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon serialization module.">com.hexagontk.serialization:serialization</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon JSON serialization format (using DSL-JSON).">com.hexagontk.serialization:serialization_dsl_json</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization_dsl_json/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Jackson's serialization utilities (used in several serialization formats).">com.hexagontk.serialization:serialization_jackson</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization_jackson/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon CSV serialization format (using Jackson).">com.hexagontk.serialization:serialization_jackson_csv</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization_jackson_csv/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon JSON serialization format (using Jackson).">com.hexagontk.serialization:serialization_jackson_json</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization_jackson_json/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon TOML serialization format (using Jackson).">com.hexagontk.serialization:serialization_jackson_toml</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization_jackson_toml/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon XML serialization format (using Jackson).">com.hexagontk.serialization:serialization_jackson_xml</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization_jackson_xml/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon YAML serialization format (using Jackson).">com.hexagontk.serialization:serialization_jackson_yaml</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.serialization/serialization_jackson_yaml/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Template processing port. Supports template loading and context passing. Allow multiple adapters at once.">com.hexagontk.templates:templates</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.templates/templates/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Template processor adapter for Freemarker.">com.hexagontk.templates:templates_freemarker</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.templates/templates_freemarker/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Template processor adapter for 'jte'.">com.hexagontk.templates:templates_jte</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.templates/templates_jte/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Template processor adapter for Pebble.">com.hexagontk.templates:templates_pebble</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.templates/templates_pebble/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Template processor adapter for Rocker. Don't support dynamic template loading.">com.hexagontk.templates:templates_rocker</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk.templates/templates_rocker/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon core utilities (dates, exceptions, logging, etc.).">com.hexagontk:core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk/core/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Handlers to be applied on events processing.">com.hexagontk:handlers</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk/handlers/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Hexagon helpers. Not used inside the toolkit but useful for applications.">com.hexagontk:helpers</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.hexagontk/helpers/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Core module for barcodes creation.">com.itextpdf:barcodes</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/barcodes/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.itextpdf:bouncy-castle-adapter</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/bouncy-castle-adapter/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Core module which allows to pick cryptography library, bouncy castle or bouncy castle fips, for PDF manipulations.">com.itextpdf:bouncy-castle-connector</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/bouncy-castle-connector/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.itextpdf:commons</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/commons/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Asian fonts for use in conjunction with iText.">com.itextpdf:font-asian</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/font-asian/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="2"><code title="iText Core module for form fields manipulations.">com.itextpdf:forms</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/forms/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+<tr>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/forms/8.0.3/jar" target="_blank" title="Minimum version">8.0.3</a>, < 8.0.4
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="pdfHTML is an iText add-on that lets you to parse (X)HTML snippets and the associated CSS and converts them to PDF.">com.itextpdf:html2pdf</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/html2pdf/6.1.0/jar" target="_blank" title="Minimum version">6.1.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="XML files that can be used for hyphenation in layout module.">com.itextpdf:hyph</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/hyph/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="2"><code title="Low level iText Core module for reading data to be used in PDF (image streams, font programs etc).">com.itextpdf:io</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/io/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+<tr>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/io/8.0.3/jar" target="_blank" title="Minimum version">8.0.3</a>, < 8.0.4
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Umbrella module which includes all iText Core modules.">com.itextpdf:itext-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/itext-core/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="2"><code title="iText Core module responsible for low level PDF creation and manipulation.">com.itextpdf:kernel</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/kernel/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+<tr>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/kernel/8.0.3/jar" target="_blank" title="Minimum version">8.0.3</a>, < 8.0.4
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="2"><code title="iText Core module that performs operations of transforming abstract elements (like Paragraph, Table, List etc) into low level PDF syntax on actual document pages.">com.itextpdf:layout</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/layout/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+<tr>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/layout/8.0.3/jar" target="_blank" title="Minimum version">8.0.3</a>, < 8.0.4
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Core module to ease PDF/A documents creation.">com.itextpdf:pdfa</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/pdfa/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Core module containing a set of tools to execute iText Core tests.">com.itextpdf:pdftest</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/pdftest/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Core module to ease PDF/UA documents creation.">com.itextpdf:pdfua</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/pdfua/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Core module used to sign PDF documents and validate signatures.">com.itextpdf:sign</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/sign/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="iText Core module to parse HTML and XML.">com.itextpdf:styled-xml-parser</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/styled-xml-parser/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="2"><code title="iText Core module that allows you to integrate SVG images in your PDF creation and manipulation process.">com.itextpdf:svg</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/svg/8.0.4/jar" target="_blank" title="Minimum version">8.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+<tr>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.itextpdf/svg/8.0.3/jar" target="_blank" title="Minimum version">8.0.3</a>, < 8.0.4
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.microsoft.sqlserver:mssql-jdbc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.microsoft.sqlserver/mssql-jdbc/12.2.0.jre11/jar" target="_blank" title="Minimum version">12.2.0.jre11</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.mysql:mysql-connector-j</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.mysql/mysql-connector-j/8.0.31/jar" target="_blank" title="Minimum version">8.0.31</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="The OpenAI Java SDK provides convenient access to the OpenAI REST API from applications written in Java.">com.openai:openai-java</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.openai/openai-java/2.16.0/jar" target="_blank" title="Minimum version">2.16.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Oracle Application Performance Monoitoring(APM) Java Tracer for Helidon 2.x based applications">com.oracle.apm.agent.java:apm-java-agent-helidon</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.oracle.apm.agent.java/apm-java-agent-helidon/1.8.3326/jar" target="_blank" title="Minimum version">1.8.3326</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Oracle Application Performance Monoitoring(APM) Java Tracer for Helidon 3.x based applications">com.oracle.apm.agent.java:apm-java-agent-helidon3</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.oracle.apm.agent.java/apm-java-agent-helidon3/1.8.3326/jar" target="_blank" title="Minimum version">1.8.3326</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Oracle Application Performance Monoitoring(APM) Java Tracer for Micronaut based applications">com.oracle.apm.agent.java:apm-java-agent-micronaut</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.oracle.apm.agent.java/apm-java-agent-micronaut/1.8.3326/jar" target="_blank" title="Minimum version">1.8.3326</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Oracle JDBC Driver compatible with JDK11, JDK12, JDK13, JDK14 and JDK15">com.oracle.database.jdbc:ojdbc11</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.oracle.database.jdbc/ojdbc11/21.1.0.0/jar" target="_blank" title="Minimum version">21.1.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Oracle JDBC Driver compatible with JDK8, JDK11, JDK12, JDK13, JDK14 and JDK15">com.oracle.database.jdbc:ojdbc8</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.oracle.database.jdbc/ojdbc8/21.1.0.0/jar" target="_blank" title="Minimum version">21.1.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Oracle Cloud Infrastructure Java SDK">com.oracle.oci.sdk:oci-java-sdk</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.oracle.oci.sdk/oci-java-sdk/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.sun.mail:jakarta.mail</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.sun.mail/jakarta.mail/2.0.1/jar" target="_blank" title="Minimum version">2.0.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">com.zaxxer:HikariCP</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/com.zaxxer/HikariCP/5.0.1/jar" target="_blank" title="Minimum version">5.0.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">commons-logging:commons-logging</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/commons-logging/commons-logging/1.2/jar" target="_blank" title="Minimum version">1.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Avaje Configuration.">io.avaje:avaje-config</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.avaje/avaje-config/3.9/jar" target="_blank" title="Minimum version">3.9</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Avaje Validator.">io.avaje:avaje-validator</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.avaje/avaje-validator/1.2/jar" target="_blank" title="Minimum version">1.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Ebean database migration runner.">io.ebean:ebean-migration</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.ebean/ebean-migration/13.10.0/jar" target="_blank" title="Minimum version">13.10.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.grpc:grpc-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.grpc/grpc-core/1.69.0/jar" target="_blank" title="Minimum version">1.69.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.grpc:grpc-netty</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.grpc/grpc-netty/1.51.0/jar" target="_blank" title="Minimum version">1.51.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Helidon Configuration.">io.helidon.config:helidon-config</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.helidon.config/helidon-config/1.0.0/jar" target="_blank" title="Minimum version">1.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Helidon MicroProfile Bundle. Requires Helidon native image features.">io.helidon.microprofile.bundles:helidon-microprofile</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.helidon.microprofile.bundles/helidon-microprofile/2.0.0/jar" target="_blank" title="Minimum version">2.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Helidon MicroProfile Core Bundle. Requires Helidon native image features.">io.helidon.microprofile.bundles:helidon-microprofile-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.helidon.microprofile.bundles/helidon-microprofile-core/2.0.0/jar" target="_blank" title="Minimum version">2.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Helidon Reactive WebClient.">io.helidon.webclient:helidon-webclient</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.helidon.webclient/helidon-webclient/1.0.0/jar" target="_blank" title="Minimum version">1.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Helidon Reactive WebServer. Requires Helidon native image feature.">io.helidon.webserver:helidon-webserver</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.helidon.webserver/helidon-webserver/1.0.0/jar" target="_blank" title="Minimum version">1.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.jsonwebtoken:jjwt-gson</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.jsonwebtoken/jjwt-gson/0.11.5/jar" target="_blank" title="Minimum version">0.11.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.jsonwebtoken:jjwt-jackson</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5/jar" target="_blank" title="Minimum version">0.11.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.jsonwebtoken:jjwt-orgjson</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.jsonwebtoken/jjwt-orgjson/0.11.5/jar" target="_blank" title="Minimum version">0.11.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.acme:micronaut-acme</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.acme/micronaut-acme/3.2.0/jar" target="_blank" title="Minimum version">3.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.aws:micronaut-aws-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.aws/micronaut-aws-bom/3.10.5/jar" target="_blank" title="Minimum version">3.10.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.azure:micronaut-azure-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.azure/micronaut-azure-bom/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.data:micronaut-data-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.data/micronaut-data-bom/3.9.4/jar" target="_blank" title="Minimum version">3.9.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.discovery:micronaut-discovery-client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.discovery/micronaut-discovery-client/3.2.0/jar" target="_blank" title="Minimum version">3.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.email:micronaut-email-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.email/micronaut-email-bom/1.5.0/jar" target="_blank" title="Minimum version">1.5.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.flyway:micronaut-flyway-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.flyway/micronaut-flyway-bom/5.4.1/jar" target="_blank" title="Minimum version">5.4.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.gcp:micronaut-gcp-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.gcp/micronaut-gcp-bom/4.8.0/jar" target="_blank" title="Minimum version">4.8.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.grpc:micronaut-grpc-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.grpc/micronaut-grpc-bom/3.5.0/jar" target="_blank" title="Minimum version">3.5.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.jaxrs:micronaut-jaxrs-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.jaxrs/micronaut-jaxrs-bom/3.4.0/jar" target="_blank" title="Minimum version">3.4.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.jms:micronaut-jms-activemq-artemis</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.jms/micronaut-jms-activemq-artemis/2.1.0/jar" target="_blank" title="Minimum version">2.1.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.jms:micronaut-jms-activemq-classic</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.jms/micronaut-jms-activemq-classic/2.1.0/jar" target="_blank" title="Minimum version">2.1.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.jms:micronaut-jms-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.jms/micronaut-jms-core/2.1.0/jar" target="_blank" title="Minimum version">2.1.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.jms:micronaut-jms-sqs</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.jms/micronaut-jms-sqs/2.1.0/jar" target="_blank" title="Minimum version">2.1.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.kafka:micronaut-kafka-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.kafka/micronaut-kafka-bom/4.5.0/jar" target="_blank" title="Minimum version">4.5.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.kotlin:micronaut-kotlin-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.kotlin/micronaut-kotlin-bom/3.2.2/jar" target="_blank" title="Minimum version">3.2.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.kubernetes:micronaut-kubernetes-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.kubernetes/micronaut-kubernetes-bom/3.4.0/jar" target="_blank" title="Minimum version">3.4.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.liquibase:micronaut-liquibase-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.liquibase/micronaut-liquibase-bom/5.6.0/jar" target="_blank" title="Minimum version">5.6.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.micrometer:micronaut-micrometer-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.micrometer/micronaut-micrometer-bom/4.7.0/jar" target="_blank" title="Minimum version">4.7.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.mongodb:micronaut-mongo-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.mongodb/micronaut-mongo-bom/4.6.0/jar" target="_blank" title="Minimum version">4.6.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.mqtt:micronaut-mqtt-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.mqtt/micronaut-mqtt-bom/2.3.0/jar" target="_blank" title="Minimum version">2.3.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.objectstorage:micronaut-object-storage-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.objectstorage/micronaut-object-storage-bom/1.1.0/jar" target="_blank" title="Minimum version">1.1.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.openapi:micronaut-openapi-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.openapi/micronaut-openapi-bom/4.8.1/jar" target="_blank" title="Minimum version">4.8.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.oraclecloud:micronaut-oraclecloud-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.oraclecloud/micronaut-oraclecloud-bom/2.3.1/jar" target="_blank" title="Minimum version">2.3.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.picocli:micronaut-picocli-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.picocli/micronaut-picocli-bom/4.3.0/jar" target="_blank" title="Minimum version">4.3.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.problem:micronaut-problem-json-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.problem/micronaut-problem-json-bom/2.6.0/jar" target="_blank" title="Minimum version">2.6.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.r2dbc:micronaut-r2dbc-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.r2dbc/micronaut-r2dbc-bom/4.0.0/jar" target="_blank" title="Minimum version">4.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.reactor:micronaut-reactor-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.reactor/micronaut-reactor-bom/2.5.0/jar" target="_blank" title="Minimum version">2.5.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.redis:micronaut-redis-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.redis/micronaut-redis-bom/5.3.2/jar" target="_blank" title="Minimum version">5.3.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.rxjava1:micronaut-rxjava1</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.rxjava1/micronaut-rxjava1/1.0.0/jar" target="_blank" title="Minimum version">1.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.rxjava2:micronaut-rxjava2-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.rxjava2/micronaut-rxjava2-bom/1.3.0/jar" target="_blank" title="Minimum version">1.3.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.rxjava3:micronaut-rxjava3-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.rxjava3/micronaut-rxjava3-bom/2.4.0/jar" target="_blank" title="Minimum version">2.4.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.security:micronaut-security-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.security/micronaut-security-bom/3.9.0/jar" target="_blank" title="Minimum version">3.9.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.serde:micronaut-serde-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.serde/micronaut-serde-bom/1.5.0/jar" target="_blank" title="Minimum version">1.5.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.servlet:micronaut-servlet-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.servlet/micronaut-servlet-bom/3.3.3/jar" target="_blank" title="Minimum version">3.3.3</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.spring:micronaut-spring-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.spring/micronaut-spring-bom/4.4.0/jar" target="_blank" title="Minimum version">4.4.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.sql:micronaut-sql-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.sql/micronaut-sql-bom/4.7.2/jar" target="_blank" title="Minimum version">4.7.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.test:micronaut-test-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.test/micronaut-test-bom/3.8.0/jar" target="_blank" title="Minimum version">3.8.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.testresources:micronaut-test-resources-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.testresources/micronaut-test-resources-bom/1.2.3/jar" target="_blank" title="Minimum version">1.2.3</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.tracing:micronaut-tracing-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.tracing/micronaut-tracing-bom/4.4.0/jar" target="_blank" title="Minimum version">4.4.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.views:micronaut-views-bom</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.views/micronaut-views-bom/3.8.0/jar" target="_blank" title="Minimum version">3.8.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut.xml:micronaut-jackson-xml</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut.xml/micronaut-jackson-xml/3.2.0/jar" target="_blank" title="Minimum version">3.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.micronaut:micronaut-tracing</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.micronaut/micronaut-tracing/3.2.7/jar" target="_blank" title="Minimum version">3.2.7</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.nats:jnats</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.nats/jnats/2.16.11/jar" target="_blank" title="Minimum version">2.16.11</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.netty:netty-buffer</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty-buffer/4.1.80.Final/jar" target="_blank" title="Minimum version">4.1.80.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.netty:netty-codec-http</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty-codec-http/4.1.80.Final/jar" target="_blank" title="Minimum version">4.1.80.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.netty:netty-codec-http2</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty-codec-http2/4.1.80.Final/jar" target="_blank" title="Minimum version">4.1.80.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.netty:netty-common</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty-common/4.1.80.Final/jar" target="_blank" title="Minimum version">4.1.80.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.netty:netty-handler</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty-handler/4.1.80.Final/jar" target="_blank" title="Minimum version">4.1.80.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.netty:netty-resolver-dns</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty-resolver-dns/4.1.80.Final/jar" target="_blank" title="Minimum version">4.1.80.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.netty:netty-transport</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty-transport/4.1.80.Final/jar" target="_blank" title="Minimum version">4.1.80.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Netty project - an event-driven asynchronous network application framework">io.netty:netty5-parent</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.netty/netty5-parent/5.0/jar" target="_blank" title="Minimum version">5.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.opentelemetry:opentelemetry-exporter-jaeger</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.opentelemetry/opentelemetry-exporter-jaeger/1.19.0/jar" target="_blank" title="Minimum version">1.19.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.opentelemetry:opentelemetry-exporter-logging</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.opentelemetry/opentelemetry-exporter-logging/1.19.0/jar" target="_blank" title="Minimum version">1.19.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.opentelemetry:opentelemetry-exporter-otlp</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.opentelemetry/opentelemetry-exporter-otlp/1.19.0/jar" target="_blank" title="Minimum version">1.19.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.opentelemetry:opentelemetry-exporter-zipkin</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.opentelemetry/opentelemetry-exporter-zipkin/1.19.0/jar" target="_blank" title="Minimum version">1.19.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.opentelemetry:opentelemetry-sdk-metrics</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.opentelemetry/opentelemetry-sdk-metrics/1.19.0/jar" target="_blank" title="Minimum version">1.19.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.opentelemetry:opentelemetry-sdk-trace</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.opentelemetry/opentelemetry-sdk-trace/1.19.0/jar" target="_blank" title="Minimum version">1.19.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">io.undertow:undertow-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/io.undertow/undertow-core/2.2.19.Final/jar" target="_blank" title="Minimum version">2.2.19.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">jakarta.servlet:jakarta.servlet-api</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/jakarta.servlet/jakarta.servlet-api/5.0.0/jar" target="_blank" title="Minimum version">5.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">javax.cache:cache-api</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/javax.cache/cache-api/1.1.1/jar" target="_blank" title="Minimum version">1.1.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">log4j:log4j</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/log4j/log4j/1.2.17/jar" target="_blank" title="Minimum version">1.2.17</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">mysql:mysql-connector-java</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/mysql/mysql-connector-java/8.0.29/jar" target="_blank" title="Minimum version">8.0.29</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">net.java.dev.jna:jna</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/net.java.dev.jna/jna/5.8.0/jar" target="_blank" title="Minimum version">5.8.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.activemq:activemq-broker</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.activemq/activemq-broker/5.18.1/jar" target="_blank" title="Minimum version">5.18.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.activemq:activemq-client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.activemq/activemq-client/5.18.1/jar" target="_blank" title="Minimum version">5.18.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.activemq:artemis-jms-client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.activemq/artemis-jms-client/2.28.0/jar" target="_blank" title="Minimum version">2.28.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.commons:commons-compress</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.commons/commons-compress/1.23.0/jar" target="_blank" title="Minimum version">1.23.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.commons:commons-dbcp2</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.commons/commons-dbcp2/2.12.0/jar" target="_blank" title="Minimum version">2.12.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.commons:commons-pool2</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.commons/commons-pool2/2.11.1/jar" target="_blank" title="Minimum version">2.11.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.httpcomponents:httpclient</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.httpcomponents/httpclient/4.5.14/jar" target="_blank" title="Minimum version">4.5.14</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.kafka:kafka-clients</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.kafka/kafka-clients/3.5.1/jar" target="_blank" title="Minimum version">3.5.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.kafka:kafka-streams</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.kafka/kafka-streams/3.5.1/jar" target="_blank" title="Minimum version">3.5.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.santuario:xmlsec</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.santuario/xmlsec/4.0.4/jar" target="_blank" title="Minimum version">4.0.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="2"><code title="Apache Tomcat">org.apache.tomcat.embed:tomcat-embed-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.tomcat.embed/tomcat-embed-core/10.0.20/jar" target="_blank" title="Minimum version">10.0.20</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+<tr>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.tomcat.embed/tomcat-embed-core/9.0/jar" target="_blank" title="Minimum version">9.0</a>, < 10.0.20
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.tomcat:tomcat-jdbc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.tomcat/tomcat-jdbc/10.1.7/jar" target="_blank" title="Minimum version">10.1.7</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.apache.zookeeper:zookeeper</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.apache.zookeeper/zookeeper/3.8.1/jar" target="_blank" title="Minimum version">3.8.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.bouncycastle:bcpkix-jdk15on</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.bouncycastle/bcpkix-jdk15on/1.70/jar" target="_blank" title="Minimum version">1.70</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.bouncycastle:bcpkix-jdk15to18</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.bouncycastle/bcpkix-jdk15to18/1.77/jar" target="_blank" title="Minimum version">1.77</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.bouncycastle:bcpkix-jdk18on</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.bouncycastle/bcpkix-jdk18on/1.77/jar" target="_blank" title="Minimum version">1.77</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.eclipse.angus:jakarta.mail</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.eclipse.angus/jakarta.mail/1.0.0/jar" target="_blank" title="Minimum version">1.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.eclipse.jetty:jetty-client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.eclipse.jetty/jetty-client/11.0.12/jar" target="_blank" title="Minimum version">11.0.12</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.eclipse.jetty:jetty-server</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.eclipse.jetty/jetty-server/11.0.12/jar" target="_blank" title="Minimum version">11.0.12</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.eclipse.jetty:jetty-util</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.eclipse.jetty/jetty-util/12.0.9/jar" target="_blank" title="Minimum version">12.0.9</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.eclipse.jgit:org.eclipse.jgit</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.eclipse.jgit/org.eclipse.jgit/6.5.0.202303070854-r/jar" target="_blank" title="Minimum version">6.5.0.202303070854-r</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.eclipse.paho:org.eclipse.paho.client.mqttv3</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.2.5/jar" target="_blank" title="Minimum version">1.2.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.eclipse.paho:org.eclipse.paho.mqttv5.client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.eclipse.paho/org.eclipse.paho.mqttv5.client/1.2.5/jar" target="_blank" title="Minimum version">1.2.5</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.ehcache:ehcache</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.ehcache/ehcache/3.10.8-jakarta/jar" target="_blank" title="Minimum version">3.10.8-jakarta</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.flywaydb:flyway-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.flywaydb/flyway-core/9.0.1/jar" target="_blank" title="Minimum version">9.0.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.flywaydb:flyway-database-postgresql</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.flywaydb/flyway-database-postgresql/10.10.0/jar" target="_blank" title="Minimum version">10.10.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.flywaydb:flyway-sqlserver</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.flywaydb/flyway-sqlserver/10.10.0/jar" target="_blank" title="Minimum version">10.10.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.freemarker:freemarker</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.freemarker/freemarker/2.3.31/jar" target="_blank" title="Minimum version">2.3.31</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Core modules of Fugerit Venus Doc framework. Contains XML source and simple markdown doc handler.">org.fugerit.java:fj-doc-base</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.fugerit.java/fj-doc-base/8.10.6/jar" target="_blank" title="Minimum version">8.10.6</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="FreeMarker extensions for Fugerit Venus Doc framework. Contains doc handler for HTML and AsciiDoc.">org.fugerit.java:fj-doc-freemarker</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.fugerit.java/fj-doc-freemarker/8.10.6/jar" target="_blank" title="Minimum version">8.10.6</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="OpenCSV Module for Fugerit Venus Doc. Contains doc handler for CSV format (based on com.opencsv:opencsv).">org.fugerit.java:fj-doc-mod-opencsv</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.fugerit.java/fj-doc-mod-opencsv/8.10.8/jar" target="_blank" title="Minimum version">8.10.8</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.glassfish.jaxb:jaxb-runtime</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.glassfish.jaxb/jaxb-runtime/3.0.2/jar" target="_blank" title="Minimum version">3.0.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.hdrhistogram:HdrHistogram</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.hdrhistogram/HdrHistogram/2.1.12/jar" target="_blank" title="Minimum version">2.1.12</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.hibernate.orm:hibernate-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.hibernate.orm/hibernate-core/6.1.1.Final/jar" target="_blank" title="Minimum version">6.1.1.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.hibernate.orm:hibernate-envers</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.hibernate.orm/hibernate-envers/6.1.1.Final/jar" target="_blank" title="Minimum version">6.1.1.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.hibernate.reactive:hibernate-reactive-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.hibernate.reactive/hibernate-reactive-core/2.0.0.Final/jar" target="_blank" title="Minimum version">2.0.0.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.hibernate.validator:hibernate-validator</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.hibernate.validator/hibernate-validator/7.0.4.Final/jar" target="_blank" title="Minimum version">7.0.4.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.hibernate:hibernate-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.hibernate/hibernate-core/5.6.14.Final/jar" target="_blank" title="Minimum version">5.6.14.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.hibernate:hibernate-spatial</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.hibernate/hibernate-spatial/6.5.0.Final/jar" target="_blank" title="Minimum version">6.5.0.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.jboss.logging:jboss-logging</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.jboss.logging/jboss-logging/3.5.0.Final/jar" target="_blank" title="Minimum version">3.5.0.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.jboss.spec.javax.servlet:jboss-servlet-api_4.0_spec</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.jboss.spec.javax.servlet/jboss-servlet-api_4.0_spec/2.0.0.Final/jar" target="_blank" title="Minimum version">2.0.0.Final</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.jctools:jctools-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.jctools/jctools-core/2.1.2/jar" target="_blank" title="Minimum version">2.1.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.jetbrains.kotlin:kotlin-reflect</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.jetbrains.kotlin/kotlin-reflect/1.7.10/jar" target="_blank" title="Minimum version">1.7.10</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.jetbrains.kotlin:kotlin-stdlib</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.jetbrains.kotlin/kotlin-stdlib/1.7.10/jar" target="_blank" title="Minimum version">1.7.10</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.jline:jline</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.jline/jline/3.21.0/jar" target="_blank" title="Minimum version">3.21.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.jooq:jooq</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.jooq/jooq/3.17.7/jar" target="_blank" title="Minimum version">3.17.7</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.liquibase:liquibase-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.liquibase/liquibase-core/4.17.0/jar" target="_blank" title="Minimum version">4.17.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.mariadb.jdbc:mariadb-java-client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mariadb.jdbc/mariadb-java-client/3.0.6/jar" target="_blank" title="Minimum version">3.0.6</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.mariadb:r2dbc-mariadb</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mariadb/r2dbc-mariadb/1.1.3/jar" target="_blank" title="Minimum version">1.1.3</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.mockito:mockito-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mockito/mockito-core/4.8.1/jar" target="_blank" title="Minimum version">4.8.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="MongoDB's Java implementation of the BSON specification">org.mongodb:bson</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mongodb/bson/5.2.0/jar" target="_blank" title="Minimum version">5.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="MongoDB client-side crypto support">org.mongodb:mongodb-crypt</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mongodb/mongodb-crypt/5.2.0/jar" target="_blank" title="Minimum version">5.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Shared components for the Synchronous and Reactive Streams implementations of the MongoDB Java Driver.">org.mongodb:mongodb-driver-core</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mongodb/mongodb-driver-core/5.2.0/jar" target="_blank" title="Minimum version">5.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="A Reactive Streams implementation of the MongoDB Java Driver">org.mongodb:mongodb-driver-reactivestreams</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mongodb/mongodb-driver-reactivestreams/5.2.0/jar" target="_blank" title="Minimum version">5.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="The official MongoDB driver for synchronous Java applications">org.mongodb:mongodb-driver-sync</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.mongodb/mongodb-driver-sync/5.2.0/jar" target="_blank" title="Minimum version">5.2.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Official Java Driver for Neo4j">org.neo4j.driver:neo4j-java-driver</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.neo4j.driver/neo4j-java-driver/4.4.6/jar" target="_blank" title="Minimum version">4.4.6</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.opengauss:opengauss-jdbc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.opengauss/opengauss-jdbc/3.1.0-og/jar" target="_blank" title="Minimum version">3.1.0-og</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.postgresql:postgresql</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.postgresql/postgresql/42.3.4/jar" target="_blank" title="Minimum version">42.3.4</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.quartz-scheduler:quartz</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.quartz-scheduler/quartz/2.3.2/jar" target="_blank" title="Minimum version">2.3.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="RESTHeart Core - Core HTTP microservices platform for MongoDB and other data stores">org.restheart:restheart</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.restheart/restheart/8.0.0/jar" target="_blank" title="Minimum version">8.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="RESTHeart Commons - Common utilities and interfaces for RESTHeart modules">org.restheart:restheart-commons</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.restheart/restheart-commons/8.0.0/jar" target="_blank" title="Minimum version">8.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="RESTHeart GraphQL - GraphQL services and plugins for RESTHeart">org.restheart:restheart-graphql</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.restheart/restheart-graphql/8.0.0/jar" target="_blank" title="Minimum version">8.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="RESTHeart Metrics - Metrics and monitoring services for RESTHeart">org.restheart:restheart-metrics</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.restheart/restheart-metrics/8.0.0/jar" target="_blank" title="Minimum version">8.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="RESTHeart MongoDB - MongoDB services and plugins for RESTHeart">org.restheart:restheart-mongodb</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.restheart/restheart-mongodb/8.0.0/jar" target="_blank" title="Minimum version">8.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="RESTHeart Polyglot - JavaScript and polyglot language support for RESTHeart plugins">org.restheart:restheart-polyglot</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.restheart/restheart-polyglot/8.0.0/jar" target="_blank" title="Minimum version">8.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="RESTHeart Security - Authentication and authorization services for RESTHeart">org.restheart:restheart-security</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.restheart/restheart-security/8.0.0/jar" target="_blank" title="Minimum version">8.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.rocksdb:rocksdbjni</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.rocksdb/rocksdbjni/7.9.2/jar" target="_blank" title="Minimum version">7.9.2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Provides core abstractions and infrastructure for building message-driven applications using AMQP brokers such as RabbitMQ.">org.springframework.amqp:spring-amqp</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.amqp/spring-amqp/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Boot's Actuator which provides production ready features to help you monitor and manage your application">org.springframework.boot:spring-boot-starter-actuator</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-actuator/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring AMQP and Rabbit MQ">org.springframework.boot:spring-boot-starter-amqp</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-amqp/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Framework's caching support">org.springframework.boot:spring-boot-starter-cache</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-cache/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Data JDBC">org.springframework.boot:spring-boot-starter-data-jdbc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-jdbc/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Data JPA with Hibernate">org.springframework.boot:spring-boot-starter-data-jpa</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-jpa/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using MongoDB document-oriented database and Spring Data MongoDB">org.springframework.boot:spring-boot-starter-data-mongodb</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-mongodb/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using MongoDB document-oriented database and Spring Data MongoDB Reactive">org.springframework.boot:spring-boot-starter-data-mongodb-reactive</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-mongodb-reactive/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Data R2DBC">org.springframework.boot:spring-boot-starter-data-r2dbc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-r2dbc/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Redis key-value data store with Spring Data Redis and the Lettuce client">org.springframework.boot:spring-boot-starter-data-redis</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-redis/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Redis key-value data store with Spring Data Redis reactive and the Lettuce client">org.springframework.boot:spring-boot-starter-data-redis-reactive</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for exposing Spring Data repositories over REST using Spring Data REST">org.springframework.boot:spring-boot-starter-data-rest</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-rest/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building MVC web applications using FreeMarker views">org.springframework.boot:spring-boot-starter-freemarker</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-freemarker/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building GraphQL applications with Spring for GraphQL">org.springframework.boot:spring-boot-starter-graphql</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-graphql/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building hypermedia-based RESTful web application with Spring MVC and Spring HATEOAS">org.springframework.boot:spring-boot-starter-hateoas</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-hateoas/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Integration">org.springframework.boot:spring-boot-starter-integration</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-integration/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using JDBC with the HikariCP connection pool">org.springframework.boot:spring-boot-starter-jdbc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-jdbc/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Jetty as the embedded servlet container. An alternative to spring-boot-starter-tomcat">org.springframework.boot:spring-boot-starter-jetty</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-jetty/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for reading and writing json">org.springframework.boot:spring-boot-starter-json</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-json/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for logging using Logback. Default logging starter">org.springframework.boot:spring-boot-starter-logging</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-logging/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Java Mail and Spring Framework's email sending support">org.springframework.boot:spring-boot-starter-mail</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-mail/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building web applications using Mustache views">org.springframework.boot:spring-boot-starter-mustache</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-mustache/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Security's OAuth2/OpenID Connect client features">org.springframework.boot:spring-boot-starter-oauth2-client</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-oauth2-client/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Security's OAuth2 resource server features">org.springframework.boot:spring-boot-starter-oauth2-resource-server</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-oauth2-resource-server/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using the Quartz scheduler">org.springframework.boot:spring-boot-starter-quartz</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-quartz/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Reactor Netty as the embedded reactive HTTP server.">org.springframework.boot:spring-boot-starter-reactor-netty</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-reactor-netty/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building RSocket clients and servers">org.springframework.boot:spring-boot-starter-rsocket</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-rsocket/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Spring Security">org.springframework.boot:spring-boot-starter-security</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-security/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for testing Spring Boot applications with libraries including JUnit Jupiter and AssertJ">org.springframework.boot:spring-boot-starter-test</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-test/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building MVC web applications using Thymeleaf views">org.springframework.boot:spring-boot-starter-thymeleaf</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-thymeleaf/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Tomcat as the embedded servlet container. Default servlet container starter used by spring-boot-starter-web">org.springframework.boot:spring-boot-starter-tomcat</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-tomcat/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Undertow as the embedded servlet container. An alternative to spring-boot-starter-tomcat">org.springframework.boot:spring-boot-starter-undertow</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-undertow/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for using Java Bean Validation with Hibernate Validator">org.springframework.boot:spring-boot-starter-validation</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container">org.springframework.boot:spring-boot-starter-web</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-web/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building WebFlux applications using Spring Framework's Reactive Web support">org.springframework.boot:spring-boot-starter-webflux</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-webflux/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Starter for building WebSocket applications using Spring Framework's WebSocket support">org.springframework.boot:spring-boot-starter-websocket</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-websocket/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Supplies shared repository abstractions and infrastructure underpinning all Spring Data modules.">org.springframework.data:spring-data-common</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.data/spring-data-common/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="LDAP support in Spring Security">org.springframework.security:spring-security-ldap</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.security/spring-security-ldap/6.0.0/jar" target="_blank" title="Minimum version">6.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Spring Session support backed by Redis">org.springframework.session:spring-session-data-redis</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.session/spring-session-data-redis/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Spring Session support backed by a relational database">org.springframework.session:spring-session-jdbc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework.session/spring-session-jdbc/3.0.0/jar" target="_blank" title="Minimum version">3.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="Implements Spring’s Servlet-based MVC framework for building HTTP web applications and RESTful service.">org.springframework:spring-webmvc</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.springframework/spring-webmvc/6.0.0/jar" target="_blank" title="Minimum version">6.0.0</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.testcontainers:testcontainers</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.testcontainers/testcontainers/1.17.6/jar" target="_blank" title="Minimum version">1.17.6</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.thymeleaf.extras:thymeleaf-extras-springsecurity6</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6/3.1.0.RELEASE/jar" target="_blank" title="Minimum version">3.1.0.RELEASE</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.thymeleaf:thymeleaf</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.thymeleaf/thymeleaf/3.1.0.M2/jar" target="_blank" title="Minimum version">3.1.0.M2</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="">org.thymeleaf:thymeleaf-spring6</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/org.thymeleaf/thymeleaf-spring6/3.1.0.RELEASE/jar" target="_blank" title="Minimum version">3.1.0.RELEASE</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested as part of the GraalVM Reachability Metadata repository or some other community-driven project.">&#x2605;<sup><a href="#footnote-1">1)</a></sup></span></td>
+</tr>
+<tr>
+<td class="tg artifact" rowspan="1"><code title="AWS SDK for Java v2.0">software.amazon.awssdk:*</code></td>
+<td class="tg">
+⩾ <a href="https://search.maven.org/artifact/software.amazon.awssdk/*/2.16.1/jar" target="_blank" title="Minimum version">2.16.1</a>
+</td>
+<td class="tg test-level"><span class="details" title="The library or framework is continuously tested by the maintainers. This is the best test level.">&#x2605;&#x2605;</span></td>
+</tr>
+</tbody>
+</table>
+
+            <h5 id="footnote-1">1) Requires metadata from the <a
+              href="https://github.com/oracle/graalvm-reachability-metadata" target="_blank">GraalVM Reachability
+              Metadata repository</a>.
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+      </main>
+      <!-- Connect with us -->
+<section class="content-section socials">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row-socials">
+      <div class="title">
+        <h2 class="title-section">Connect with us</h2>
+      </div>
+      <div class="social-icons">
+        <div class="wider-logo">
+          <a href="https://github.com/oracle/graal" target="_blank" title="github social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="github social media icon">
+              <path
+                d="M12 0C5.374 0 0 5.373 0 12C0 17.302 3.438 21.8 8.207 23.387C8.806 23.498 9 23.126 9 22.81V20.576C5.662 21.302 4.967 19.16 4.967 19.16C4.421 17.773 3.634 17.404 3.634 17.404C2.545 16.659 3.717 16.675 3.717 16.675C4.922 16.759 5.556 17.912 5.556 17.912C6.626 19.746 8.363 19.216 9.048 18.909C9.155 18.134 9.466 17.604 9.81 17.305C7.145 17 4.343 15.971 4.343 11.374C4.343 10.063 4.812 8.993 5.579 8.153C5.455 7.85 5.044 6.629 5.696 4.977C5.696 4.977 6.704 4.655 8.997 6.207C9.954 5.941 10.98 5.808 12 5.803C13.02 5.808 14.047 5.941 15.006 6.207C17.297 4.655 18.303 4.977 18.303 4.977C18.956 6.63 18.545 7.851 18.421 8.153C19.191 8.993 19.656 10.064 19.656 11.374C19.656 15.983 16.849 16.998 14.177 17.295C14.607 17.667 15 18.397 15 19.517V22.81C15 23.129 15.192 23.504 15.801 23.386C20.566 21.797 24 17.3 24 12C24 5.373 18.627 0 12 0Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://x.com/graalvm" target="_blank" title="x social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg" alt="X social media icon">
+              <path d="M714.2 507.9L1167 0H1060.1L661.8 460.4L343.9 0H0L475.4 690.3L0 1227H106.9L531.8 738.5L875.6 1227H1219.5L714.2 507.9ZM582.6 675.5L537.9 611.2L144.6 80.6H288.5L598.8 530.5L643.5 594.8L1048.5 1146.4H904.6L582.6 675.5Z" fill="#171F26"/>
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://www.linkedin.com/company/graalvm/" target="_blank" title="linkedin social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="linkedin social media icon">
+              <path
+                d="M12 0C5.3736 0 0 5.3736 0 12C0 18.6264 5.3736 24 12 24C18.6264 24 24 18.6264 24 12C24 5.3736 18.6264 0 12 0ZM8.51294 18.1406H5.59039V9.34808H8.51294V18.1406ZM7.05176 8.14746H7.03271C6.052 8.14746 5.41772 7.47235 5.41772 6.6286C5.41772 5.76581 6.07141 5.10938 7.07117 5.10938C8.07092 5.10938 8.68616 5.76581 8.7052 6.6286C8.7052 7.47235 8.07092 8.14746 7.05176 8.14746ZM19.051 18.1406H16.1288V13.4368C16.1288 12.2547 15.7057 11.4485 14.6483 11.4485C13.8409 11.4485 13.3601 11.9923 13.1488 12.5173C13.0715 12.7051 13.0527 12.9677 13.0527 13.2305V18.1406H10.1303C10.1303 18.1406 10.1686 10.173 10.1303 9.34808H13.0527V10.593C13.441 9.9939 14.1359 9.14172 15.6865 9.14172C17.6093 9.14172 19.051 10.3984 19.051 13.099V18.1406Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://medium.com/graalvm" target="_blank" title="medium social media link">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="medium social media icon">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12 0C5.374 0 0 5.372 0 12C0 18.627 5.374 24 12 24C18.627 24 24 18.627 24 12C24 5.372 18.627 0 12 0ZM18.974 17.557V17.322L17.882 16.25C17.786 16.177 17.738 16.056 17.758 15.937V8.063C17.738 7.944 17.786 7.823 17.882 7.75L19 6.678V6.443H15.131L12.373 13.323L9.235 6.443H5.176V6.678L6.484 8.253C6.612 8.368 6.678 8.538 6.66 8.71V14.898C6.698 15.121 6.628 15.349 6.471 15.512L5 17.296V17.531H9.17V17.296L7.699 15.512C7.541 15.349 7.466 15.123 7.497 14.898V9.546L11.157 17.531H11.582L14.725 9.546V15.911C14.725 16.081 14.725 16.113 14.614 16.224L13.484 17.322V17.557H18.974Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://bsky.app/profile/graalvm.org" target="_blank" title="blue sky social media link">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_2442_17265)">
+              <path d="M6.6075 3.99362C9.59982 6.25419 12.8184 10.8377 14.0001 13.2975C15.1819 10.8379 18.4003 6.25415 21.3927 3.99362C23.5518 2.36248 27.0501 1.1004 27.0501 5.11641C27.0501 5.91846 26.5931 11.8541 26.3251 12.8177C25.3935 16.1679 21.9986 17.0224 18.9789 16.5052C24.2574 17.4093 25.6002 20.4037 22.7002 23.3982C17.1927 29.0853 14.7843 21.9713 14.1669 20.1484C14.0537 19.8143 14.0008 19.6579 14 19.7909C13.9992 19.6579 13.9463 19.8143 13.8332 20.1484C13.216 21.9713 10.8077 29.0855 5.29983 23.3982C2.39985 20.4037 3.74261 17.4091 9.0212 16.5052C6.00134 17.0224 2.60645 16.1679 1.67495 12.8177C1.40692 11.854 0.949951 5.91837 0.949951 5.11641C0.949951 1.1004 4.44834 2.36248 6.60735 3.99362H6.6075Z" fill="#171F26"/>
+              </g>
+              <defs>
+              <clipPath id="clip0_2442_17265">
+              <rect width="27" height="24" fill="white" transform="translate(0.5 2)"/>
+              </clipPath>
+              </defs>
+              </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="/slack-invitation/" title="slack social media link">
+            <svg class="social-icon" width="40" height="40" viewBox="0 0 40 40" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="slack social media icon">
+              <path
+                d="M13.0009 23.1698C12.9989 23.6678 12.8495 24.154 12.5714 24.5671C12.2933 24.9802 11.899 25.3017 11.4384 25.4909C10.9777 25.6801 10.4714 25.7285 9.98319 25.6302C9.49502 25.5318 9.04693 25.291 8.6955 24.9382C8.34408 24.5854 8.10506 24.1363 8.00863 23.6478C7.91221 23.1592 7.96269 22.6531 8.15371 22.1932C8.34474 21.7333 8.66773 21.3403 9.08193 21.0638C9.49612 20.7874 9.98294 20.6398 10.4809 20.6398H13.0009V23.1698ZM14.2709 29.4798C14.3636 30.0763 14.6665 30.6201 15.125 31.0128C15.5835 31.4055 16.1672 31.6214 16.7709 31.6214C17.3746 31.6214 17.9584 31.4055 18.4168 31.0128C18.8753 30.6201 19.1782 30.0763 19.2709 29.4798V23.1698C19.327 22.8091 19.3043 22.4404 19.2044 22.0893C19.1045 21.7381 18.9299 21.4127 18.6923 21.1354C18.4548 20.8582 18.1601 20.6356 17.8284 20.483C17.4968 20.3304 17.136 20.2514 16.7709 20.2514C16.4058 20.2514 16.0451 20.3304 15.7134 20.483C15.3817 20.6356 15.087 20.8582 14.8495 21.1354C14.612 21.4127 14.4373 21.7381 14.3374 22.0893C14.2375 22.4404 14.2149 22.8091 14.2709 23.1698V29.4798ZM19.2709 13.0398V10.5198C19.2806 10.0137 19.1382 9.51621 18.8622 9.09184C18.5861 8.66746 18.1891 8.33567 17.7224 8.13936C17.2558 7.94305 16.741 7.89125 16.2445 7.99067C15.7481 8.09009 15.293 8.33615 14.9379 8.69703C14.5829 9.05791 14.3442 9.51701 14.2529 10.015C14.1616 10.5129 14.2217 11.0268 14.4256 11.4902C14.6295 11.9536 14.9677 12.3452 15.3965 12.6143C15.8253 12.8835 16.325 13.0177 16.8309 12.9998L19.2709 13.0398ZM10.4309 14.3098C9.8344 14.4025 9.29069 14.7054 8.89796 15.1639C8.50523 15.6224 8.28938 16.2061 8.28938 16.8098C8.28938 17.4135 8.50523 17.9973 8.89796 18.4557C9.29069 18.9142 9.8344 19.2171 10.4309 19.3098H16.7409C17.1017 19.3659 17.4703 19.3432 17.8215 19.2433C18.1726 19.1434 18.498 18.9688 18.7753 18.7312C19.0526 18.4937 19.2751 18.199 19.4278 17.8673C19.5804 17.5357 19.6594 17.1749 19.6594 16.8098C19.6594 16.4447 19.5804 16.084 19.4278 15.7523C19.2751 15.4206 19.0526 15.1259 18.7753 14.8884C18.498 14.6509 18.1726 14.4762 17.8215 14.3763C17.4703 14.2765 17.1017 14.2538 16.7409 14.3098H10.4309ZM26.8709 19.3098H29.3909C29.8984 19.3379 30.4027 19.2124 30.8378 18.9497C31.273 18.6871 31.619 18.2994 31.8307 17.8373C32.0424 17.3752 32.1099 16.86 32.0246 16.3589C31.9392 15.8578 31.7049 15.3941 31.3522 15.0281C30.9995 14.6621 30.5447 14.4108 30.0471 14.307C29.5495 14.2032 29.0322 14.2517 28.5626 14.4461C28.093 14.6406 27.6928 14.972 27.4142 15.3972C27.1357 15.8224 26.9916 16.3216 27.0009 16.8298L26.8709 19.3098ZM25.6009 10.4698C25.5605 9.82762 25.2769 9.22495 24.8078 8.78447C24.3387 8.34399 23.7194 8.0988 23.0759 8.0988C22.4324 8.0988 21.8131 8.34399 21.3441 8.78447C20.875 9.22495 20.5914 9.82762 20.5509 10.4698V16.7798C20.5292 17.1248 20.5784 17.4705 20.6955 17.7957C20.8125 18.1209 20.995 18.4187 21.2316 18.6707C21.4682 18.9226 21.7539 19.1234 22.0711 19.2607C22.3883 19.398 22.7303 19.4688 23.0759 19.4688C23.4216 19.4688 23.7635 19.398 24.0807 19.2607C24.3979 19.1234 24.6837 18.9226 24.9203 18.6707C25.1568 18.4187 25.3393 18.1209 25.4564 17.7957C25.5734 17.4705 25.6226 17.1248 25.6009 16.7798V10.4698ZM20.6409 26.9998V29.5198C20.6389 30.0206 20.7856 30.5108 21.0624 30.9281C21.3392 31.3455 21.7337 31.6713 22.1958 31.8644C22.6579 32.0574 23.1669 32.1089 23.6583 32.0124C24.1498 31.9159 24.6015 31.6758 24.9563 31.3223C25.3112 30.9689 25.5531 30.5181 25.6516 30.0271C25.75 29.536 25.7005 29.0268 25.5093 28.564C25.3181 28.1011 24.9938 27.7054 24.5775 27.4269C24.1613 27.1485 23.6717 26.9998 23.1709 26.9998H20.6409ZM29.4809 25.7298C30.1231 25.6894 30.7258 25.4058 31.1663 24.9367C31.6068 24.4676 31.8519 23.8483 31.8519 23.2048C31.8519 22.5613 31.6068 21.942 31.1663 21.473C30.7258 21.0039 30.1231 20.7203 29.4809 20.6798H23.1709C22.826 20.6581 22.4802 20.7073 22.155 20.8244C21.8298 20.9414 21.532 21.1239 21.2801 21.3605C21.0281 21.5971 20.8273 21.8828 20.69 22.2C20.5528 22.5172 20.4819 22.8592 20.4819 23.2048C20.4819 23.5505 20.5528 23.8924 20.69 24.2096C20.8273 24.5268 21.0281 24.8126 21.2801 25.0492C21.532 25.2858 21.8298 25.4682 22.155 25.5853C22.4802 25.7023 22.826 25.7515 23.1709 25.7298H29.4809Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+        <div class="wider-logo">
+          <a href="https://www.youtube.com/graalvm" target="_blank" title="youtube social media link">
+            <svg class="social-icon" width="35" height="24" viewBox="0 0 35 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg" alt="youtube social media icon">
+              <path
+                d="M18.1713 23.9692L11.0316 23.839C8.71989 23.7937 6.40246 23.8843 4.13616 23.4143C0.688425 22.7121 0.444187 19.2692 0.188588 16.3812C-0.163569 12.321 -0.0272501 8.18716 0.637305 4.16095C1.01218 1.90151 2.48897 0.553774 4.77232 0.406542C12.48 -0.125756 20.2388 -0.0634659 27.9295 0.185695C28.7417 0.208346 29.5597 0.332927 30.3605 0.474496C34.3138 1.16535 34.4103 5.06699 34.6659 8.35138C34.9215 11.6698 34.8136 15.0051 34.3251 18.3008C33.9332 21.0303 33.1835 23.318 30.0197 23.5389C26.0551 23.8277 22.1814 24.0599 18.2054 23.9862C18.2054 23.9692 18.1827 23.9692 18.1713 23.9692ZM13.9738 17.0607C16.9615 15.3505 19.8924 13.6687 22.863 11.9699C19.8696 10.2597 16.9445 8.57789 13.9738 6.87907V17.0607Z"
+                fill="#171F26" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__getstarted">
+        <div class="rubber-footer">
+          <p class="title-footer quickstart">Get started with GraalVM</p>
+          <p class="footer-desc">Available for Linux, macOS, and Windows platforms</p>
+          <a href="/latest/docs/getting-started/" class="btn btn-primary">Get Started</a>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer" onclick="fadeInAndOut(this)">Learn</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item">
+                SDK Javadocs:
+                <a href="https://www.graalvm.org/23.1/javadoc/sdk/" class="javadoc" target="_blank">21</a> or
+                <a href="https://www.graalvm.org/25.4/javadoc/sdk/" class="javadoc" target="_blank">25.4</a>
+              </li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/workshops" target="_blank">Workshops</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos" target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer" onclick="fadeInAndOut(this)">Resources</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://docs.oracle.com/en/graalvm/index.html" target="_blank">Oracle Help Center</a></li>
+              <li class="footer-list__item"><a href="https://labs.oracle.com/" target="_blank">Oracle Labs</a></li>
+              <li class="footer-list__item"><a href="/graalvm-brand-guidelines/">Brand Guidelines</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer" onclick="fadeInAndOut(this)">More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="/release-notes/">Release Notes</a></li>
+              <li class="footer-list__item"><a href="/release-calendar/">Release Calendar</a></li>
+              <li class="footer-list__item"><a href="/community/contributors/">Contributors</a></li>
+              <li class="footer-list__item"><a href="/support/">Support</a></li>
+              <li class="footer-list__item"><a href="/faq/">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2018, 2026, Oracle and/or its affiliates. All rights reserved. Oracle and Java are
+            registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function fadeInAndOut(thz) {
+    var elmt = thz.nextElementSibling;//Get the element that is below the button that
+    //was just clicked
+    if (elmt.clientHeight) {
+      elmt.style.height = 0;
+    } else {
+      var wrapper = elmt.querySelector('ul');
+      elmt.style.height = wrapper.clientHeight + "px";
+    }
+  }
+</script>
+
+    </div>
+    <div class="overlay"></div>
+    <script src='/resources/lib/slick-slider/slick.min.js'></script>
+    <script src='/resources/js/main.js'></script>
+    <script src='/resources/js/download.js'></script>
+    <script src='/resources/js/sidebar.js'></script>
+    <script src='/resources/js/favicon.js'></script>
+  </body>
+</html>
