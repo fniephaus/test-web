@@ -1,4 +1,4 @@
-name: Build and publish Javadocs
+name: Deploy Javadocs
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: Deploy GraalWasm website
+name: Deploy graalvm.org/webassembly
 
 on: [workflow_dispatch]
 

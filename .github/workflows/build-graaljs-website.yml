@@ -1,4 +1,4 @@
-name: Deploy GraalJS website
+name: Deploy graalvm.org/javascript
 
 on: [workflow_dispatch]
 

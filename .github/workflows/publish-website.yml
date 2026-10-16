@@ -1,4 +1,4 @@
-name: Build and publish GraalVM website
+name: Deploy graalvm.org
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: publish-website-master
+  group: publish-website
   cancel-in-progress: false
 
 permissions:
