@@ -50,15 +50,10 @@ jobs:
       GRAAL_DIRECTORY: ${{ github.workspace }}/graal
       MX_DIRECTORY: ${{ github.workspace }}/mx
       JAVA_HOME: ${{ github.workspace }}/jdk
-      VERSION: ${{ matrix.version }}
-      LABS_JDK_VERSION: ${{ matrix.labs_jdk_version }}
-      COMPILER_PROJECT: ${{ matrix.compiler_project }}
-      COMPILER_PACKAGES: ${{ matrix.compiler_packages }}
-      COMPILER_JAVADOC_DIRECTORY: ${{ matrix.compiler_javadoc_directory }}
 
     steps:
       - name: Check out Graal sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           repository: oracle/graal
           ref: ${{ matrix.graal_ref }}
@@ -75,7 +70,7 @@ jobs:
           echo "MX_VERSION=$MX_VERSION" >> "$GITHUB_ENV"
 
       - name: Check out mx
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           repository: graalvm/mx
           ref: ${{ env.MX_VERSION }}
@@ -83,7 +78,7 @@ jobs:
           fetch-depth: 1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.0.1
         with:
           python-version: '3.8'
 
@@ -92,7 +87,7 @@ jobs:
           set -euo pipefail
           mkdir -p jdk-dl
           "$MX_DIRECTORY/mx" --java-home= fetch-jdk \
-            --jdk-id "labsjdk-ce-${LABS_JDK_VERSION}" \
+            --jdk-id "labsjdk-ce-${{ matrix.labs_jdk_version }}" \
             --to jdk-dl \
             --alias "$JAVA_HOME"
 
@@ -120,18 +115,17 @@ jobs:
           pushd "$GRAAL_DIRECTORY/compiler" >/dev/null
           mx build
           mx javadoc \
-            --projects "$COMPILER_PROJECT" \
-            --packages "$COMPILER_PACKAGES"
+            --projects "${{ matrix.compiler_project }}" \
+            --packages "${{ matrix.compiler_packages }}"
           popd >/dev/null
 
-          compiler_javadoc="$GRAAL_DIRECTORY/compiler/$COMPILER_JAVADOC_DIRECTORY/javadoc"
+          compiler_javadoc="$GRAAL_DIRECTORY/compiler/${{ matrix.compiler_javadoc_directory }}/javadoc"
           if [[ ! -d "$compiler_javadoc" ]]; then
             echo "Compiler Javadoc directory does not exist: $compiler_javadoc" >&2
             exit 1
           fi
 
-          destination="$GITHUB_WORKSPACE/javadocs/$VERSION/javadoc"
-          rm -rf "$destination"
+          destination="$GITHUB_WORKSPACE/javadocs/${{ matrix.version }}/javadoc"
           mkdir -p "$destination"
 
           for component in sdk truffle tools; do
@@ -152,22 +146,22 @@ jobs:
           if-no-files-found: error
 
   publish:
-    name: Publish Javadocs to master
+    name: Publish Javadocs to gh-pages
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: write
     concurrency:
-      group: publish-website-master
+      group: publish-javadocs
       cancel-in-progress: false
 
     steps:
-      - name: Check out website master
-        uses: actions/checkout@v4
+      - name: Check out gh-pages
+        uses: actions/checkout@v7.0.1
         with:
-          ref: master
-          path: website
+          ref: gh-pages
+          path: gh-pages
           fetch-depth: 1
 
       - name: Download Javadocs
@@ -181,11 +175,9 @@ jobs:
         working-directory: website
         shell: bash
         run: |
-          set -euo pipefail
-
           for version in 25.4 25.0 23.1 23.0; do
-            source="$GITHUB_WORKSPACE/javadocs/$version/javadoc"
-            destination="$version/javadoc"
+            source="${{ github.workspace }}/javadocs/$version/javadoc"
+            destination="${{ github.workspace }}/gh-pages/$version/javadoc"
             if [[ ! -d "$source" ]]; then
               echo "Missing Javadocs for $version: $source" >&2
               exit 1
@@ -193,8 +185,7 @@ jobs:
             rsync --archive --delete "$source/" "$destination/"
           done
 
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          cd "${{ github.workspace }}/gh-pages"
           git add --all -- \
             25.4/javadoc \
             25.0/javadoc \
@@ -206,5 +197,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Javadoc as of $(date -u +%Y/%m/%d)"
-          git push origin HEAD:master
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Update Javadocs on $(date)"
+          git push origin gh-pages
