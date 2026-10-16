@@ -6,8 +6,8 @@ Where to make a change:
 
 - Product documentation belongs in [oracle/graal](https://github.com/oracle/graal). Follow the [GraalVM documentation guide](https://github.com/oracle/graal/blob/master/docs/README.md) for documentation structure, terminology, and Markdown conventions.
 - Website navigation, layouts, styles, static pages, redirects, release notes, and approved static assets belong in this repository.
-- Base website changes on the `jekyll-build` branch. The `master` branch contains generated website output and is maintained by GitHub Actions.
-- Do not edit generated Javadoc directories in `master` manually. The Javadoc workflow rebuilds them from the matching public Graal release branches.
+- Base website changes on the `main` branch. The `gh-pages` branch contains generated website output and is maintained by GitHub Actions.
+- Do not edit generated Javadoc directories in `gh-pages` manually. The Javadoc workflow rebuilds them from the matching public Graal release branches.
 
 ## Before opening a pull request
 
