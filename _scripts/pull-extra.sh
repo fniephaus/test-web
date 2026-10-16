@@ -41,7 +41,7 @@ rm -rf docs/reference-manual/native-image/assets/skills
 # The site-owned community page is the canonical Publications page.
 rm -f docs/Publications.md
 
-# The public site does not ship Oracle Help Center infrastructure. Exclude
+# Exclude
 # documentation pages that require its historical layout instead of rendering
 # them without their required assets and navigation.
 while IFS= read -r -d '' file; do
@@ -51,7 +51,6 @@ while IFS= read -r -d '' file; do
 done < <(find docs -name '*.md' -print0)
 
 # Remove the corresponding navigation subsection from the public Getting
-# Started page after its Oracle Help Center target has been excluded.
 if [[ -f docs/getting-started/get-started.md ]]; then
   ruby -0pi -e 'sub(%r{\n### Oracle Cloud Infrastructure Users\n\nOracle Cloud Infrastructure users.*?Compute instance\.\n}m, "\n")' \
     docs/getting-started/get-started.md

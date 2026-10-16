@@ -2,8 +2,6 @@
 set -ex
 export JEKYLL_ENV=production
 
-# index.md is the public website home page.  Do not copy the Enterprise-only
-# Oracle Help Center index into this public-source build.
 cp pages/native-image/libraries-and-frameworks-with-header.md pages/native-image/libraries-and-frameworks.md
 
 # Build LATEST version documentation from the current development branch.
