@@ -2,7 +2,7 @@
 # Pull the GraalVM documentation used to build this site.
 set -euo pipefail
 
-readonly GRAAL_REPOSITORY="${GRAAL_REPOSITORY:-ssh://git@ol-bitbucket-mirror1.oraclecorp.com:7999/g/graal.git}"
+readonly GRAAL_REPOSITORY="https://github.com/oracle/graal.git"
 readonly GRAAL_CHECKOUT="${GRAAL_CHECKOUT:-$PWD/repos/graal}"
 graal_branch="${1:?Usage: $0 <graal-branch>}"
 

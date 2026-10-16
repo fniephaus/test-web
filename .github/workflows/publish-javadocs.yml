@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  publish:
+  build:
     name: Javadocs ${{ matrix.version }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
