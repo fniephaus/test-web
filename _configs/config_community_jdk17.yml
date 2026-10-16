@@ -372,19 +372,13 @@ exclude:
   - jdk17
   - dev
   - pages/native-image/libraries-and-frameworks-with-header.md
-  - ci.jsonnet
-  - release-notes/enterprise
-  - docs/enterprise-overview
   - docs/getting-started/graalvm-enterprise
   - docs/reference-manual.md
   - docs/README.md
-  - robots-ohc.txt
-  - robots-original.txt
-  - original_website_index.md
-  - sp_common
+  - CONTRIBUTING.md
   - Gemfile
   - Gemfile.lock
-  - README.md
+  - LICENSE
   - repos
   - vendor
   - Dockerfile
