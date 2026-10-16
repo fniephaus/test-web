@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/webassembly/assets/img/graalvm.png' />
+  
+  <title>GraalWasm</title><link rel="canonical" href="/"><link rel="apple-touch-icon" sizes="180x180" href='/webassembly/assets/img/favicons/apple-touch-icon.png'>
+  <link rel="icon" type="image/png" sizes="32x32" href='/webassembly/assets/img/favicons/favicon-32x32.png'>
+  <link rel="icon" type="image/png" sizes="16x16" href='/webassembly/assets/img/favicons/favicon-16x16.png'>
+
+  <link rel="stylesheet" href="/webassembly/assets/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/webassembly/assets/css/style.css">
+  <link rel="stylesheet" href="/webassembly/assets/css/highlight.css">
+
+  <script src='/webassembly/assets/lib/jquery/jquery-3.7.1.min.js'></script>
+
+  <script src='/webassembly/assets/lib/bootstrap/js/bootstrap.min.js'></script>
+
+  <script src='/webassembly/assets/lib/sticky-sidebar/resizeSensor.js'></script>
+  <script src='/webassembly/assets/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body>
+    <header class="site-header site--header">
+  <div class="container">
+  <div class="wrapper">
+    <a class="menu__logo" href="/webassembly/">
+      <img src='/webassembly/assets/logo.svg' alt="Logo">
+    </a>
+    
+    <nav class="site-nav">
+      <ul class="menu__list"><li class="menu__item">
+          <a href='/webassembly/docs/' class="menu__link">Documentation</a>
+        </li><li class="menu__item">
+          <div class="stack-container">
+            <a href="#" class="menu__link stack__header">Graal Projects</a>
+            <div class="stack-menu">
+              <div class="stack-row">
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img alt="GraalVM icon" src="/webassembly/assets/img/header-navigation/graalvm.svg">
+                    <a href="https://graalvm.org/" class="item-line">GraalVM</a>
+                  </div>
+                  <div class="stack__item">
+                    <img alt="Graal Stack icon" src="/webassembly/assets/img/header-navigation/graalstack.svg">
+                    <a href="https://graal.cloud/" class="item-line">Graal Stack</a>
+                  </div>
+                  <div class="stack__item">
+                    <img alt="Graal Dev Kit for Micronaut icon" src="/webassembly/assets/img/header-navigation/gdk.svg">
+                    <a href="https://graal.cloud/gdk/" class="item-line">Graal Dev Kit for Micronaut</a>
+                  </div>
+                  <div class="stack__item">
+                    <img alt="GraalOS icon" src="/webassembly/assets/img/header-navigation/graalos.svg">
+                    <a href="https://graal.cloud/graalos/" class="item-line">GraalOS</a>
+                  </div>
+                </div>
+                <div class="stack-column">
+                  <div class="stack__item">
+                    <img alt="JavaScript icon" src="/webassembly/assets/img/header-navigation/js-navi.svg">
+                    <a href="https://graalvm.org/javascript/" class="item-line">GraalJS</a>
+                  </div>
+                  <div class="stack__item">
+                    <img alt="Python icon" src="/webassembly/assets/img/header-navigation/python-navi.svg">
+                    <a href="https://graalpy.org/" class="item-line">GraalPy</a>
+                  </div>
+                  <div class="stack__item">
+                    <img alt="WebAssembly icon" src="/webassembly/assets/img/header-navigation/wasm-navi.svg">
+                    <a href="https://graalvm.org/webassembly/" class="item-line">GraalWasm</a>
+                  </div>
+                  <div class="stack__item">
+                    <img alt="Java icon" src="/webassembly/assets/img/header-navigation/java-navi.svg">
+                    <a href='https://graalvm.org/reference-manual/java-on-truffle/' class="item-line">Espresso</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <div class="menu__item icons githubstar" tabindex="0">
+          <span class="github-widget">
+            <a tabindex="-1" class="github-button" href="https://github.com/oracle/graal" data-icon="octicon-star"
+              data-show-count="true" aria-label="Star oracle/graal on GitHub">Star</a>
+          </span>
+        </div>
+      </ul>
+      <div role="button" class="menu-btn menu-btn--menu js-show-menu" tabindex="-1" title="sweet hamburger">
+        <div class="hamburger">
+          <div class="inner"></div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  </div>
+</header>
+
+    <main class="page-content" aria-label="Content">
+      <section>
+  <div>
+    <div class="hi">
+      <div class="container">
+        <div class="hi__row">
+          <div class="hi__body">
+            <h4 class="hi__title">A high-performance embeddable WebAssembly runtime for the JVM</h4>
+            <div class="hi__buttons">
+              <a href="#getting-started" class="btn btn-primary">Quickstart</a>
+              <a href="#demos" class="btn btn-primary">Demos</a>
+            </div>
+          </div>
+          <div class="hi__image">
+            <img src="/webassembly/assets/img/home/webassembly-logo.svg" alt="WebAssembly icon" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits -->
+<section class="content-section">
+  <div class="wrapper">
+    <div class="langbenefits">
+      <div class="container">
+        <h3 class="langpage__title-02">Benefits</h3>
+        <div class="langbenefits__row">
+          <div class="langbenefits__card">
+            <div class="langbenefits__icon">
+              <img src="/webassembly/assets/img/icon-set-general/container-icon.svg" alt="access icon" />
+            </div>
+            <div class="langbenefits__title">
+              <h4>WebAssembly on the JVM</h4>
+            </div>
+            <div class="langpage__benefits-text">
+              <h5><a href="#getting-started">Load and use Wasm modules</a> and functions directly in Java</h5>
+            </div>
+          </div>
+          <div class="langbenefits__card">
+            <div class="langbenefits__icon">
+              <img src="/webassembly/assets/img/icon-set-general/compatibility.svg" alt="compatibility icon" />
+            </div>
+            <div class="langbenefits__title">
+              <h4>WebAssembly 2.0 Support</h4>
+            </div>
+            <div class="langpage__benefits-text">
+              <h5>Full WebAssembly 2.0 compatibility and support for many <a href="https://webassembly.org/features/" target="_blank">feature extensions</a>, including WASI</h5>
+            </div>
+          </div>
+          <div class="langbenefits__card">
+            <div class="langbenefits__icon">
+              <img src="/webassembly/assets/img/icon-set-general/speed-icon.svg" alt="speed icon" />
+            </div>
+            <div class="langbenefits__title">
+              <h4>Portable Native Extensions</h4>
+            </div>
+            <div class="langpage__benefits-text">
+              <h5>Integrate <a href="https://github.com/graalvm/graal-languages-demos/tree/main/graalwasm/graalwasm-embed-c-code-guide/" target="_blank">C, C++</a>, <a href="https://github.com/graalvm/graal-languages-demos/tree/main/graalwasm/graalwasm-embed-rust-code-guide/" target="_blank">Rust</a>, and <a href="https://github.com/graalvm/graal-languages-demos/tree/main/graalwasm/graalwasm-embed-go-code-guide/" target="_blank">Go</a> libraries using Wasm as an alternative to JNI or FFM API</h5>
+            </div>
+          </div>
+        </div>
+        <div class="langbenefits__row">
+          <div class="langbenefits__card">
+            <div class="langbenefits__icon">
+              <img src="/webassembly/assets/img/icon-set-general/js-integration-icon.svg" alt="JavaScript integration icon" />
+            </div>
+            <div class="langbenefits__title">
+              <h4>JavaScript integration</h4>
+            </div>
+            <div class="langpage__benefits-text">
+              <h5>Simplifies use of WebAssembly modules with <a href="https://github.com/graalvm/graal-languages-demos/blob/main/graalwasm/graalwasm-spring-boot-photon/" target="_blank">JavaScript bindings</a></h5>
+            </div>
+          </div>
+          <div class="langbenefits__card">
+            <div class="langbenefits__icon">
+              <img src="/webassembly/assets/img/icon-set-general/speed-icon.svg" alt="speed icon" />
+            </div>
+            <div class="langbenefits__title">
+              <h4>Fastest Wasm on the JVM</h4>
+            </div>
+            <div class="langpage__benefits-text">
+              <h5><a href="https://www.graalvm.org/latest/reference-manual/java/compiler/">Graal JIT</a> compiles Wasm for native code speed</h5>
+            </div>
+          </div>
+          <div class="langbenefits__card">
+            <div class="langbenefits__icon">
+              <img src="/webassembly/assets/img/icon-set-general/coffee-beans-icon.svg" alt="coffee beans icon" />
+            </div>
+            <div class="langbenefits__title">
+              <h4>100% Java</h4>
+            </div>
+            <div class="langpage__benefits-text">
+              <h5>Written in <a href="https://central.sonatype.com/artifact/org.graalvm.polyglot/wasm" target="_blank">pure Java</a> with zero native dependencies</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Get Started -->
+<section class="content-section languages__back">
+  <div class="wrapper">
+    <div class="languages__example">
+      <div class="container">
+        <h3 id="getting-started" class="langstarter__title">How to Get Started</h3>
+        <div class="langpage__benefits-text">
+          <h5>You have the option to extend your Java application with WebAssembly, or go straight to the <a href="https://github.com/graalvm/graal-languages-demos/blob/main/graalwasm/graalwasm-starter/" target="_blank">starter project</a></h5>
+        </div>
+        <div class="languages__example-card">
+          <div class="language__example-subtitle-mobile">
+            <h4>1. Add GraalWasm as a dependency from <a href="https://central.sonatype.com/artifact/org.graalvm.polyglot/wasm" target="_blank">Maven Central</a></h4>
+          </div>
+          <div class="languages__example-box">
+            <div class="languages__snippet">
+                      <div class="language__example-subtitle">
+            <h4>1. Add GraalWasm as a dependency from <a href="https://central.sonatype.com/artifact/org.graalvm.polyglot/wasm" target="_blank">Maven Central</a></h4>
+          </div>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.graalvm.polyglot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>polyglot<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>25.3.4.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.graalvm.polyglot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>wasm<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>25.3.4.1<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;type&gt;</span>pom<span class="nt">&lt;/type&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></figure>
+</div>
+            <div class="example-logo-box">
+              <img alt="Maven icon" src="/webassembly/assets/img/logos/maven-logo.svg" class="languages__example-logo" />
+            </div>
+          </div>
+          <div class="languages__example-box">
+            <div class="languages__snippet">
+                      <div class="language__text-secondary">
+            <h4>or</h4>
+          </div>
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">implementation</span><span class="o">(</span><span class="s2">"org.graalvm.polyglot:polyglot:25.3.4.1"</span><span class="o">)</span>
+<span class="n">implementation</span><span class="o">(</span><span class="s2">"org.graalvm.polyglot:wasm:25.3.4.1"</span><span class="o">)</span></code></pre></figure>
+</div>
+            <div class="example-logo-box">
+              <img alt="Gradle icon" src="/webassembly/assets/img/logos/gradle-logo.svg" class="languages__example-logo" />
+            </div>
+          </div>
+          <div class="language__example-subtitle-mobile">
+            <h4>2. Create a WebAssembly module, for example with <a href="https://webassembly.github.io/wabt/demo/wat2wasm/" target="_blank">wat2wasm</a></h4>
+          </div>
+          <div class="languages__example-box">
+            <div class="languages__snippet">
+                      <div class="language__example-subtitle">
+            <h4>2. Create a WebAssembly module, for example with <a href="https://webassembly.github.io/wabt/demo/wat2wasm/" target="_blank">wat2wasm</a></h4>
+          </div>
+<figure class="highlight"><pre><code class="language-wat" data-lang="wat"><span class="c1">;; wat2wasm add-two.wat -o add-two.wasm</span>
+<span class="p">(</span><span class="k">module</span>
+  <span class="p">(</span><span class="k">func</span> <span class="p">(</span><span class="k">export</span> <span class="s">"addTwo"</span><span class="p">)</span> <span class="p">(</span><span class="k">param</span> <span class="kt">i32</span> <span class="kt">i32</span><span class="p">)</span> <span class="p">(</span><span class="k">result</span> <span class="kt">i32</span><span class="p">)</span>
+    <span class="na">local.get</span> <span class="mi">0</span>
+    <span class="na">local.get</span> <span class="mi">1</span>
+    <span class="na">i32.add</span>
+  <span class="p">)</span>
+<span class="p">)</span></code></pre></figure>
+</div>
+            <div class="example-logo-box">
+              <img alt="WebAssembly icon" src="/webassembly/assets/img/logos/webassembly-logo.svg" class="languages__example-logo" />
+            </div>
+          </div>
+          <div class="language__example-subtitle-mobile">
+            <h4>3. Embed the Wasm module in Java</h4>
+          </div>
+          <div class="languages__example-box">
+            <div class="languages__snippet">
+              <div class="language__example-subtitle">
+                <h4>3. Embed the Wasm module in Java</h4>
+              </div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.graalvm.polyglot.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.graalvm.polyglot.Source</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.graalvm.polyglot.Value</span><span class="o">;</span>
+
+<span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+    <span class="no">URL</span> <span class="n">wasmFile</span> <span class="o">=</span> <span class="nc">Main</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResource</span><span class="o">(</span><span class="s">"add-two.wasm"</span><span class="o">);</span>
+    <span class="nc">Value</span> <span class="n">mainModule</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="nc">Source</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">(</span><span class="s">"wasm"</span><span class="o">,</span> <span class="n">wasmFile</span><span class="o">).</span><span class="na">build</span><span class="o">());</span>
+    <span class="nc">Value</span> <span class="n">mainInstance</span> <span class="o">=</span> <span class="n">mainModule</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+    <span class="nc">Value</span> <span class="n">addTwo</span> <span class="o">=</span> <span class="n">mainInstance</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"exports"</span><span class="o">).</span><span class="na">getMember</span><span class="o">(</span><span class="s">"addTwo"</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"addTwo(40, 2) = "</span> <span class="o">+</span> <span class="n">addTwo</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="mi">40</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+<span class="o">}</span></code></pre></figure>
+
+            </div><!-- languages__snippet -->
+            <div class="example-logo-box">
+              <img alt="Java icon" src="/webassembly/assets/img/logos/java-logo.svg" class="languages__example-logo" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Demos -->
+<section class="boxes">
+  <div class="wrapper">
+    <div class="guides">
+      <div class="container guides-box build all">
+        <h3 id="demos" class="truffle__subtitle">Demos</h3>
+        <div class="guides__row">
+          <div class="guides__column">
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://github.com/graalvm/graal-languages-demos/tree/main/graalwasm/graalwasm-embed-c-code-guide/" target="_blank">
+                <div class="guides__topics">Embed C in Java Using GraalWasm</div>
+              </a>
+            </div>
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://github.com/graalvm/graal-languages-demos/tree/main/graalwasm/graalwasm-embed-go-code-guide/" target="_blank">
+                <div class="guides__topics">Embed Go in Java Using GraalWasm</div>
+              </a>
+            </div>
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://github.com/graalvm/graal-languages-demos/blob/main/graalwasm/graalwasm-micronaut-photon/" target="_blank">
+                <div class="guides__topics">Embed Photon Image Processing Library with GraalWasm in Micronaut</div>
+              </a>
+            </div>
+          </div>
+          <div class="guides__column">
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://github.com/graalvm/graal-languages-demos/tree/main/graalwasm/graalwasm-embed-rust-code-guide/" target="_blank">
+                <div class="guides__topics">Embed Rust in Java Using GraalWasm</div>
+              </a>
+            </div>
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://github.com/graalvm/graal-languages-demos/blob/main/graalwasm/graalwasm-spring-boot-photon/" target="_blank">
+                <div class="guides__topics">Embed Photon Image Processing Library with GraalWasm in Spring Boot</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Learn More -->
+<section class="boxes">
+  <div class="wrapper">
+    <div class="guides">
+      <div class="container guides-box build all">
+        <h3 id="demos" class="truffle__subtitle">Learn More</h3>
+        <div class="guides__row">
+          <div class="guides__column">
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://www.youtube.com/watch?v=uefc2t9AmQI" target="_blank">
+                <div class="guides__topics">Video: GraalVM meets WebAssembly at Devoxx 2025</div>
+              </a>
+            </div>
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://medium.com/graalvm/announcing-graalwasm-a-webassembly-engine-in-graalvm-25cd0400a7f2" target="_blank">
+                <div class="guides__topics">Blog: Announcing GraalWasm — a WebAssembly engine in GraalVM</div>
+              </a>
+            </div>
+          </div>
+          <div class="guides__column">
+            <div class="guides__card">
+              <img src="/webassembly/assets/img/downloads/miscellaneous-book.svg" alt="book icon" />
+              <a href="https://www.youtube.com/watch?v=Z2SWSIThHXY" target="_blank">
+                <div class="guides__topics">Video: GraalWasm at Wasm I/O 2025</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    </main>
+    <footer class="footer footer__mobile">
+  <div class="container">
+    <div class="row footer-content">
+      <div class="footer__logo">
+        <div class="rubber-footer">
+          <img src='/webassembly/assets/logo.svg' alt="project logo">
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Open Source</h6>
+          <ul class="footer-list">
+            <li class="footer-list__item"><a target="_blank" rel="noopener noreferrer" href="https://github.com/oracle/graal/tree/master/wasm">Project Repository</a></li>
+            <li class="footer-list__item"><a target="_blank" rel="noopener noreferrer" href="https://github.com/graalvm/graal-languages-demos/">Demos and Guides</a></li>
+            <li class="footer-list__item"><a target="_blank" rel="noopener noreferrer" href="https://github.com/oracle/graal/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Help</h6>
+          <ul class="footer-list">
+            <li class="footer-list__item"><a target="_blank" rel="noopener noreferrer" href="https://github.com/oracle/graal/issues">File an issue</a></li>
+            <li class="footer-list__item"><a target="_blank" rel="noopener noreferrer" href="https://www.graalvm.org/slack-invitation/">GraalVM Slack</a></li>
+            <li class="footer-list__item"><a target="_blank" rel="noopener noreferrer" href="https://github.com/oracle/graal/blob/master/wasm/LICENSE">License</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright© 2026. Oracle and/or its affiliates. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script src='/webassembly/assets/js/main.js'></script>
+    <script src='/webassembly/assets/js/sidebar.js'></script>
+  </body>
+</html>
