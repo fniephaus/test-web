@@ -19951,7 +19951,6 @@ div.snippet-container {
   position: relative;
 }
 
-div.snippet-container span.fiddle-button,
 div.snippet-container span.copy-button {
   transition: opacity 0.1s;
   cursor: pointer;
@@ -19962,17 +19961,9 @@ div.snippet-container span.copy-button {
   height: 25px;
   top: 15px;
   text-align: center;
-}
-
-div.snippet-container span.fiddle-button {
-  right: 43px;
-}
-
-div.snippet-container span.copy-button {
   right: 12px;
 }
 
-div.snippet-container span.fiddle-button:hover,
 div.snippet-container span.copy-button:hover {
   opacity: 0.7;
 }
