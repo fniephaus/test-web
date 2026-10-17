@@ -41,15 +41,6 @@ rm -rf docs/reference-manual/native-image/assets/skills
 # The site-owned community page is the canonical Publications page.
 rm -f docs/Publications.md
 
-# Exclude
-# documentation pages that require its historical layout instead of rendering
-# them without their required assets and navigation.
-while IFS= read -r -d '' file; do
-  if grep -qx 'layout: ohc' "$file"; then
-    rm -f "$file"
-  fi
-done < <(find docs -name '*.md' -print0)
-
 # Remove the corresponding navigation subsection from the public Getting
 if [[ -f docs/getting-started/get-started.md ]]; then
   ruby -0pi -e 'sub(%r{\n### Oracle Cloud Infrastructure Users\n\nOracle Cloud Infrastructure users.*?Compute instance\.\n}m, "\n")' \
