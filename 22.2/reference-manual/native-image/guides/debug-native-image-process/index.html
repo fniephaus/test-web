@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.2/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.2/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.2/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.2/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.2/assets/main.css'>
+  <script src='/22.2/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.2/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.2/resources/lib/purl/purl.js'></script>
+  <script src='/22.2/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/22.2/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.2/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.2/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.2/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="debug-native-executables-with-gdb">Debug Native Executables with GDB</h1>
+
+<p>A generated native executable is heavily optimized code with minimal symbol information which makes debugging harder.
+This can be solved by embedding debug information into the resulting binary at build time.
+This information tells the debugger precisely how to interpret the machine code and point it back to the original Java method.</p>
+
+<p>If your Java application deployed as a native executable behaves differently than expected, you can interactively debug a running process:</p>
+
+<ul>
+  <li>using the standard Linux GNU Debugger (GDB);</li>
+  <li>using the built-in Java debugging in VS Code enabled with the <a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm">GraalVM Tools for Java extension</a>.</li>
+</ul>
+
+<p>In this guide you will learn how to debug a native executable using GDB.</p>
+
+<blockquote>
+  <p>Note: Native Image debugging with GDB currently works on Linux with initial support for macOS. The feature is experimental.</p>
+</blockquote>
+
+<h3 id="run-a-demo">Run a Demo</h3>
+
+<p>To build a native executable with debug information, provide the <code>-g</code> command-line option for <code>javac</code> when compiling the application, and then to the <code>native-image</code> builder.
+This enables source-level debugging, and the debugger (GDB) then correlates machine instructions with specific source lines in Java files.</p>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<ul>
+  <li>Linux AMD64</li>
+  <li>GDB 10.1 or higher</li>
+</ul>
+
+<p>Follow the steps to test debugging a native executable with GDB. The below workflow is known to work on Linux with GDB 10.1.</p>
+
+<ol>
+  <li>
+    <p>Save the following code to the file named <em>GDBDemo.java</em>.</p>
+
+    <pre><code class="language-java"> public class GDBDemo {
+     static long fieldUsed = 1000;
+
+     public static void main( String[] args ) {
+         if (args.length &gt; 0) {
+             int n = -1;
+             try {
+                 n = Integer.parseInt(args[0]);
+             } catch (NumberFormatException ex) {
+                 System.out.println(args[0] + " is not a number!");
+             }
+             if (n &lt; 0) {
+                 System.out.println(args[0] + " is negative.");
+             }
+             double f = factorial(n);
+             System.out.println(n + "! = " + f);
+         } 
+
+         if (false)
+             neverCalledMethod();
+
+         StringBuilder text = new StringBuilder();
+         text.append("Hello World from GraalVM Native Image and GDB in Java.\n");
+         System.out.println(text.toString());
+     }
+
+     static void neverCalledMethod() {
+         System.out.println("This method is unreachable and will not be included in the native executable.");
+     }
+
+     static double factorial(int n) {
+         if (n == 0) {
+             return 1;
+         }
+         if (n &gt;= fieldUsed) {
+             return Double.POSITIVE_INFINITY;
+         }
+         double f = 1;
+         while (n &gt; 1) {
+             f *= n--;
+         }
+         return f;
+     }
+ }
+</code></pre>
+  </li>
+  <li>
+    <p>Compile it and generate a native executable with debug information:</p>
+
+    <pre><code class="language-shell"> $JAVA_HOME/bin/javac -g GDBDemo.java
+</code></pre>
+    <pre><code class="language-shell"> native-image -g -O0 GDBDemo
+</code></pre>
+    <p>The <code>-g</code> option instructs <code>native-image</code> to generate debug information. The resulting native executable will contain debug records in a format GDB understands.</p>
+
+    <p>Notice that you can also pass <code>-O0</code> which specifies that no compiler optimizations should be performed. Disabling all optimizations is not required, but in general it makes the debugging experience better.</p>
+  </li>
+  <li>
+    <p>Launch the debugger and run your native executable:</p>
+
+    <pre><code class="language-shell"> gdb ./gdbdemo
+</code></pre>
+    <p>The <code>gdb</code> prompt will open.</p>
+  </li>
+  <li>
+    <p>Set a breakpoint: type <code>breakpoint &lt;java method&gt;</code> to set a breakpoint and <code>run &lt;arg&gt;</code> to run the native executable. You can put breakpoints configured by file and line, or by method name. See below the example of a debugging session.</p>
+
+    <pre><code class="language-shell">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+ $ gdb ./gdbdemo
+ GNU gdb (GDB) 10.2
+ Copyright (C) 2021 Free Software Foundation, Inc.
+ ...
+ Reading symbols from ./gdbdemo...
+ Reading symbols from /dev/gdbdemo.debug...
+=======
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1222129c866 (Update Debug Native Executables with GDB guide)
+ (gdb) info func ::main
+ All functions matching regular expression "::main":
+
+ File GDBDemo.java:
+ 5:	void GDBDemo::main(java.lang.String[]*);
+ (gdb) b ::factorial
+ Breakpoint 1 at 0x2d000: file GDBDemo.java, line 32.
+ (gdb) run 42
+ Starting program: /dev/gdbdemo 42
+ Thread 1 "gdbdemo" hit Breakpoint 1, GDBDemo::factorial (n=42) at GDBDemo.java:32
+ 32	        if (n == 0) {
+ (gdb) info args
+ n = 42
+ (gdb) step
+ 35	        if (n &gt;= fieldUsed) {
+ (gdb) next
+ 38	        double f = 1;
+ (gdb) next
+ 39	        while (n &gt; 1) {
+ (gdb) info locals
+ f = 1
+ (gdb) ...
+</code></pre>
+  </li>
+</ol>
+
+<p>«««&lt; HEAD</p>
+
+<h1 id="in-case-your-native-executable-segfaults-you-can-print-the-backtrace-of-the-entire-stack-bt">In case your native executable segfaults, you can print the backtrace of the entire stack (<code>bt</code>).</h1>
+<ol>
+  <li>
+    <p>Print the local variables:</p>
+
+    <pre><code class="language-shell"> (gdb) info arg
+</code></pre>
+  </li>
+  <li>
+    <p>Pass <code>&lt;arg&gt;</code> to the command line. Step over to the next function call. If the native executable segfaults, you can print the backtrace of the entire stack (<code>bt</code>).</p>
+    <blockquote>
+      <blockquote>
+        <blockquote>
+          <blockquote>
+            <blockquote>
+              <blockquote>
+                <blockquote>
+                  <p>1222129c866 (Update Debug Native Executables with GDB guide)</p>
+                </blockquote>
+              </blockquote>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </li>
+</ol>
+
+<p>The debugger points machine instructions back from the binary to specific source lines in Java files. Note that single stepping within a compiled method includes file and line number information for inlined code. GDB may switch files even though you are still in the same compiled method.</p>
+
+<p>Most of the regular debugging actions are supported by GDB, namely:</p>
+
+<ul>
+  <li>single stepping including both into and over function calls</li>
+  <li>stack backtraces (not including frames detailing inlined code)</li>
+  <li>printing of primitive values</li>
+  <li>structured, field by field, printing of Java objects</li>
+  <li>casting and printing objects at different levels of generality</li>
+  <li>access through object networks via path expressions</li>
+  <li>reference by name to methods and static field data</li>
+</ul>
+
+<p>The generation of debug information is implemented by modeling the Java program as an equivalent C++ program. Since GDB was primarily designed for debugging C (and C++), there are certain considerations to be taken into account when debugging Java applications. 
+Read more about Native Image debugging support in the <a href="/22.2/reference-manual/native-image/debugging-and-diagnostics/DebugInfo/#special-considerations-for-debugging-java-from-gdb">reference documentation</a>.</p>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="/22.2/reference-manual/native-image/debugging-and-diagnostics/DebugInfo/">Debug Info Feature</a></li>
+  <li><a href="/22.2/tools/vscode/graalvm-extension/debugging-native-image/">Debug a running native image process from VS Code</a></li>
+  <li><a href="https://luna.oracle.com/lab/cbe9d331-5dbc-4300-a5ca-20b88346cbcf">GraalVM Native Image Debugging</a></li>
+</ul>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.2/resources/js/main.js'></script>
+  </body>
+
+</html>

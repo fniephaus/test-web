@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.2/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.2/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.2/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.2/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.2/assets/main.css'>
+  <script src='/22.2/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.2/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.2/resources/lib/purl/purl.js'></script>
+  <script src='/22.2/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/22.2/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.2/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.2/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.2/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="native-image-build-output">Native Image Build Output</h1>
+
+<ul>
+  <li><a href="#build-stages">Build Stages</a></li>
+  <li><a href="#resource-usage-statistics">Resource Usage Statistics</a></li>
+  <li><a href="#machine-readable-build-output">Machine-Readable Build Output</a></li>
+  <li><a href="#build-output-options">Build Output Options</a></li>
+</ul>
+
+<p>Here you will find information about the build output of GraalVM Native Image.
+Below is the example output when building a native executable of the <code>HelloWorld</code> class:</p>
+
+<pre><code class="language-shell">================================================================================
+GraalVM Native Image: Generating 'helloworld' (executable)...
+================================================================================
+[1/7] Initializing...                                            (2.5s @ 0.21GB)
+ Version info: 'GraalVM dev Java 11 CE'
+ C compiler: gcc (linux, x86_64, 9.3.0)
+ Garbage collector: Serial GC
+[2/7] Performing analysis...  [*******]                          (5.6s @ 0.46GB)
+   2,718 (72.93%) of  3,727 classes reachable
+   3,442 (53.43%) of  6,442 fields reachable
+  12,128 (44.82%) of 27,058 methods reachable
+      27 classes,     0 fields, and   271 methods registered for reflection
+      58 classes,    59 fields, and    52 methods registered for JNI access
+       4 native libraries: dl, pthread, rt, z
+[3/7] Building universe...                                       (0.5s @ 0.61GB)
+[4/7] Parsing methods...      [*]                                (0.5s @ 0.86GB)
+[5/7] Inlining methods...     [****]                             (0.5s @ 0.73GB)
+[6/7] Compiling methods...    [**]                               (3.7s @ 2.38GB)
+[7/7] Creating image...                                          (2.1s @ 1.04GB)
+   4.00MB (28.31%) for code area:     7,073 compilation units
+   5.90MB (41.70%) for image heap:   83,319 objects and 5 resources
+   3.24MB (22.91%) for debug info generated in 1.0s
+   1.00MB ( 7.08%) for other data
+  14.15MB in total
+--------------------------------------------------------------------------------
+Top 10 packages in code area:           Top 10 object types in image heap:
+ 632.68KB java.util                      871.62KB byte[] for code metadata
+ 324.42KB java.lang                      798.53KB java.lang.String
+ 223.90KB java.util.regex                774.91KB byte[] for general heap data
+ 221.62KB java.text                      614.06KB java.lang.Class
+ 198.30KB com.oracle.svm.jni             492.51KB byte[] for java.lang.String
+ 166.02KB java.util.concurrent           314.81KB java.util.HashMap$Node
+ 115.44KB java.math                      233.58KB c.o.s.c.h.DynamicHubCompanion
+  98.48KB sun.text.normalizer            154.84KB java.lang.String[]
+  97.42KB java.util.logging              139.54KB byte[] for embedded resources
+  95.18KB c.oracle.svm.core.genscavenge  139.04KB char[]
+   1.83MB for 118 more packages            1.29MB for 753 more object types
+--------------------------------------------------------------------------------
+    0.9s (5.6% of total time) in 17 GCs | Peak RSS: 3.22GB | CPU load: 10.87
+--------------------------------------------------------------------------------
+Produced artifacts:
+ /home/janedoe/helloworld/helloworld (executable)
+ /home/janedoe/helloworld/sources (debug_info)
+ /home/janedoe/helloworld/helloworld (debug_info)
+ /home/janedoe/helloworld/helloworld.build_artifacts.txt
+================================================================================
+Finished generating 'helloworld' in 16.2s.
+</code></pre>
+
+<h2 id="build-stages">Build Stages</h2>
+
+<h3 id="initializing"><a name="stage-initializing"></a>Initializing</h3>
+<p>In this stage, the Native Image build process is set up and <a href="https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html"><code>Features</code></a> are initialized.</p>
+
+<h4 id="native-image-kind"><a name="glossary-imagekind"></a>Native Image Kind</h4>
+<p>By default, Native Image generates <em>executables</em> but it can also generate <a href="/22.2/reference-manual/native-image/native-code-interoperability/"><em>native shared libraries</em></a> and <a href="/22.2/reference-manual/native-image/guides/build-static-executables/"><em>static executables</em></a>.</p>
+
+<h4 id="version-info"><a name="glossary-version-info"></a>Version Info</h4>
+<p>The version info of the Native Image process.
+This string is also used for the <code>java.vm.version</code> property within the generated native binary.
+Please report this version info when you <a href="https://github.com/oracle/graal/issues/new">file issues</a>.</p>
+
+<h4 id="java-version-info"><a name="glossary-java-version-info"></a>Java Version Info</h4>
+<p>The Java version info (<code>java.runtime.version</code> property) of the Native Image build process.
+Please report this version info when you <a href="https://github.com/oracle/graal/issues/new">file issues</a>.</p>
+
+<h4 id="c-compiler"><a name="glossary-ccompiler"></a>C Compiler</h4>
+<p>The C compiler executable, vendor, target architecture, and version info used by the Native Image build process.</p>
+
+<h4 id="garbage-collector"><a name="glossary-gc"></a>Garbage Collector</h4>
+<p>The garbage collector used within the generated executable:</p>
+<ul>
+  <li>The <em>Serial GC</em> is the default GC and optimized for low memory footprint and small Java heap sizes.</li>
+  <li>The <em>G1 GC</em> (only available with GraalVM Enterprise Edition) is a multi-threaded GC that is optimized to reduce stop-the-world pauses and therefore improve latency while achieving high throughput.</li>
+  <li>The <em>Epsilon GC</em> does not perform any garbage collection and is designed for very short-running applications that only allocate a small amount of memory.</li>
+</ul>
+
+<p>For more information see the <a href="/22.2/reference-manual/native-image/optimizations-and-performance/MemoryManagement/">docs on Memory Management at Image Run Time</a>.</p>
+
+<h4 id="user-specific-features"><a name="glossary-user-specific-features"></a>User-Specific Features</h4>
+<p>All <a href="https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html"><code>Features</code></a> that are either provided or specifically enabled by the user, or implicitly registered for the user, for example, by a framework.
+GraalVM Native Image deploys a number of internal features, which are excluded from this list.</p>
+
+<h3 id="performing-analysis"><a name="stage-analysis"></a>Performing Analysis</h3>
+<p>In this stage, a <a href="https://dl.acm.org/doi/10.1145/3360610">points-to analysis</a> is performed.
+The progress indicator visualizes the number of analysis iterations.
+A large number of iterations can indicate problems in the analysis likely caused by misconfiguration or a misbehaving feature.</p>
+
+<h4 id="reachable-classes-fields-and-methods"><a name="glossary-reachability"></a>Reachable Classes, Fields, and Methods</h4>
+<p>The number of classes, fields, and methods that are reachable versus the total number of classes and methods loaded as part of the build process.
+A significantly larger number of loaded classes that are not reachable can indicate a configuration problem.
+To reduce overhead, please ensure that the classpath only contains entries that are needed for building the application.</p>
+
+<h4 id="reflection-registrations"><a name="glossary-reflection-registrations"></a>Reflection Registrations</h4>
+<p>The number of classes, fields, and methods that are registered for reflection.
+Large numbers can cause significant reflection overheads, slow down the build process, and increase the size of the native binary (see <a href="#glossary-reflection-metadata">reflection metadata</a>).</p>
+
+<h4 id="jni-access-registrations"><a name="glossary-jni-access-registrations"></a>JNI Access Registrations</h4>
+<p>The number of classes, fields, and methods that are registered for <a href="/22.2/reference-manual/native-image/dynamic-features/JNI/">JNI</a> access.</p>
+
+<h4 id="runtime-compiled-methods"><a name="glossary-runtime-methods"></a>Runtime Compiled Methods</h4>
+<p>The number of methods marked for runtime compilation.
+This number is only shown if runtime compilation is built into the executable, for example, when building a <a href="https://github.com/oracle/graal/tree/master/truffle">Truffle</a> language.
+Runtime-compiled methods account for <a href="#glossary-graph-encodings">graph encodings</a> in the heap.</p>
+
+<h3 id="building-universe"><a name="stage-universe"></a>Building Universe</h3>
+<p>In this stage, a universe with all classes, fields, and methods is built, which is then used to create the native binary.</p>
+
+<h3 id="parsing-methods"><a name="stage-parsing"></a>Parsing Methods</h3>
+<p>In this stage, the Graal compiler parses all reachable methods.
+The progress indicator is printed periodically at an increasing interval.</p>
+
+<h3 id="inlining-methods"><a name="stage-inlining"></a>Inlining Methods</h3>
+<p>In this stage, trivial method inlining is performed.
+The progress indicator visualizes the number of inlining iterations.</p>
+
+<h3 id="compiling-methods"><a name="stage-compiling"></a>Compiling Methods</h3>
+<p>In this stage, the Graal compiler compiles all reachable methods to machine code.
+The progress indicator is printed periodically at an increasing interval.</p>
+
+<h3 id="creating-image"><a name="stage-creating"></a>Creating Image</h3>
+<p>In this stage, the native binary is created and written to disk.
+Debug info is also generated as part of this stage (if requested).</p>
+
+<h4 id="code-area"><a name="glossary-code-area"></a>Code Area</h4>
+<p>The code area contains machine code produced by the Graal compiler for all reachable methods.
+Therefore, reducing the number of <a href="#glossary-reachability">reachable methods</a> also reduces the size of the code area.</p>
+
+<h4 id="image-heap"><a name="glossary-image-heap"></a>Image Heap</h4>
+<p>The heap contains reachable objects such as static application data, metadata, and <code>byte[]</code> for different purposes (see below).</p>
+
+<h5 id="general-heap-data-stored-in-byte"><a name="glossary-general-heap-data"></a>General Heap Data Stored in <code>byte[]</code></h5>
+<p>The total size of all <code>byte[]</code> objects that are neither used for <code>java.lang.String</code>, nor <a href="#glossary-code-metadata">code metadata</a>, nor <a href="#glossary-reflection-metadata">reflection metadata</a>, nor <a href="#glossary-graph-encodings">graph encodings</a>.
+Therefore, this can also include <code>byte[]</code> objects from application code.</p>
+
+<h5 id="embedded-resources-stored-in-byte"><a name="glossary-embedded-resources"></a>Embedded Resources Stored in <code>byte[]</code></h5>
+<p>The total size of all <code>byte[]</code> objects used for storing resources (for example, files accessed via <code>Class.getResource()</code>) within the native binary. The number of resources is shown in the <a href="#glossary-image-heap">Heap</a> section.</p>
+
+<h5 id="code-metadata-stored-in-byte"><a name="glossary-code-metadata"></a>Code Metadata Stored in <code>byte[]</code></h5>
+<p>The total size of all <code>byte[]</code> objects used for metadata for the <a href="#glossary-code-area">code area</a>.
+Therefore, reducing the number of <a href="#glossary-reachability">reachable methods</a> also reduces the size of this metadata.</p>
+
+<h5 id="reflection-metadata-stored-in-byte"><a name="glossary-reflection-metadata"></a>Reflection Metadata Stored in <code>byte[]</code></h5>
+<p>The total size of all <code>byte[]</code> objects used for reflection metadata, including class, field, method, and constructor data.
+To reduce the amount of reflection metadata, reduce the number of <a href="#glossary-reflection-registrations">elements registered for reflection</a>.</p>
+
+<h5 id="graph-encodings-stored-in-byte"><a name="glossary-graph-encodings"></a>Graph Encodings Stored in <code>byte[]</code></h5>
+<p>The total size of all <code>byte[]</code> objects used for graph encodings.
+These encodings are a result of <a href="#glossary-runtime-methods">runtime compiled methods</a>.
+Therefore, reducing the number of such methods also reduces the size of corresponding graph encodings.</p>
+
+<h4 id="debug-info"><a name="glossary-debug-info"></a>Debug Info</h4>
+<p>The total size of generated debug information (if enabled).</p>
+
+<h4 id="other-data"><a name="glossary-other-data"></a>Other Data</h4>
+<p>The amount of data in the binary that is neither in the <a href="#glossary-code-area">code area</a>, nor in the <a href="#glossary-image-heap">heap</a>, nor <a href="#glossary-debug-info">debug info</a>.
+This data typically contains internal information for Native Image and should not be dominating.</p>
+
+<h2 id="resource-usage-statistics">Resource Usage Statistics</h2>
+
+<h4 id="garbage-collections"><a name="glossary-garbage-collection"></a>Garbage Collections</h4>
+<p>The total time spent in all garbage collectors, total GC time divided by the total process time as a percentage, and the total number of garbage collections.
+A large number of collections or time spent in collectors usually indicates that the system is under memory pressure.
+Increase the amount of available memory to reduce the time to build the native binary.</p>
+
+<h4 id="peak-rss"><a name="glossary-peak-rss"></a>Peak RSS</h4>
+<p>Peak <a href="https://en.wikipedia.org/wiki/Resident_set_size">resident set size</a> as reported by the operating system.
+This value indicates the maximum amount of memory consumed by the build process.
+If the <a href="#glossary-garbage-collection">GC statistics</a> do not show any problems, the amount of available memory of the system can be reduced to a value closer to the peak RSS.</p>
+
+<h4 id="cpu-load"><a name="glossary-cpu-load"></a>CPU load</h4>
+<p>The CPU time used by the process divided by the total process time.
+Increase the number of CPU threads to reduce the time to build the native binary.</p>
+
+<h2 id="build-output-options">Build Output Options</h2>
+
+<p>Run <code>native-image --expert-options-all | grep "BuildOutput"</code> to see all build output options:</p>
+
+<pre><code>-H:±BuildOutputBreakdowns    Show code and heap breakdowns as part of the build output. Default: + (enabled).
+-H:±BuildOutputColorful      Colorize build output. Default: + (enabled).
+-H:±BuildOutputGCWarnings    Print GC warnings as part of build output. Default: + (enabled).
+-H:±BuildOutputLinks         Show links in build output. Default: + (enabled).
+-H:±BuildOutputPrefix        Prefix build output with '&lt;pid&gt;:&lt;name of binary&gt;'. Default: - (disabled).
+-H:±BuildOutputProgress      Report progress in build output. Default: + (enabled).
+</code></pre>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="/22.2/reference-manual/native-image/guides/build-native-shared-library/">Build a Native Shared Library</a></li>
+  <li><a href="/22.2/reference-manual/native-image/guides/build-static-executables/">Build a Statically Linked or Mostly-Statically Linked Native Executable</a></li>
+  <li><a href="https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html">Feature</a></li>
+  <li><a href="/22.2/reference-manual/native-image/native-code-interoperability/">Interoperability with Native Code</a></li>
+  <li><a href="/22.2/reference-manual/native-image/dynamic-features/JNI/">Java Native Interface (JNI) in Native Image</a></li>
+  <li><a href="/22.2/reference-manual/native-image/optimizations-and-performance/MemoryManagement/">Memory Management</a></li>
+  <li><a href="/22.2/reference-manual/native-image/overview/Build-Overview/">Native Image Build Overview</a></li>
+  <li><a href="/22.2/reference-manual/native-image/overview/BuildConfiguration/">Native Image Build Configuration</a></li>
+</ul>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.2/resources/js/main.js'></script>
+  </body>
+
+</html>

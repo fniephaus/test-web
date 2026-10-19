@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/21.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/21.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/21.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/21.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/21.3/assets/main.css'>
+  <script src='/21.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/21.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/21.3/resources/lib/purl/purl.js'></script>
+  <script src='/21.3/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/21.3/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/21.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/21.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/21.3/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="truffle-options">Truffle Options</h1>
+
+<p>You can list options from the command line with any language launcher:</p>
+
+<pre><code class="language-shell">language-launcher --help:expert
+</code></pre>
+
+<p>Or, for options only relevant for Truffle language implementers:</p>
+
+<pre><code class="language-shell">language-launcher --help:internal
+</code></pre>
+
+<p>In addition, the GraalVM compiler options can be listed with:</p>
+
+<pre><code class="language-shell">language-launcher --jvm --vm.XX:+JVMCIPrintProperties
+</code></pre>
+<p>See <a href="https://chriswhocodes.com/graalvm_ce_jdk8_options.html">graalvm_ce_jdk8_options</a> for a list of GraalVM compiler options.</p>
+
+<h2 id="default-language-launcher-options">Default Language Launcher Options</h2>
+
+<pre><code class="language-shell">  --polyglot                                   Run with all other guest languages accessible.
+  --native                                     Run using the native launcher with limited Java access (default).
+  --jvm                                        Run on the Java Virtual Machine with Java access.
+  --vm.[option]                                Pass options to the host VM. To see available options, use '--help:vm'.
+  --log.file=&lt;String&gt;                          Redirect guest languages logging into a given file.
+  --log.[logger].level=&lt;String&gt;                Set language log level to OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST or ALL.
+  --help                                       Print this help message.
+  --help:vm                                    Print options for the host VM.
+  --version:graalvm                            Print GraalVM version information and exit.
+  --show-version:graalvm                       Print GraalVM version information and continue execution.
+  --help:languages                             Print options for all installed languages.
+  --help:tools                                 Print options for all installed tools.
+  --help:expert                                Print additional options for experts.
+  --help:internal                              Print internal options for debugging language implementations and tools.
+</code></pre>
+
+<h2 id="expert-engine-options">Expert Engine Options</h2>
+
+<p>These are advanced options for controlling the engine.
+They are useful to users and language and tool implementers.</p>
+
+<pre><code class="language-shell">Expert engine options:
+  --engine.BackgroundCompilation=&lt;Boolean&gt;     Enable asynchronous truffle compilation in background threads
+  --engine.Compilation=&lt;Boolean&gt;               Enable or disable Truffle compilation.
+  --engine.CompilerIdleDelay=&lt;Long&gt;            Set the time in milliseconds an idle Truffle compiler thread will wait for new tasks before terminating. New compiler
+                                               threads will be started once new compilation tasks are submitted. Select '0' to never terminate the Truffle compiler
+                                               thread. The option is not supported by all Truffle runtimes. On the runtime which does not support it the option has no
+                                               effect.
+  --engine.CompilerThreads=&lt;Integer&gt;           Manually set the number of compiler threads
+  --engine.EncodedGraphCacheCapacity=&lt;Integer&gt; Maximum number of entries in the encoded graph cache (&lt; 0 unbounded, 0 disabled).
+  --engine.EncodedGraphCachePurgeDelay=&lt;Integer&gt;
+                                               Delay, in milliseconds, after which the encoded graph cache is dropped when the compile queue becomes idle.The option is
+                                               only supported on the HotSpot (non-libgraal) Truffle runtime.On runtimes which does not support it the option has no
+                                               effect.
+  --engine.FirstTierCompilationThreshold=&lt;Integer&gt;
+                                               Minimum number of invocations or loop iterations needed to compile a guest language root in first tier.
+  --engine.FirstTierMinInvokeThreshold=&lt;Integer&gt;
+                                               Minimum number of invocations or loop iterations needed to compile a guest language root in last tier.
+  --engine.LastTierCompilationThreshold=&lt;Integer&gt;
+                                               Minimum number of invocations or loop iterations needed to compile a guest language root when not using multi tier.
+  --engine.SingleTierCompilationThreshold=&lt;Integer&gt;
+                                               Minimum number of invocations or loop iterations needed to compile a guest language root when not using multi tier.
+  --engine.Inlining=&lt;Boolean&gt;                  Enable automatic inlining of guest language call targets.
+  --engine.InliningExpansionBudget=&lt;Integer&gt;   The base expansion budget for language-agnostic inlining.
+  --engine.InliningInliningBudget=&lt;Integer&gt;    The base inlining budget for language-agnostic inlining
+  --engine.InliningNodeBudget=&lt;Integer&gt;        Maximum number of inlined non-trivial AST nodes per compilation unit.
+  --engine.InliningPolicy=&lt;String&gt;             Explicitly pick a inlining policy by name. Highest priority chosen by default.
+  --engine.InliningRecursionDepth=&lt;Integer&gt;    Maximum depth for recursive inlining.
+  --engine.MinInvokeThreshold=&lt;Integer&gt;        Minimum number of calls before a call target is compiled
+  --engine.Mode=&lt;EngineMode&gt;                   Configures the execution mode of the engine. Available modes are 'latency' and 'throughput'. The default value balances
+                                               between the two.
+  --engine.MultiTier                           Whether to use multiple Truffle compilation tiers by default.
+  --engine.OSR=&lt;Boolean&gt;                       Enable automatic on-stack-replacement of loops.
+  --engine.PartialBlockCompilation=&lt;Boolean&gt;   Enable partial compilation for BlockNode.
+  --engine.PartialBlockCompilationSize=&lt;Integer&gt;
+                                               Sets the target non-trivial Truffle node size for partial compilation of BlockNode nodes.
+  --engine.Splitting=&lt;Boolean&gt;                 Enable automatic duplication of compilation profiles (splitting).
+  --engine.TraceCompilation                    Print information for compilation results.
+</code></pre>
+
+<h2 id="internal-engine-options">Internal Engine Options</h2>
+
+<p>These are internal options for debugging language implementations and tools.</p>
+
+<pre><code class="language-shell">  --engine.ArgumentTypeSpeculation=&lt;Boolean&gt;   Speculate on arguments types at call sites
+  --engine.CompilationFailureAction=&lt;ExceptionAction&gt;
+                                               Specifies the action to take when Truffle compilation fails.%nThe accepted values are:%n    Silent - Print nothing to
+                                               the console.%n     Print - Print the exception to the console.%n     Throw - Throw the exception to caller.%n  Diagnose
+                                               - Retry compilation with extra diagnostics enabled.%n    ExitVM - Exit the VM process.
+  --engine.CompilationStatisticDetails         Print additional more verbose Truffle compilation statistics at the end of a run.
+  --engine.CompilationStatistics               Print Truffle compilation statistics at the end of a run.
+  --engine.CompileImmediately                  Compile immediately to test Truffle compilation
+  --engine.CompileOnly=&lt;String&gt;                Restrict compilation to ','-separated list of includes (or excludes prefixed with '~').
+  --engine.ExcludeAssertions=&lt;Boolean&gt;         Exclude assertion code from Truffle compilations
+  --engine.InlineAcrossTruffleBoundary         Enable inlining across Truffle boundary
+  --engine.InstrumentBoundaries                Instrument Truffle boundaries and output profiling information to the standard output.
+  --engine.InstrumentBoundariesPerInlineSite   Instrument Truffle boundaries by considering different inlining sites as different branches.
+  --engine.InstrumentBranches                  Instrument branches and output profiling information to the standard output.
+  --engine.InstrumentBranchesPerInlineSite     Instrument branches by considering different inlining sites as different branches.
+  --engine.InstrumentExceptionsAreThrown       Propagates exceptions thrown by instruments.
+  --engine.InstrumentFilter=&lt;String&gt;           Method filter for host methods in which to add instrumentation.
+  --engine.InstrumentationTableSize=&lt;Integer&gt;  Maximum number of instrumentation counters available.
+  --engine.IterativePartialEscape              Run the partial escape analysis iteratively in Truffle compilation.
+  --engine.MaximumGraalNodeCount=&lt;Integer&gt;     Stop partial evaluation when the graph exceeded this many nodes.
+  --engine.MaximumInlineNodeCount=&lt;Integer&gt;    Ignore further truffle inlining decisions when the graph exceeded this many nodes.
+  --engine.NodeSourcePositions                 Enable node source positions in truffle partial evaluations.
+  --engine.OSRCompilationThreshold=&lt;Integer&gt;   Number of loop iterations until on-stack-replacement compilation is triggered.
+  --engine.PrintExpansionHistogram             Prints a histogram of all expanded Java methods.
+  --engine.Profiling=&lt;Boolean&gt;                 Enable/disable builtin profiles in com.oracle.truffle.api.profiles.
+  --engine.ReturnTypeSpeculation=&lt;Boolean&gt;     Speculate on return types at call sites
+  --engine.ShowInternalStackFrames             Show internal frames specific to the language implementation in stack traces.
+  --engine.SplittingAllowForcedSplits=&lt;Boolean&gt;
+                                               Should forced splits be allowed.
+  --engine.SplittingDumpDecisions              Dumps to IGV information on polymorphic events
+  --engine.SplittingGrowthLimit=&lt;Double&gt;       Disable call target splitting if the number of nodes created by splitting exceeds this factor times node count
+  --engine.SplittingMaxCalleeSize=&lt;Integer&gt;    Disable call target splitting if tree size exceeds this limit
+  --engine.SplittingMaxNumberOfSplitNodes=&lt;Integer&gt;
+                                               Disable call target splitting if number of nodes created by splitting exceeds this limit
+  --engine.SplittingMaxPropagationDepth=&lt;Integer&gt;
+                                               Propagate info about a polymorphic specialize through maximum this many call targets
+  --engine.SplittingTraceEvents                Trace details of splitting events and decisions.
+  --engine.TraceAssumptions                    Print stack trace on assumption invalidation
+  --engine.TraceCompilationAST                 Print the entire AST after each compilation
+  --engine.TraceCompilationCallTree            Print the inlined call tree for each compiled method
+  --engine.TraceCompilationDetails             Print information for compilation queuing.
+  --engine.TraceCompilationPolymorphism        Print all polymorphic and generic nodes after each compilation
+  --engine.TraceInlining                       Print information for inlining decisions.
+  --engine.TraceInliningDetails                Print detailed information for inlining (i.e. the entire explored call tree).
+  --engine.TracePerformanceWarnings=&lt;PerformanceWarningKind&gt;
+                                               Print potential performance problems
+  --engine.TraceSplitting                      Print information for splitting decisions.
+  --engine.TraceSplittingSummary               Used for debugging the splitting implementation. Prints splitting summary directly to stdout on shutdown
+  --engine.TraceStackTraceLimit=&lt;Integer&gt;      Number of stack trace elements printed by TraceTruffleTransferToInterpreter and TraceTruffleAssumptions
+  --engine.TraceTransferToInterpreter          Print stack trace on transfer to interpreter.
+  --engine.TreatPerformanceWarningsAsErrors=&lt;PerformanceWarningKind&gt;
+                                               Treat performance warnings as error. Handling of the error depends on the CompilationFailureAction option value
+  --engine.UseConservativeContextReferences    Enables conservative context references. This allows invalid sharing between contexts. For testing purposes only.
+</code></pre>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/21.3/resources/js/main.js'></script>
+  </body>
+
+</html>

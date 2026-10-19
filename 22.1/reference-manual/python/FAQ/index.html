@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.1/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.1/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.1/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.1/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.1/assets/main.css'>
+  <script src='/22.1/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.1/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.1/resources/lib/purl/purl.js'></script>
+  <script src='/22.1/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/22.1/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.1/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.1/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="wrapper wrapper-content">
+  <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/index.html" class="link-back"><i>&#9664;</i>Table of Contents</a>
+
+      <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+
+<h3 id="does-modulepackage-xyz-work-on-graalvms-python-runtime">Does module/package XYZ work on GraalVM’s Python runtime?</h3>
+
+<p>It depends, but is currently unlikely.
+The first goal with GraalVM’s Python runtime was to show that NumPy and related packages can run using the managed GraalVM LLVM runtime.
+The GraalVM team continues to improve the number of passing CPython unittests, and to track the compatibility with popular PyPI packages.</p>
+
+<h3 id="can-the-graalvm-python-runtime-replace-my-jython-use-case">Can the GraalVM Python runtime replace my Jython use case?</h3>
+
+<p>It can, but there are some caveats, like Python code subclassing Java classes or use through the <code>javax.script.ScriptEngine</code> not being supported.
+See the <a href="/22.1/reference-manual/python/Jython/">Jython Migration</a> guide for details.</p>
+
+<h3 id="do-i-need-to-compile-and-run-native-modules-as-llvm-bitcode-to-use-on-graalvms-python-runtime">Do I need to compile and run native modules as LLVM bitcode to use on GraalVM’s Python runtime?</h3>
+
+<p>On GraalVM, Python C extension modules run using the GraalVM LLVM runtime.
+To use such modules, you cannot use binary distributions, but instead you must install them from source using the GraalVM Python runtime, which will transparently produce LLVM bitcode during the build process.
+However, many of the core features of Python (including, e.g., large parts of the <code>os</code> API) are implemented in pure Java and many standard library modules and packages work without running any LLVM bitcode.
+So even though the Python runtime depends on the GraalVM LLVM runtime, for many use cases you can disallow native modules entirely.</p>
+
+<h3 id="can-i-use-the-graalvm-sandboxing-features-with-python">Can I use the GraalVM sandboxing features with Python?</h3>
+
+<p>Yes, you can.
+As an embedder, you can selectively disable features.
+For example, you can disable native code execution or filesystem access.
+Also, GraalVM’s managed execution mode for LLVM fully works for running extensions such as NumPy in a safer manner.</p>
+
+<h3 id="do-all-the-graalvm-polyglot-features-work-with-python">Do all the GraalVM polyglot features work with Python?</h3>
+
+<p>The team is continuously working to ensure all polyglot features of GraalVM work as a Python user would expect.
+There are still many cases where expectations are unclear or where multiple behaviors are imaginable.
+The team is actively looking at use cases and continuously evolving the GraalVM Python runtime to provide the most
+convenient and least surprising behaviour.</p>
+
+<h3 id="what-performance-can-i-expect-from-graalvms-python-runtime">What performance can I expect from GraalVM’s Python runtime?</h3>
+
+<p>For the pure Python code, performance after warm-up can be expected to be around 5-6 times faster than CPython 3.8 (or 6-7x faster than Jython).
+For native extensions running as LLVM bitcode, CPython is currently slower – you can expect to see between 0.1x and 0.5x performance.</p>
+
+<h3 id="i-heard-languages-with-jit-compilers-have-slow-startup-is-that-true-for-graalvms-python-runtime">I heard languages with JIT compilers have slow startup. Is that true for GraalVM’s Python runtime?</h3>
+
+<p>It depends.
+When you use <a href="/22.1/reference-manual/native-image/">Native Image</a> with Python, or the <code>graalpython</code> launcher of GraalVM, startup is competitive with CPython.
+In any case, both with Native Image or when running on the JVM, you first need to warm up to reach peak performance. This is a complicated story in itself, but, in general, it can take a while (a minute or two) after you have reached and are running your core workload.</p>
+
+<h3 id="can-i-share-warmed-up-code-between-multiple-python-contexts">Can I share warmed-up code between multiple Python contexts?</h3>
+
+<p>Yes, this works, and you will find that starting up multiple contexts in the same engine, and running the same or similar code in them will get increasingly faster, because the compiled code is shared across contexts.
+However, the peak performance in this setup is currently lower than in the single context case.</p>
+
+      </div>
+  </div>
+</div>
+
+</div>
+
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.1/resources/js/main.js'></script>
+  </body>
+
+</html>

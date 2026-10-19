@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.0/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.0/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.0/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.0/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.0/assets/main.css'>
+  <script src='/22.0/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.0/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.0/resources/lib/purl/purl.js'></script>
+  <script src='/22.0/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/22.0/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.0/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.0/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.0/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="class-initialization-in-native-image">Class Initialization in Native Image</h1>
+
+<p>The semantics of Java requires that a class is initialized the first time it is accessed at run time.
+Class initialization has negative consequences for ahead-of-time compilation of Java as:</p>
+
+<ul>
+  <li>It significantly degrades the performance of native images: every class access (via field or method) requires a check if the class is already initialized. Without special optimizations, this can reduce performance by more than 2x.</li>
+  <li>It increases the amount of work to start the application. For example, the simple “Hello, World!” program requires initialization of more than 300 classes.</li>
+</ul>
+
+<p>To reduce the negative impact of class initialization, Native Image supports class initialization at build time: certain classes can be initialized during image building, making run-time initialization and checks unnecessary.
+All the static state information from initialized classes is stored in the image.
+Access to the static fields that were initialized at build time is transparent to the application and works as if the class was initialized at run time.</p>
+
+<p>Specifying class initialization policies can be complicated due to the following constraints that come from class initialization semantics:</p>
+
+<ul>
+  <li>
+    <p>When a class is initialized, all super classes and super interfaces with default methods must also be initialized.
+Interfaces without default methods, however, are not initialized.
+To describe this, a short-term “relevant supertype” is used furhter, and a relevant subtype for subtypes of classes and interfaces with default methods.</p>
+  </li>
+  <li>Relevant supertypes of types initialized at build time must also be initialized at build time.</li>
+  <li>Relevant subtypes of types initialized at run time must also be initialized at run time.</li>
+  <li>No instances classes that are initialized at run time must be present in the image.</li>
+</ul>
+
+<p>To enjoy the complete out-of-the-box experience of Native Image and still get the benefits of build-time initailization, Native Image does three things:</p>
+
+<ul>
+  <li><a href="#build-time-initialization-of-native-image-runtime">Build-Time Initialization of Native Image Runtime</a></li>
+  <li><a href="#automatic-initialization-of-safe-classes">Automatic Initialization of Safe Classes</a></li>
+  <li><a href="#explicitly-specifying-class-initialization">Explicitly Specifying Class Initialization</a></li>
+</ul>
+
+<p>To track which classes were initialized and why, one can use the flag <code>-H:+PrintClassInitialization</code>.
+This flag greatly helps to configure the image build to work as intended.
+The goal is to have as many classes as possible initialized at build time, yet keep the correct semantics of the program.</p>
+
+<h2 id="build-time-initialization-of-native-image-runtime">Build-Time Initialization of Native Image Runtime</h2>
+
+<p>In the Native Image runtime most of the classes are initialized at image build time.
+This includes the garbage collector, important JDK classes, the deoptimizer, etc.
+For all of the build-time initialized classes from the runtime, Native Image gives proper support so the semantics remains the same even if initialization happened at build time.
+If there is an issue with a JDK class behaving incorrectly because of class initialization at build time, please <a href="https://github.com/oracle/graal/issues/new">report an issue</a>.</p>
+
+<h2 id="automatic-initialization-of-safe-classes">Automatic Initialization of Safe Classes</h2>
+
+<p>For application classes, Native Image tries to find classes that can be safely initialized at build time.
+A class is considered safe if all of its relevant super types are safe and if the class initializer does not call any unsafe methods or initialize other unsafe classes.</p>
+
+<p>A method is considered as unsafe:</p>
+
+<ul>
+  <li>If it transitively calls into native code (e.g., <code>System.out.println</code>): native code is not analyzed so Native Image cannot know which illegal actions could have been performed.</li>
+  <li>If it calls methods that cannot be reduced to a single target (virtual methods).
+This restriction is there to avoid the explosion of search space for the safety analysis of static initializers.</li>
+  <li>If it is substituted by Native Image. Running initializers of substituted methods would yield different results in the hosting VM than in the produced image.
+As a result, the safety analysis would consider some methods safe but their execution would lead to illegal states.</li>
+</ul>
+
+<p>A test that shows examples of classes that are proven safe can be found <a href="https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.test/src/com/oracle/svm/test/clinit/TestClassInitializationMustBeSafeEarly.java">here</a>.
+The list of all classes that are proven safe is displayed in a file when <code>-H:+PrintClassInitialization</code> is set on the command line.</p>
+
+<h2 id="explicitly-specifying-class-initialization">Explicitly Specifying Class Initialization</h2>
+
+<p>Each class can be initialized either (1) at run time, or (2) at build time.
+To specify class-initialization policies, two flags are provided: <code>--initialize-at-build-time</code> and <code>--initialize-at-run-time</code>.
+These flags allow specifying a policy for whole packages or individual classes.
+For example, if you have classes <code>p.C1</code>, <code>p.C2</code>, … , or <code>p.Cn</code>, you can eagerly initialize this package with:</p>
+<pre><code class="language-shell">--initialize-at-build-time=p
+</code></pre>
+
+<p>If you want to delay one of the classes in package <code>p</code>, simply add:</p>
+<pre><code class="language-shell">--initialize-at-run-time=p.C1
+</code></pre>
+
+<p>The whole class hierarchy can be initialized at build time by passing <code>--initialize-at-build-time</code> on the command line.</p>
+
+<p>Class initialization can also be specified programatically by using <a href="https://github.com/oracle/graal/blob/master/sdk/src/org.graalvm.nativeimage/src/org/graalvm/nativeimage/hosted/RuntimeClassInitialization.java"><code>RuntimeClassInitialization</code></a> from the <a href="https://github.com/oracle/graal/blob/master/sdk/src/org.graalvm.nativeimage/src/org/graalvm/nativeimage/hosted/Feature.java">Native Image feature</a>.</p>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.0/resources/js/main.js'></script>
+  </body>
+
+</html>

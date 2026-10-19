@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/21.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/21.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/21.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/21.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/21.3/assets/main.css'>
+  <script src='/21.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/21.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/21.3/resources/lib/purl/purl.js'></script>
+  <script src='/21.3/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/21.3/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/21.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/21.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/21.3/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="native-image-build-configuration">Native Image Build Configuration</h1>
+
+<ul>
+  <li><a href="#embedding-a-configuration-file">Embedding a Configuration File</a></li>
+  <li><a href="#configuration-file-format">Configuration File Format</a></li>
+  <li><a href="#memory-configuration-for-native-image-build">Memory Configuration for Native Image Build</a></li>
+  <li><a href="#runtime-vs-build-time-initialization">Runtime vs Build-Time Initialization</a></li>
+  <li><a href="/21.3/reference-manual/native-image/Agent/#assisted-configuration-of-native-image-builds">Assisted Configuration of Native Image Builds</a></li>
+  <li><a href="/21.3/reference-manual/native-image/Agent/#building-native-image-with-java-reflection-example">Building Native Image with Java Reflection Example</a></li>
+  <li><a href="/21.3/reference-manual/native-image/Agent/#agent-advanced-usage">Agent Advanced Usage</a></li>
+</ul>
+
+<p>Native Image supports a wide range of options to configure a native image build process.</p>
+
+<h2 id="embedding-a-configuration-file">Embedding a Configuration File</h2>
+
+<p>A recommended way to provide configuration is to embed a <strong>native-image.properties</strong> file into a project JAR file.
+The Native Image builder will automatically pick up all configuration options provided anywhere below the resource location <code>META-INF/native-image/</code> and use it to construct <code>native-image</code> command line arguments.</p>
+
+<p>To avoid a situation when constituent parts of a project are built with overlapping configurations, it is recommended to use “subdirectories” within <code>META-INF/native-image</code>.
+That way a JAR file built from multiple maven projects cannot suffer from overlapping <code>native-image</code> configurations.
+For example:</p>
+<ul>
+  <li><em>foo.jar</em> has its configurations in <code>META-INF/native-image/foo_groupID/foo_artifactID</code></li>
+  <li><em>bar.jar</em> has its configurations in <code>META-INF/native-image/bar_groupID/bar_artifactID</code></li>
+</ul>
+
+<p>The JAR file that contains <code>foo</code> and <code>bar</code> will then contain both configurations without conflicting with one another.
+Therefore the recommended layout for storing native image configuration data in JAR files is the following:</p>
+<pre><code>META-INF/
+└── native-image
+    └── groupID
+        └── artifactID
+            └── native-image.properties
+</code></pre>
+
+<p>Note that the use of <code>${.}</code> in a <em>native-image.properties</em> file expands to the resource location that contains that exact configuration file.
+This can be useful if the <em>native-image.properties</em> file wants to refer to resources within its “subfolder”, for example, <code>-H:SubstitutionResources=${.}/substitutions.json</code>.
+Always make sure to use the option variants that take resources, i.e., use <code>-H:ResourceConfigurationResources</code> instead of <code>-H:ResourceConfigurationFiles</code>.
+Other options that are known to work in this context are:</p>
+<ul>
+  <li><code>-H:DynamicProxyConfigurationResources</code></li>
+  <li><code>-H:JNIConfigurationResources</code></li>
+  <li><code>-H:ReflectionConfigurationResources</code></li>
+  <li><code>-H:ResourceConfigurationResources</code></li>
+  <li><code>-H:SubstitutionResources</code></li>
+  <li><code>-H:SerializationConfigurationResources</code></li>
+</ul>
+
+<p>By having such a composable <em>native-image.properties</em> file, building an image does not require any additional arguments specified on command line.
+It is sufficient to just run the following command:</p>
+<pre><code class="language-shell">$JAVA_HOME/bin/native-image -jar target/&lt;name&gt;.jar
+</code></pre>
+
+<p>To debug which configuration data gets applied for the image building, use <code>native-image --verbose</code>.
+This will show from where <code>native-image</code> picks up the configurations to construct the final composite configuration command line options for the native image builder.</p>
+<pre><code class="language-shell">native-image --verbose -jar build/basic-app-0.1-all.jar
+Apply jar:file://~/build/basic-app-0.1-all.jar!/META-INF/native-image/io.netty/common/native-image.properties
+Apply jar:file://~/build/basic-app-0.1-all.jar!/META-INF/native-image/io.netty/buffer/native-image.properties
+Apply jar:file://~/build/basic-app-0.1-all.jar!/META-INF/native-image/io.netty/transport/native-image.properties
+Apply jar:file://~/build/basic-app-0.1-all.jar!/META-INF/native-image/io.netty/handler/native-image.properties
+Apply jar:file://~/build/basic-app-0.1-all.jar!/META-INF/native-image/io.netty/codec-http/native-image.properties
+...
+Executing [
+    &lt;composite configuration command line options for the image builder&gt;
+]
+</code></pre>
+
+<p>Typical examples of <code>META-INF/native-image</code> based native image configuration can be found in <a href="https://github.com/graalvm/graalvm-demos/tree/master/native-image-configure-examples">Native Image configuration examples</a>.</p>
+
+<h2 id="configuration-file-format">Configuration File Format</h2>
+
+<p>A <code>native-image.properties</code> file is a regular Java properties file that can be
+used to specify native image configurations. The following properties are
+supported.</p>
+
+<p><strong>Args</strong></p>
+
+<p>Use this property if your project requires custom <code>native-image</code> command line options to build correctly.
+For example, the <code>native-image-configure-examples/configure-at-runtime-example</code> has <code>Args = --initialize-at-build-time=com.fasterxml.jackson.annotation.JsonProperty$Access</code> in its <code>native-image.properties</code> file to ensure the class <code>com.fasterxml.jackson.annotation.JsonProperty$Access</code> gets initialized at image build time.</p>
+
+<p><strong>JavaArgs</strong></p>
+
+<p>Sometimes it can be necessary to provide custom options to the JVM that runs the native image builder.
+The <code>JavaArgs</code> property can be used in this case.</p>
+
+<p><strong>ImageName</strong></p>
+
+<p>This property can be used to specify a user-defined name for the image.
+If <code>ImageName</code> is not used, a name gets automatically chosen:</p>
+<ul>
+  <li><code>native-image -jar &lt;name.jar&gt;</code> has a default image name <code>&lt;name&gt;</code></li>
+  <li><code>native-image -cp ... fully.qualified.MainClass</code> has a default image name <code>fully.qualified.mainclass</code></li>
+</ul>
+
+<p>Note that using <code>ImageName</code> does not prevent the user to override the name later via command line.
+For example, if <code>foo.bar</code> contains <code>ImageName=foo_app</code>:</p>
+<ul>
+  <li><code>native-image -jar foo.bar</code> generates the image <code>foo_app</code> but</li>
+  <li><code>native-image -jar foo.bar application</code> generates the image <code>application</code></li>
+</ul>
+
+<h3 id="order-of-arguments-evaluation">Order of Arguments Evaluation</h3>
+<p>The arguments passed to <code>native-image</code> are evaluated left-to-right.
+This also extends to arguments that get passed indirectly via <code>META-INF/native-image</code> based native image configuration.
+Suppose you have a JAR file that contains <em>native-image.properties</em> with <code>Args = -H:Optimize=0</code>.
+Then by using the <code>-H:Optimize=2</code> option after <code>-cp &lt;jar-file&gt;</code> you can override the setting that comes from the JAR file.</p>
+
+<h3 id="specifying-default-options-for-native-image">Specifying Default Options for Native Image</h3>
+<p>If there is a need to pass some options for every image build unconditionally, for example, to always generate an image in verbose mode (<code>--verbose</code>), you can make use of the <code>NATIVE_IMAGE_CONFIG_FILE</code> environment variable.
+If it is set to a Java properties file, the Native Image builder will use the default setting defined in there on each invocation.
+Write a configuration file and export <code>NATIVE_IMAGE_CONFIG_FILE=$HOME/.native-image/default.properties</code> in <code>~/.bash_profile</code>.
+Every time <code>native-image</code> gets used, it will implicitly use the arguments specified as <code>NativeImageArgs</code>, plus the arguments specified on the command line.
+Here is an example of a configuration file, saved as <code>~/.native-image/default.properties</code>:</p>
+
+<pre><code>NativeImageArgs = --configurations-path /home/user/custom-image-configs \
+                  -O1
+</code></pre>
+
+<h3 id="changing-the-configuration-directory">Changing the Configuration Directory</h3>
+
+<p>Native Image by default stores the configuration information in user’s home directory – <code>$HOME/.native-image/</code>.
+In order to change the output directory, set the environment variable <code>NATIVE_IMAGE_USER_HOME</code> to a different location. For example:</p>
+<pre><code class="language-shell">export NATIVE_IMAGE_USER_HOME= $HOME/.local/share/native-image
+</code></pre>
+
+<h2 id="memory-configuration-for-native-image-build">Memory Configuration for Native Image Build</h2>
+
+<p>The native image build runs on the Java HotSpot VM and uses the memory management of the underlying platform.
+The usual Java HotSpot command-line options for garbage collection apply to the native image builder.</p>
+
+<p>During the native image build, the representation of a whole program is created to figure out which classes and methods will be used at run time.
+It is a computationally intensive process.
+The default values for memory usage at image build time are:</p>
+<pre><code>-Xss10M \
+-Xms1G \
+</code></pre>
+<p>These defaults can be changed by passing <code>-J + &lt;jvm option for memory&gt;</code> to the native image builder.</p>
+
+<p>The <code>-Xmx</code> value is computed by using 80% of the physical memory size, but no more than 14G per server.
+Providing a larger value for <code>-Xmx</code> on command line is possible, e.g., <code>-J-Xmx26G</code>.</p>
+
+<p>By default, image building uses of up to 32 threads (but not more than the number of processors available). For custom values <code>-H:NumberOfThreads=...</code> can be used.</p>
+
+<p>Check other related options to the native image builder from the <code>native-image --expert-options-all</code> list.</p>
+
+<h2 id="runtime-vs-build-time-initialization">Runtime vs Build-Time Initialization</h2>
+
+<p>Building your application into a native image allows you to decide which parts of your application should be run at image build time and which parts have to run at image run time.</p>
+
+<p>All class-initialization code (static initializers and static field initialization) of the application you build an image for is executed at image run time by default.
+Sometimes it is beneficial to allow class initialization code to get executed at image build time for faster startup (e.g., if some static fields get initialized to run-time independent data).
+This can be controlled with the following <code>native-image</code> options:</p>
+
+<ul>
+  <li><code>--initialize-at-build-time=&lt;comma-separated list of packages and classes&gt;</code></li>
+  <li><code>--initialize-at-run-time=&lt;comma-separated list of packages and classes&gt;</code></li>
+</ul>
+
+<p>In addition to that, arbitrary computations are allowed at build time that can be put into <code>ImageSingletons</code> that are accessible at image run time.
+For more information please have a look at <a href="https://github.com/graalvm/graalvm-demos/tree/master/native-image-configure-examples">Native Image configuration examples</a>.</p>
+
+<p>For more information, continue reading to the <a href="/21.3/reference-manual/native-image/ClassInitialization/">Class Initialization in Native Image</a> guide.</p>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/21.3/resources/js/main.js'></script>
+  </body>
+
+</html>

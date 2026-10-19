@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.2/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.2/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.2/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.2/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.2/assets/main.css'>
+  <script src='/22.2/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.2/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.2/resources/lib/purl/purl.js'></script>
+  <script src='/22.2/resources/lib/fiddle/fiddle.js' defer></script>
+  <link rel="stylesheet" href='/22.2/resources/styles/fiddle.css'>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.2/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.2/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.2/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="build-a-native-shared-library">Build a Native Shared Library</h1>
+
+<p>To build a native shared library, pass the command-line argument <code>--shared</code> to the <code>native-image</code> tool, as follows</p>
+
+<pre><code class="language-shell">native-image &lt;class name&gt; --shared
+</code></pre>
+
+<p>To build a native shared library from a JAR file, use the following syntax:</p>
+<pre><code class="language-shell">native-image -jar &lt;jarfile&gt; --shared
+</code></pre>
+
+<p>The resulting native shared library will have the <code>main()</code> method of the given Java class as its <strong>entrypoint</strong> method.</p>
+
+<p>If your library doesn’t include a <code>main()</code> method, use the <code>-H:Name=</code> command-line option to specify the library name, as follows:</p>
+
+<pre><code class="language-shell">native-image --shared -H:Name=&lt;libraryname&gt; &lt;class name&gt;
+native-image --shared -jar &lt;jarfile&gt; -H:Name=&lt;libraryname&gt;
+</code></pre>
+
+<p>GraalVM makes it easy to use C to call into a native shared library. 
+There are two primary mechanisms for calling a method (function) embedded in a native shared library: the <a href="/22.2/reference-manual/native-image/native-code-interoperability/C-API/">Native Image C API</a> and the <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/jni/invocation.html">JNI Invocation API</a>.</p>
+
+<p>This guide describes how to use the <strong>Native Image C API</strong>. It consists of the following steps:</p>
+<ol>
+  <li>Create and compile a Java class library containing at least one <strong>entrypoint</strong> method.</li>
+  <li>Use the <code>native-image</code> tool to create a shared library from the Java class library.</li>
+  <li>Create and compile a C application that calls an <strong>entrypoint</strong> method in the shared library.</li>
+</ol>
+
+<h3 id="tips-and-tricks">Tips and Tricks</h3>
+
+<p>The shared library must have at least one <strong>entrypoint</strong> method.
+By default, only a method named <code>main()</code>, originating from a <code>public static void main()</code> method, is identified as an <strong>entrypoint</strong> and callable from a C application.</p>
+
+<p>To export any other Java method:</p>
+
+<ul>
+  <li>Declare the method as static.</li>
+  <li>Annotate the method with <code>@CEntryPoint</code> (<code>org.graalvm.nativeimage.c.function.CEntryPoint</code>).</li>
+  <li>Make one of the method’s parameters of type <code>IsolateThread</code> or <code>Isolate</code>, for example, the first parameter (<code>org.graalvm.nativeimage.IsolateThread</code>) in the method below. This parameter provides the current thread’s execution context for the call.</li>
+  <li>Restrict your parameter and return types to non-object types. These are Java primitive types including pointers, from the <code>org.graalvm.nativeimage.c.type</code> package.</li>
+  <li>Provide a unique name for the method. If you give two exposed methods the same name, the <code>native-image</code> builder will fail with the <code>duplicate symbol</code> message. If you do not specify the name in the annotation, you must provide the <code>-H:Name=libraryName</code> flag at build time.</li>
+</ul>
+
+<p>Below is an example of an <strong>entrypoint</strong> method:</p>
+
+<pre><code class="language-java">@CEntryPoint(name = "function_name")
+static int add(IsolateThread thread, int a, int b) {
+    return a + b;
+}
+</code></pre>
+
+<p>When the <code>native-image</code> tool builds a native shared library, it also generates a C header file.
+The header file contains declarations for the <a href="/22.2/reference-manual/native-image/native-code-interoperability/C-API/">Native Image C API</a> (which enables you to create isolates and attach threads from C code) as well as declarations for each <strong>entrypoint</strong> in the shared library.
+The <code>native-image</code> tool generates a C header file containing the following C declaration for the example above:</p>
+<pre><code class="language-c">int add(graal_isolatethread_t* thread, int a, int b);
+</code></pre>
+
+<p>A native shared library can have an unlimited number of <strong>entrypoints</strong>, for example to implement callbacks or APIs.</p>
+
+<h3 id="run-a-demo">Run a Demo</h3>
+
+<p>In the following example, you’ll create a small Java class library (containing one class), use <code>native-image</code> to create a shared library from the class library, and then create a small C application that uses the shared library.
+The C application takes a string as its argument, passes it to the shared library, and prints environment variables that contain the argument.</p>
+
+<h4 id="prerequisites">Prerequisites</h4>
+
+<p>You have set the <code>GRAALVM_HOME</code> environment variable to the location of the GraalVM installation.</p>
+
+<p>You have have installed LLVM toolchain support to GraalVM, as follows:</p>
+<pre><code class="language-shell">$GRAALVM_HOME/bin/gu install llvm-toolchain
+</code></pre>
+
+<blockquote>
+  <p>Note: The llvm-toolchain GraalVM component is not available on Microsoft Windows.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>Save the following Java code to a file named <em>LibEnvMap.java</em>:</p>
+
+    <pre><code class="language-java"> import java.util.Map;
+ import org.graalvm.nativeimage.IsolateThread;
+ import org.graalvm.nativeimage.c.function.CEntryPoint;
+ import org.graalvm.nativeimage.c.type.CCharPointer;
+ import org.graalvm.nativeimage.c.type.CTypeConversion;
+
+ public class LibEnvMap {
+     //NOTE: this class has no main() method
+
+     @CEntryPoint(name = "filter_env")
+     private static int filterEnv(IsolateThread thread, CCharPointer cFilter) {
+         String filter = CTypeConversion.toJavaString(cFilter);
+         Map&lt;String, String&gt; env = System.getenv();
+         int count = 0;
+         for (String envName : env.keySet()) {
+             if(!envName.contains(filter)) continue;
+             System.out.format("%s=%s%n",
+                             envName,
+                             env.get(envName));
+             count++;
+         }
+         return count;
+     }
+ }
+</code></pre>
+    <p>Notice how the method <code>filterEnv()</code> is identified as an <strong>entrypoint</strong> using the <code>@CEntryPoint</code> annotation and the method is given a name as a argument to the annotation.</p>
+  </li>
+  <li>
+    <p>Compile the Java code and build a native shared library, as follows:</p>
+
+    <pre><code class="language-shell"> $GRAALVM_HOME/bin/javac LibEnvMap.java
+ $GRAALVM_HOME/bin/native-image -H:Name=LibEnvMap --shared 
+</code></pre>
+
+    <p>It will produce the following artifacts:</p>
+    <pre><code> --------------------------------------------------
+ Produced artifacts:
+ /demo/libenvmap.dylib (shared_lib)
+ /demo/libenvmap.h (header)
+ /demo/graal_isolate.h (header)
+ /demo/libenvmap_dynamic.h (header)
+ /demo/graal_isolate_dynamic.h (header)
+ /demo/libenvmap.build_artifacts.txt
+ ==================================================
+</code></pre>
+
+    <p>If you work with C or C++, use these header files directly. For other languages, such as Java, use the function declarations in the headers to set up your foreign call bindings.</p>
+  </li>
+  <li>
+    <p>Create a C application, <em>main.c</em>, in the same directory containing the following code:</p>
+
+    <pre><code class="language-c"> #include &lt;stdio.h&gt;
+ #include &lt;stdlib.h&gt;
+
+ #include "libenvmap.h"
+
+ int main(int argc, char **argv) {
+ if (argc != 2) {
+     fprintf(stderr, "Usage: %s &lt;filter&gt;\n", argv[0]);
+     exit(1);
+ }
+
+ graal_isolate_t *isolate = NULL;
+ graal_isolatethread_t *thread = NULL;
+
+ if (graal_create_isolate(NULL, &amp;isolate, &amp;thread) != 0) {
+     fprintf(stderr, "initialization error\n");
+     return 1;
+ }
+
+ printf("Number of entries: %d\n", filter_env(thread, argv[1]));
+
+ graal_tear_down_isolate(thread);
+ }
+</code></pre>
+
+    <p>The statement <code>#include "libenvmap.h"</code> loads the native shared library.</p>
+  </li>
+  <li>
+    <p>Compile the C application using <code>clang</code>.</p>
+
+    <pre><code class="language-shell"> $GRAALVM_HOME/languages/llvm/native/bin/clang -I ./ -L ./ -l envmap -Wl,-rpath ./ -o main main.c 
+</code></pre>
+  </li>
+  <li>
+    <p>Run the C application by passing a string as an argument. For example:</p>
+
+    <pre><code class="language-shell"> ./main USER
+</code></pre>
+    <p>It will correctly print out the name and value of the matching environment variable(s).</p>
+  </li>
+</ol>
+
+<p>The advantage of using the Native Image C API is that you can determine what your API will look like. 
+The restriction is that your parameter and return types must be non-object types.
+If you want to manage Java objects from C, you should consider <a href="/22.2/reference-manual/native-image/dynamic-features/JNI/">JNI Invocation API</a>.</p>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="https://nirvdrum.com/2022/05/09/truffle-language-embedding.html">Embedding Truffle Languages</a>– a blog post by Kevin Menard where he compares both mechanisms for exposing Java methods.</li>
+  <li><a href="/22.2/reference-manual/native-image/native-code-interoperability/">Interoperability with Native Code</a></li>
+  <li><a href="/22.2/reference-manual/native-image/dynamic-features/JNI/">Java Native Interface (JNI) in Native Image</a></li>
+  <li><a href="/22.2/reference-manual/native-image/native-code-interoperability/C-API/">Native Image C API</a></li>
+</ul>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.2/resources/js/main.js'></script>
+  </body>
+
+</html>
