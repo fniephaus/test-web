@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.2/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.2/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.2/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.2/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.2/assets/main.css'>
+  <script src='/22.2/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.2/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.2/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.2/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.2/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.2/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="create-a-heap-dump-from-a-native-executable">Create a Heap Dump from a Native Executable</h1>
+
+<p>You can create a heap dump of a running executable to monitor its execution. Just like any other Java heap dump, it can be opened with the <a href="/22.2/tools/visualvm/">VisualVM</a> tool.</p>
+
+<p>You can build a native executable so that it dumps its heap in three ways:</p>
+
+<ol>
+  <li>Dump the initial heap of a native executable using the <code>-XX:+DumpHeapAndExit</code> command-line option.</li>
+  <li>Build a native executable with the <code>-H:+AllowVMInspection</code> option. Then create heap dumps sending <code>USR1</code> (other supported signals are <code>QUIT/BREAK</code> for stack dumps and <code>USR2</code> to dump runtime compilation information).</li>
+  <li>Create a heap dumps programmatically through the <a href="https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/VMInspection.java"><code>org.graalvm.nativeimage.VMRuntime#dumpHeap</code></a> API.</li>
+</ol>
+
+<p>All three approaches are described below.</p>
+
+<blockquote>
+  <p>Note: Creating heap dumps is not available on the Microsoft Windows platform.</p>
+</blockquote>
+
+<h2 id="dump-the-initial-heap-of-a-native-executable">Dump the Initial Heap of a Native Executable</h2>
+
+<p>Use the <code>-XX:+DumpHeapAndExit</code> command-line option to dump the initial heap of a native executable.
+This can be useful to identify which objects the Native Image build process allocated to the executable’s heap. 
+For a HelloWorld example, use the option as follows:</p>
+
+<pre><code class="language-shell">$GRAALVM_HOME/bin/native-image HelloWorld -H:+AllowVMInspection
+./helloworld -XX:+DumpHeapAndExit
+Heap dump created at '/path/to/helloworld.hprof'.
+</code></pre>
+
+<h2 id="handle-usr1-signals">Handle USR1 Signals</h2>
+
+<p>The following example is a simple multi-threaded Java application that runs for 60 seconds. 
+This provides you with enough time to send it a <code>USR1</code> signal. The application will handle the signal and create a heap dump in the application’s working directory. The heap dump will contain the <code>Collection</code> of <code>Person</code>s referenced by the static variable <code>CROWD</code>.</p>
+
+<p>Follow these steps to build a native executable that will produce a heap dump when it receives a <code>USR1</code> signal.</p>
+
+<ol>
+  <li>Save the following code in a file named <em>SVMHeapDump.java</em>:
+    <pre><code class="language-java">import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
+import org.graalvm.nativeimage.ProcessProperties;
+
+public class SVMHeapDump extends Thread {
+    static Collection&lt;Person&gt; CROWD = new ArrayList&lt;&gt;();
+    static DateFormat DATE_FORMATTER = DateFormat.getDateTimeInstance();
+    static int i = 0;
+    static int runs = 60;
+    static int sleepTime = 1000;
+    @Override
+    public void run() {
+        System.out.println(DATE_FORMATTER.format(new Date()) + ": Thread started, it will run for " + runs + " seconds");
+        while (i &lt; runs) {
+            // Add a new person to the collection
+            CROWD.add(new Person());
+            System.out.println("Sleeping for " + (runs - i) + " seconds.");
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException ie) {
+                System.out.println("Sleep interrupted.");
+            }
+            i++;
+        }
+    }
+
+    /**
+    * @param args the command line arguments
+    */
+    public static void main(String[] args) throws InterruptedException {
+        // Add objects to the heap
+        for (int i = 0; i &lt; 1000; i++) {
+            CROWD.add(new Person());
+        }
+        long pid = ProcessProperties.getProcessID();
+        StringBuffer sb1 = new StringBuffer(100);
+        sb1.append(DATE_FORMATTER.format(new Date()));
+        sb1.append(": Hello GraalVM native image developer! \n");
+        sb1.append("The PID of this process is: " + pid + "\n");
+        sb1.append("Send it a signal: ");
+        sb1.append("'kill -SIGUSR1 " + pid + "' \n");
+        sb1.append("to dump the heap into the working directory.\n");
+        sb1.append("Starting thread!");
+        System.out.println(sb1);
+        SVMHeapDump t = new SVMHeapDump();
+        t.start();
+        while (t.isAlive()) {
+            t.join(0);
+        }
+        sb1 = new StringBuffer(100);
+        sb1.append(DATE_FORMATTER.format(new Date()));
+        sb1.append(": Thread finished after: ");
+        sb1.append(i);
+        sb1.append(" iterations.");
+        System.out.println(sb1);
+    }
+}
+
+class Person {
+        private static Random R = new Random();
+        private String name;
+        private int age;
+            
+        public Person() {
+            byte[] array = new byte[7];
+            R.nextBytes(array);
+            name = new String(array, Charset.forName("UTF-8"));
+            age = R.nextInt(100);
+        }
+    }
+</code></pre>
+  </li>
+  <li>
+    <p>Build a native executable:</p>
+
+    <p>Compile SVMHeapDump.java as follows:</p>
+    <pre><code class="language-shell"> $JAVA_HOME/bin/javac SVMHeapDump.java
+</code></pre>
+    <p>Build a native executable using the <code>-H:+AllowVMInspection</code> command-line option.
+ (This causes the resulting native executable to produce a heap dump when it receives a <code>USR1</code> signal.)</p>
+
+    <pre><code class="language-shell"> $JAVA_HOME/bin/native-image SVMHeapDump -H:+AllowVMInspection
+</code></pre>
+
+    <p>(The <code>native-image</code> builder creates a native executable from the <code>SVMHeapDump.class</code>.
+ When the command completes, the native executable <code>svmheapdump</code> is created in the current directory.)</p>
+  </li>
+  <li>
+    <p>Run the application, send it a signal, and check the heap dump</p>
+
+    <p>Run the application:</p>
+    <pre><code class="language-shell"> ./svmheapdump
+ 17 May 2022, 16:38:13: Hello GraalVM native image developer! 
+ The PID of this process is: 57509
+ Send it a signal: 'kill -SIGUSR1 57509' 
+ to dump the heap into the working directory.
+ Starting thread!
+ 17 May 2022, 16:38:13: Thread started, it will run for 60 seconds
+</code></pre>
+
+    <p>Make a note of the PID and open a second terminal. Use the PID to send a signal to the application. For example, if the PID is <code>57509</code>:</p>
+    <pre><code class="language-shell"> kill -SIGUSR1 57509
+</code></pre>
+    <p>The heap dump will be created in the working directory while the application continues to run. The heap dump can be opened with the <a href="/22.2/tools/visualvm/">VisualVM</a> tool, as illustrated below.</p>
+
+    <p><img src="/22.2/docs/reference-manual/native-image/guides/img/heap-dump.png" alt="Native Image Heap Dump View in VisualVM" /></p>
+  </li>
+</ol>
+
+<h2 id="create-a-heap-dump-from-within-a-native-executable">Create a Heap Dump from within a Native Executable</h2>
+
+<p>The following example shows how to create a heap dump from a running native executable using <a href="https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/VMInspection.java"><code>VMRuntime.dumpHeap()</code></a> if some condition is met.
+The condition to create a heap dump is provided as an option on the command line.</p>
+
+<ol>
+  <li>
+    <p>Save the code below in a file named <em>SVMHeapDumpAPI.java</em>.</p>
+
+    <pre><code class="language-java"> import java.io.File;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
+ import java.nio.charset.Charset;
+ import java.text.DateFormat;
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.Date;
+ import java.util.Random;
+ import org.graalvm.nativeimage.VMRuntime;
+
+ public class SVMHeapDumpAPI {
+     static Collection&lt;Person&gt; CROWD = new ArrayList&lt;&gt;();
+
+     /**
+     * @param args the command line arguments
+     */
+     public static void main(String[] args) {   	
+         // Populate the crowd
+         for (int i = 0; i &lt; 1000; i++) {
+             CROWD.add(new Person());
+         }
+         StringBuffer sb1 = new StringBuffer(100);
+         sb1.append(DateFormat.getDateTimeInstance().format(new Date()));
+         sb1.append(": Hello GraalVM native image developer. \nYour command line options are: ");
+         if (args.length &gt; 0) {
+             sb1.append(args[0]);
+             System.out.println(sb1);
+             if (args[0].equalsIgnoreCase("--heapdump")) {
+                 createHeapDump();
+             }
+         } else {
+             sb1.append("None");
+             System.out.println(sb1);
+         }
+     }
+
+     /**
+     * Create a heap dump and save it into temp file
+     */
+     private static void createHeapDump() {
+         try {
+             File file = File.createTempFile("SVMHeapDumpAPI-", ".hprof");
+             VMRuntime.dumpHeap(file.getAbsolutePath(), false);
+             System.out.println("  Heap dump created " + file.getAbsolutePath() + ", size: " + file.length());
+         } catch (UnsupportedOperationException unsupported) {
+             System.err.println("Heap dump creation failed: " + unsupported.getMessage());
+         } catch (IOException ioe) {
+             System.err.println("IO went wrong: " + ioe.getMessage());
+         }
+     }
+
+ }
+
+ class Person {
+         private static Random R = new Random();
+         private String name;
+         private int age;
+            
+         public Person() {
+             byte[] array = new byte[7];
+             R.nextBytes(array);
+             name = new String(array, Charset.forName("UTF-8"));
+             age = R.nextInt(100);
+         }
+     }
+</code></pre>
+
+    <p>As in the earlier example, the application creates a <code>Collection</code> of <code>Person</code>s referenced by the static variable <code>CROWD</code>. It then checks the command line to see if heap dump has to be created, and then in method <code>createHeapDump()</code> creates the heap dump.</p>
+  </li>
+  <li>
+    <p>Build a native executable</p>
+
+    <p>Compile <em>SVMHeapDumpAPI.java</em> and build a native executable:</p>
+    <pre><code class="language-shell"> $JAVA_HOME/bin/javac SVMHeapDumpAPI.java
+ $JAVA_HOME/bin/native-image SVMHeapDumpAPI
+</code></pre>
+
+    <p>When the command completes, the <code>svmheapdumpapi</code> native executable is created in the current directory.</p>
+  </li>
+  <li>
+    <p>Run the application and check the heap dump</p>
+
+    <p>Now you can run your native executable and create a heap dump from it with output similar to the following:</p>
+    <pre><code class="language-shell"> ./svmheapdumpapi --heapdump
+ Sep 15, 2020, 4:06:36 PM: Hello GraalVM native image developer.
+ Your command line options are: --heapdump
+   Heap dump created /var/folders/hw/s9d78jts67gdc8cfyq5fjcdm0000gp/T/SVMHeapDump-6437252222863577987.hprof, size: 8051959
+</code></pre>
+
+    <p>The resulting heap dump can be then opened with the <a href="/22.2/tools/visualvm/">VisualVM</a> tool like any other Java heap dump, as illustrated below.</p>
+
+    <p><img src="/22.2/docs/reference-manual/native-image/guides/img/heap-dump-api.png" alt="Native Image Heap Dump View in VisualVM" /></p>
+  </li>
+</ol>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="/22.2/reference-manual/native-image/debugging-and-diagnostics/">Debugging and Diagnostics</a></li>
+  <li><a href="/22.2/tools/visualvm/">VisualVM</a></li>
+</ul>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.2/resources/js/main.js'></script>
+  </body>
+
+</html>

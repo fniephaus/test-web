@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.0/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.0/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.0/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.0/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.0/assets/main.css'>
+  <script src='/22.0/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.0/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.0/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.0/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.0/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.0/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="native-image">Native Image</h1>
+
+<p>Native Image is a technology to ahead-of-time compile Java code to a standalone executable, called a <strong>native image</strong>.
+This executable includes the application classes, classes from its dependencies, runtime library classes, and statically linked native code from JDK.
+It does not run on the Java VM, but includes necessary components like memory management, thread scheduling, and so on from a different runtime system, called “Substrate VM”.
+Substrate VM is the name for the runtime components (like the deoptimizer, garbage collector, thread scheduling etc.).
+The resulting program has faster startup time and lower runtime memory overhead compared to a JVM.</p>
+
+<p>The <strong>Native Image builder</strong> or <code>native-image</code> is a utility that processes all classes of an application and their dependencies, including those from the JDK.
+It statically analyzes these data to determine which classes and methods are reachable during the application execution.
+Then it ahead-of-time compiles that reachable code and data to a native executable for a specific operating system and architecture.
+This entire process is called <strong>building an image</strong> (or the <strong>image build time</strong>) to clearly distinguish it from the compilation of Java source code to bytecode.</p>
+
+<p>Native Image supports JVM-based languages, e.g., Java, Scala, Clojure, Kotlin.
+The resulting image can, optionally, execute dynamic languages like JavaScript, Ruby, R or Python.
+Polyglot embeddings can also be compiled ahead-of-time.
+To inform <code>native-image</code> of a guest language used by an application, specify <code>--language:&lt;languageId&gt;</code> for each guest language (e.g., <code>--language:js</code>).</p>
+
+<ul>
+  <li><a href="#install-native-image">Install Native Image</a></li>
+  <li><a href="#prerequisites">Prerequisites</a></li>
+  <li><a href="#build-a-native-image">Build a Native Image</a></li>
+  <li><a href="#build-a-shared-library">Build a Shared Library</a></li>
+  <li><a href="#ahead-of-time-compilation-limitations">Ahead-of-time Compilation Limitations</a></li>
+</ul>
+
+<h3 id="license">License</h3>
+
+<p>The Native Image technology is distributed as a separate installable to GraalVM.
+Native Image for GraalVM Community Edition is licensed under the <a href="https://github.com/oracle/graal/blob/master/substratevm/LICENSE">GPL 2 with Classpath Exception</a>.</p>
+
+<p>Native Image for GraalVM Enterprise Edition is available as an Early Adopter feature.
+Early Adopter features are subject to ongoing development, testing, and modification.
+For more information, check the <a href="https://www.oracle.com/downloads/licenses/graalvm-otn-license.html">Oracle Technology Network License Agreement for GraalVM Enterprise Edition</a>.</p>
+
+<h2 id="install-native-image">Install Native Image</h2>
+
+<p>Native Image can be added to GraalVM with the <a href="/22.0/reference-manual/graalvm-updater/">GraalVM Updater</a> tool.</p>
+
+<p>Run this command to install Native Image:</p>
+<pre><code class="language-shell">gu install native-image
+</code></pre>
+<p>After this additional step, the <code>native-image</code> executable will become available in
+the <code>$JAVA_HOME/bin</code> directory.</p>
+
+<p>The above command will install Native Image from the GitHub catalog for GraalVM Community users.
+For GraalVM Enterprise users, the <a href="/22.0/reference-manual/graalvm-updater/#manual-installation">manual installation</a> is required.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>For compilation <code>native-image</code> depends on the local toolchain. Install <code>glibc-devel</code>, <code>zlib-devel</code> (header files for the C library and <code>zlib</code>) and <code>gcc</code>, using a package manager available on your OS. Some Linux distributions may additionally require <code>libstdc++-static</code>.</p>
+
+<p>On Oracle Linux use <code>yum</code> package manager:</p>
+<pre><code class="language-shell">sudo yum install gcc glibc-devel zlib-devel
+</code></pre>
+<p>You can still install <code>libstdc++-static</code> as long as the optional repositories are enabled (<em>ol7_optional_latest</em> on Oracle Linux 7 and <em>ol8_codeready_builder</em> on Oracle Linux 8).</p>
+
+<p>On  Ubuntu Linux use <code>apt-get</code> package manager:</p>
+<pre><code class="language-shell">sudo apt-get install build-essential libz-dev zlib1g-dev
+</code></pre>
+<p>On other Linux distributions use <code>dnf</code> package manager:</p>
+<pre><code class="language-shell">sudo dnf install gcc glibc-devel zlib-devel libstdc++-static
+</code></pre>
+<p>On macOS use <code>xcode</code>:</p>
+<pre><code class="language-shell">xcode-select --install
+</code></pre>
+
+<h4 id="prerequisites-for-using-native-image-on-windows">Prerequisites for Using Native Image on Windows</h4>
+
+<p>To start using Native Image on Windows, install <a href="https://visualstudio.microsoft.com/vs/">Visual Studio</a> and Microsoft Visual C++ (MSVC).
+There are two installation options:
+    * Install the Visual Studio Build Tools with the Windows 10 SDK
+    * Install Visual Studio with the Windows 10 SDK</p>
+
+<p>You can use Visual Studio 2017 version 15.9 or later.</p>
+
+<p>Lastly, on Windows, the <code>native-image</code> builder will only work when it is executed from the <strong>x64 Native Tools Command Prompt</strong>.
+The command for initiating an x64 Native Tools command prompt is different if you only have the Visual Studio Build Tools installed, versus if you have the full VS 2019 installed.
+Check <a href="https://medium.com/graalvm/using-graalvm-and-native-image-on-windows-10-9954dc071311">this link</a> for step-by-step instructions.</p>
+
+<h2 id="build-a-native-image">Build a Native Image</h2>
+
+<p>A native image can be built as a standalone executable, which is the default, or as a shared library (see <a href="#build-a-shared-library">Build a Shared Library</a>).
+For an image to be useful, it needs to have at least one entry point method.
+For standalone executables, Native Image supports Java main methods with a signature that takes the command line arguments as an array of strings:</p>
+<pre><code class="language-java">public static void main(String[] arg) { /* ... */ }
+</code></pre>
+<p>The executable images can have an arbitrary number of entry points, for example, to implement callbacks or APIs.</p>
+
+<p>To build a native image of a Java class file in the current working directory, use:</p>
+<pre><code class="language-shell">native-image [options] class [imagename] [options]
+</code></pre>
+
+<p>To build a native image of a JAR file, use:</p>
+<pre><code class="language-shell">native-image [options] -jar jarfile [imagename] [options]
+</code></pre>
+
+<p>The <code>native-image</code> command needs to provide the class path for all classes using the familiar option from the java launcher: <code>-cp</code> followed by a list of
+directories or JAR files, separated by <code>:</code> on Linux and macOS platforms, or <code>;</code> on Windows.
+The name of the class containing the main method is the last argument, or you can use <code>-jar</code> and provide a JAR file that specifies the main method in its manifest.</p>
+
+<p>As an example, take this small Java program that reverses a String using recursion:</p>
+<pre><code class="language-java">public class Example {
+
+    public static void main(String[] args) {
+        String str = "Native Image is awesome";
+        String reversed = reverseString(str);
+        System.out.println("The reversed string is: " + reversed);
+    }
+
+    public static String reverseString(String str) {
+        if (str.isEmpty())
+            return str;
+        return reverseString(str.substring(1)) + str.charAt(0);
+    }
+}
+</code></pre>
+<p>Compile it and build a native image from the Java class:</p>
+<pre><code class="language-shell">javac Example.java
+native-image Example
+</code></pre>
+<p>The native image builder ahead-of-time compiles the <code>Example</code> class into a standalone executable, <code>example</code>, in the current working directory.
+Run the executable:</p>
+<pre><code class="language-shell">./example
+</code></pre>
+
+<p>Another option to the native image builder that might be helpful is <code>--install-exit-handlers</code>.
+It is not recommended to register the default signal handlers when building a shared library.
+However, it is desirable to include signal handlers when building a native image for containerized environments, like Docker containers.
+The <code>--install-exit-handlers</code> option gives you the same signal handlers that a JVM does.</p>
+
+<p>For more complex examples, visit the <a href="/22.0/docs/examples/native-image-examples.md">native image generation</a> or <a href="/22.0/docs/examples/java-kotlin-aot.md">compiling a Java and Kotlin app ahead-of-time</a> pages.</p>
+
+<h2 id="build-a-shared-library">Build a Shared Library</h2>
+
+<p>To build a native image as a shared library of a Java class file, pass  <code>--shared</code> to the native image builder.
+The created shared library will have the main method of the given Java class as its entrypoint method.</p>
+<pre><code class="language-shell">native-image class [libraryname] --shared
+</code></pre>
+<p>To build a native image as a shared library of a JAR file, use:</p>
+<pre><code class="language-shell">native-image -jar jarfile [libraryname] --shared
+</code></pre>
+
+<p>Note: if you build a shared library where you do not specify a main class, you must append the <code>-H:Name=</code> flag to specify the library name: <code>-H:Name=libraryname</code>.</p>
+
+<p>As mentioned in the previous section, you need to have at least one entry point method for a native image to be useful.
+For shared libraries, Native Image provides the <code>@CEntryPoint</code> annotation to specify entry point methods that should be exported and callable from C.
+Entry point methods must be static and may only have non-object parameters and return types – this includes Java primitives, but also Word types (including pointers).
+One of the parameters of an entry point method has to be of type <code>IsolateThread</code> or <code>Isolate</code>.
+This parameter provides the current thread’s execution context for the call.</p>
+
+<p>For example:</p>
+
+<pre><code class="language-java">@CEntryPoint static int add(IsolateThread thread, int a, int b) {
+    return a + b;
+}
+</code></pre>
+
+<p>When building a shared library, an additional C header file is generated.
+This header file contains declarations for the <a href="/22.0/reference-manual/native-image/C-API/">C API</a>, which allows creating isolates and attaching threads from C code, as well as declarations for each entry point in the source code.
+The generated C declaration for the above example is:</p>
+<pre><code class="language-c">int add(graal_isolatethread_t* thread, int a, int b);
+</code></pre>
+
+<p>Shared library images and executable images alike can have an arbitrary number of entry points, for example, to implement callbacks or APIs.</p>
+
+<h3 id="how-to-determine-what-version-of-graalvm-an-image-is-generated-with">How to Determine What Version of GraalVM an Image Is Generated with</h3>
+
+<p>Assuming you have a Java class file, <em>EmptyHello.class</em> , containing an empty main method and have generated an empty shared object emptyhello with the Native Image builder:</p>
+<pre><code class="language-shell">native-image -cp hello EmptyHello
+[emptyhello:11228]    classlist:     149.59 ms
+...
+</code></pre>
+
+<p>If you do not know what GraalVM distribution is set to the <code>PATH</code> environment variable, how to determine if a native image was compiled with Community or
+Enterprise Edition?
+Run this command:</p>
+<pre><code class="language-shell">strings emptyhello | grep com.oracle.svm.core.VM
+</code></pre>
+
+<p>The expected output should match the following:</p>
+<pre><code class="language-shell">com.oracle.svm.core.VM GraalVM &lt;version&gt; Java 11 EE
+</code></pre>
+
+<p><strong>Note:</strong>
+Python source code or LLVM bitcode interpreted or compiled with GraalVM Community Edition will not have the same security characteristics as the same code interpreted or compiled using GraalVM Enterprise Edition.
+There is a GraalVM string embedded in each image that allows to figure out the version and variant of the base (Community or Enterprise) used to build an image.
+The following command will query that information from an image:</p>
+<pre><code class="language-shell">strings &lt;path to native-image exe or shared object&gt; | grep com.oracle.svm.core.VM
+</code></pre>
+
+<p>Here is an example output:</p>
+<pre><code class="language-shell">com.oracle.svm.core.VM.Target.LibC=com.oracle.svm.core.posix.linux.libc.GLibC
+com.oracle.svm.core.VM.Target.Platform=org.graalvm.nativeimage.Platform$LINUX_AMD64
+com.oracle.svm.core.VM.Target.StaticLibraries=liblibchelper.a|libnet.a|libffi.a|libextnet.a|libnio.a|libjava.a|libfdlibm.a|libzip.a|libjvm.a
+com.oracle.svm.core.VM=GraalVM &lt;version&gt; Java 11
+com.oracle.svm.core.VM.Target.Libraries=pthread|dl|z|rt
+com.oracle.svm.core.VM.Target.CCompiler=gcc|redhat|x86_64|10.2.1
+</code></pre>
+
+<p>If the image was build with Oracle GraalVM Enterprise Edition the output would instead contain:</p>
+<pre><code class="language-shell">com.oracle.svm.core.VM=GraalVM &lt;version&gt; Java 11 EE
+</code></pre>
+
+<h2 id="ahead-of-time-compilation-limitations">Ahead-of-time Compilation Limitations</h2>
+
+<p>There is a small portion of Java features are not susceptible to ahead-of-time compilation, and will therefore miss out on the performance advantages.
+To be able to build a highly optimized native executable, GraalVM runs an aggressive static analysis that requires a closed-world assumption, which means that all classes and all bytecodes that are reachable at run time must be known at build time.
+Therefore, it is not possible to load new data that have not been available during ahead-of-time compilation.
+Continue reading to <a href="/22.0/reference-manual/native-image/Limitations/">GraalVM Native Image Compatibility and Optimization</a>.</p>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.0/resources/js/main.js'></script>
+  </body>
+
+</html>

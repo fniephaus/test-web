@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.0/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.0/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.0/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.0/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.0/assets/main.css'>
+  <script src='/22.0/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.0/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.0/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.0/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.0/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="wrapper wrapper-content">
+  <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/index.html" class="link-back"><i>&#9664;</i>Table of Contents</a>
+
+      <h1 id="interoperability">Interoperability</h1>
+
+<h2 id="the-polyglot-api">The Polyglot API</h2>
+
+<p>Since GraalVM supports several other programming languages including JavaScript, R,
+Ruby, and those that compile to LLVM bitcode, it also provides a Python API to interact with them.
+In fact, GraalVM uses this API internally to execute Python C extensions using the GraalVM LLVM runtime.</p>
+
+<p>You can import the <code>polyglot</code> module to interact with other languages:</p>
+<pre><code class="language-python">import polyglot
+</code></pre>
+
+<p>You can import a global value from the entire polyglot scope:</p>
+<pre><code class="language-python">imported_polyglot_global = polyglot.import_value("global_name")
+</code></pre>
+
+<p>This global value should then work as expected:</p>
+<ul>
+  <li>Accessing attributes assumes it reads from the <code>members</code> namespace.</li>
+  <li>Accessing items is supported both with strings and numbers.</li>
+  <li>Calling methods on the result tries to do a straight invoke and falls
+back to reading the member and trying to execute it.</li>
+</ul>
+
+<p>You can evaluate some inlined code from another language:</p>
+<pre><code class="language-python">polyglot.eval(string="1 + 1", language="ruby")
+</code></pre>
+
+<p>You can evaluate some code from a file, by passing the path to it:</p>
+<pre><code class="language-python">polyglot.eval(path="./my_ruby_file.rb", language="ruby")
+</code></pre>
+
+<p>If you pass a file, you can also rely on the file-based language detection:</p>
+<pre><code class="language-python">polyglot.eval(path="./my_ruby_file.rb")
+</code></pre>
+
+<p>You can export some oblect from Python to other supported languages so they can import
+it:</p>
+<pre><code class="language-python">foo = object()
+polyglot.export_value(foo, name="python_foo")
+</code></pre>
+
+<p>The export function can be used as a decorator.
+In this case the function name is used as the globally exported name:</p>
+<pre><code class="language-python">@polyglot.export_value
+def python_method():
+    return "Hello from Python!"
+</code></pre>
+
+<p>Here is an example of how to use the JavaScript regular expression engine to
+match Python strings. Save this code to the <code>polyglot_example.py</code> file:</p>
+<pre><code class="language-python">import polyglot
+
+re = polyglot.eval(string="RegExp()", language="js")
+
+pattern = re.compile(".*(?:we have (?:a )?matching strings?(?:[!\\?] )?)(.*)")
+
+if pattern.exec("This string does not match"):
+    raise SystemError("that shouldn't happen")
+
+md = pattern.exec("Look, we have matching strings! This string was matched by Graal.js")
+if not md:
+    raise SystemError("this should have matched")
+
+print("Here is what we found: '%s'" % md[1])
+</code></pre>
+
+<p>To run it, pass the <code>--jvm --polyglot</code> option to the <code>graalpython</code> launcher:</p>
+<pre><code class="language-shell">graalpython --jvm --polyglot polyglot_example.py
+</code></pre>
+
+<p>This program matches Python strings using the JavaScript regular expression object.
+Python reads the captured group from the JavaScript result and prints:
+<em>Here is what we found: ‘This string was matched by Graal.js’</em>.</p>
+
+<p>As a more complex example, see how you can read a file using R, process the data in Python, and use R again to display the resulting data image, using both the R and Python libraries in conjunction.
+To run this example, first install the required R library:</p>
+<pre><code class="language-shell">R -e 'install.packages("https://www.rforge.net/src/contrib/jpeg_0.1-8.tar.gz", repos=NULL)'
+</code></pre>
+
+<p>This example also uses <a href="http://graalvm.org/docs/examples/image_magix.py">image_magix.py</a> and works
+on a JPEG image input (you can try with <a href="https://www.graalvm.org/resources/img/python_demo_picture.jpg">this image</a>). These files have to be in the same folder that the script below is located in and executed from.</p>
+<pre><code class="language-python">import polyglot
+import sys
+import time
+sys.path.insert(0, ".")
+from image_magix import Image
+
+load_jpeg = polyglot.eval(string="""function(file.name) {
+    library(jpeg)
+    jimg &lt;- readJPEG(file.name)
+    jimg &lt;- jimg*255
+    jimg
+}""", language="R")
+
+raw_data = load_jpeg("python_demo_picture.jpg")
+
+# the dimensions are R attributes; define function to access them
+getDim = polyglot.eval(string="function(v, pos) dim(v)[[pos]]", language="R")
+
+# Create object of Python class 'Image' with loaded JPEG data
+image = Image(getDim(raw_data, 2), getDim(raw_data, 1), raw_data)
+
+# Run Sobel filter
+result = image.sobel()
+
+draw = polyglot.eval(string="""function(processedImgObj) {
+    require(grDevices)
+    require(grid)
+    mx &lt;- matrix(processedImgObj$`@data`/255, nrow=processedImgObj$`@height`, ncol=processedImgObj$`@width`)
+    grDevices:::awt()
+    grid.raster(mx, height=unit(nrow(mx),"points"))
+}""", language="R")
+
+draw(result)
+time.sleep(10)
+</code></pre>
+
+<h2 id="the-java-host-interop-api">The Java Host Interop API</h2>
+
+<p>Finally, to interoperate with Java (only when running on the JVM), you can use the <code>java</code> module:</p>
+<pre><code class="language-python">import java
+BigInteger = java.type("java.math.BigInteger")
+myBigInt = BigInteger(42)
+myBigInt.shiftLeft(128)
+# public Java methods can just be called
+myBigInt["not"]()
+# Java method names that are keywords in Python can be accessed using "[]"
+byteArray = myBigInt.toByteArray()
+# Java arrays can act like Python lists
+print(list(byteArray))
+</code></pre>
+
+<p>For packages under the <code>java</code> package, you can also use the normal Python import
+syntax:</p>
+<pre><code class="language-python">import java.util.ArrayList
+from java.util import ArrayList
+
+java.util.ArrayList == ArrayList
+
+al = ArrayList()
+al.add(1)
+al.add(12)
+print(al)
+# prints [1, 12]
+</code></pre>
+
+<p>In addition to the <code>type</code> builtin method, the <code>java</code> module exposes the following
+methods as well:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Builtin</th>
+      <th>Specification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>instanceof(obj, class)</code></td>
+      <td>returns <code>True</code> if <code>obj</code> is an instance of <code>class</code> (<code>class</code> must be a foreign object class)</td>
+    </tr>
+    <tr>
+      <td><code>is_function(obj)</code></td>
+      <td>returns <code>True</code> if <code>obj</code> is a Java host language function wrapped using Truffle interop</td>
+    </tr>
+    <tr>
+      <td><code>is_object(obj)</code></td>
+      <td>returns <code>True</code> if <code>obj</code> if the argument is Java host language object wrapped using Truffle interop</td>
+    </tr>
+    <tr>
+      <td><code>is_symbol(obj)</code></td>
+      <td>returns <code>True</code> if <code>obj</code> if the argument is a Java host symbol, representing the constructor and static members of a Java class, as obtained by <code>java.type</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<pre><code class="language-python">import java
+ArrayList = java.type('java.util.ArrayList')
+my_list = ArrayList()
+print(java.is_symbol(ArrayList))
+# prints True
+print(java.is_symbol(my_list))
+# prints False, my_list is not a Java host symbol
+print(java.is_object(ArrayList))
+# prints True, symbols are also host objects
+print(java.is_function(my_list.add))
+# prints True, the add method of ArrayList
+print(java.instanceof(my_list, ArrayList))
+# prints True
+</code></pre>
+
+<p>See <a href="/22.0/reference-manual/polyglot-programming/">Polyglot Programming</a> and <a href="/22.0/reference-manual/embed-languages/">Embed Languages</a> for more information about interoperability with other programming languages.</p>
+
+<h2 id="the-behaviour-of-types">The Behaviour of Types</h2>
+
+<p>The interop protocol defines different “types” which can overlap in all kinds of
+ways and have restrictions on how they can interact with Python.</p>
+
+<h3 id="interop-types-to-python">Interop Types to Python</h3>
+
+<p>Most importantly and upfront - all foreign objects passing into Python have the Python type <code>foreign</code>.
+There is no emulation of i.e., objects that are interop booleans to have the Python type <code>bool</code>.
+This is because interop types can overlap in ways that the Python builtin types cannot, and it would not be clear what should take precendence.
+Instead, the <code>foreign</code> type defines all of the Python special methods for type conversion that are used throughout the interpreter (methods like <code>__add__</code>, <code>__int__</code>, <code>__str__</code>, <code>__getitem__</code>, etc.) and these try to do the right thing based on the interop type (or raise an exception.)</p>
+
+<p>Types not listed in the below table have no special interpretation in Python right now.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Interop type</th>
+      <th style="text-align: left">Python interpretation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Null</td>
+      <td style="text-align: left">It is like None. Important to know: interop null values are equal, but not identical! This was done because JavaScript defines two “null-like” values; <code>undefined</code> and <code>null</code>, which are <em>not</em> identical</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left">Behaves like Python booleans, including the fact that in Python, all booleans are also integers (1 and 0 for true and false, respectively)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Number</td>
+      <td style="text-align: left">Behaves like Python numbers. Python only has one integral and one floating point type, but it cares about the ranges in some places such as typed arrays.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Behaves like Python strings.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Buffer</td>
+      <td style="text-align: left">Buffers are also a concept in Python’s native API (albeit a bit different). Interop buffers are treated like Python buffers in some places (like <code>memoryview</code>) to avoid copies of data.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Array</td>
+      <td style="text-align: left">Arrays can be used with subscript access like Python lists, with integers and slices as indices.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Hash</td>
+      <td style="text-align: left">Hashes can be used with subscript access like Python dicts, with any hashable kind of object as key. “Hashable” follows Python semantics, generally all interop types with identity are deemed “hashable”. Note that if an interop object is both Array and Hash, the behavior of the subscript access is undefined.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Members</td>
+      <td style="text-align: left">Members can be read using normal Python ~.~ notation or the <code>getattr</code> etc functions.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Iterable</td>
+      <td style="text-align: left">Iterables are treated like Python objects with an <code>__iter__</code> method, that is, they can be used in loops and other places that accept Python iterables.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Iterator</td>
+      <td style="text-align: left">Iterators are treated like Python objects with a <code>__next__</code> method.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Exception</td>
+      <td style="text-align: left">Interop exceptions can be caught in generic except clauses.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">MetaObject</td>
+      <td style="text-align: left">Interop meta objects can be used in subtype and isinstance checks</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Executable</td>
+      <td style="text-align: left">Executable objects can be executed as functions, but never with keyword arguments.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Instantiable</td>
+      <td style="text-align: left">Instantiable objects behave like executable objects (similar to how Python treats this)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="python-to-interop-types">Python to Interop Types</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Interop type</th>
+      <th style="text-align: left">Python interpretation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Null</td>
+      <td style="text-align: left">Only <code>None</code>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left">Only subtypes of Python <code>bool</code>. Note that in contrast to Python semantics, Python <code>bool</code> is <em>never</em> also an interop number.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Number</td>
+      <td style="text-align: left">Only subtypes of <code>int</code> and <code>float</code>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Only subtypes of <code>str</code>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Array</td>
+      <td style="text-align: left">Any object with a <code>__getitem__</code> and a <code>__len__</code>, but not if it also has <code>keys</code>, <code>values</code>, and <code>items</code> (like <code>dict</code> does.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Hash</td>
+      <td style="text-align: left">Only subtypes of <code>dict</code>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Members</td>
+      <td style="text-align: left">Any Python object. Note that the rules for readable/writable are a bit ad-hoc, since checking that is not part of the Python MOP.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Iterable</td>
+      <td style="text-align: left">Anything that has an <code>__iter__</code> method or a <code>__getitem__</code> method.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Iterator</td>
+      <td style="text-align: left">Anything with a <code>__next__</code> method.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Exception</td>
+      <td style="text-align: left">Any Python <code>BaseException</code> subtype.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">MetaObject</td>
+      <td style="text-align: left">Any Python <code>type</code>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Executable</td>
+      <td style="text-align: left">Anything with a <code>__call__</code> method.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Instantiable</td>
+      <td style="text-align: left">Any Python <code>type</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+      </div>
+  </div>
+</div>
+
+</div>
+
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.0/resources/js/main.js'></script>
+  </body>
+
+</html>

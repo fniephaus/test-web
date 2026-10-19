@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.3/assets/main.css'>
+  <script src='/22.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.3/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.3/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="configure-native-image-with-the-tracing-agent">Configure Native Image with the Tracing Agent</h1>
+
+<p>To build a native executable for a Java application that uses Java reflection, dynamic proxy objects, JNI, or class path resources, you should either provide the <code>native-image</code> tool with JSON-formatted configuration files or pre-compute metadata in the code.</p>
+
+<p>You can create configuration file(s) by hand, but a more convenient approach is to generate the configuration using the Tracing agent (from now on, the agent). 
+This guide demonstrates how to configure <code>native-image</code> with the agent. The agent generates the configuration for you automatically when you run an application on a JVM.</p>
+
+<p>To learn how to build a native executable with the metadata pre-computed in the code, <a href="/22.3/reference-manual/native-image/guides/use-reachability-metadata-repository-gradle/">follow this guide</a>.</p>
+
+<p>The example application in this guide uses Java reflection. The <code>native-image</code> tool only partially detects application elements that are accessed using the Java Reflection API. So, you need to provide it with details about reflectively accessed classes, methods, and fields.</p>
+<h2 id="example-with-no-configuration">Example with No Configuration</h2>
+
+<p>The following application demonstrates the use of Java reflection.</p>
+
+<ol>
+  <li>Save the following source code in a file named <em>ReflectionExample.java</em>:
+    <pre><code class="language-java"> import java.lang.reflect.Method;
+    
+ class StringReverser {
+     static String reverse(String input) {
+         return new StringBuilder(input).reverse().toString();
+     }
+ }
+    
+ class StringCapitalizer {
+     static String capitalize(String input) {
+         return input.toUpperCase();
+     }
+ }
+    
+ public class ReflectionExample {
+     public static void main(String[] args) throws ReflectiveOperationException {
+         if (args.length == 0) {
+             System.err.println("You must provide the name of a class, the name of its method and input for the method");
+             return;
+         }
+         String className = args[0];
+         String methodName = args[1];
+         String input = args[2];
+    
+         Class&lt;?&gt; clazz = Class.forName(className);
+         Method method = clazz.getDeclaredMethod(methodName, String.class);
+         Object result = method.invoke(null, input);
+         System.out.println(result);
+     }
+ }
+</code></pre>
+    <p>This Java application uses command-line arguments to determine the operation to be performed.</p>
+  </li>
+  <li>Compile the example and then run each command below.
+    <pre><code class="language-shell"> $JAVA_HOME/bin/javac ReflectionExample.java
+ $JAVA_HOME/bin/java ReflectionExample StringReverser reverse "hello"
+ $JAVA_HOME/bin/java ReflectionExample StringCapitalizer capitalize "hello"
+</code></pre>
+    <p>The output of each command should be <code>"olleh"</code> and <code>"HELLO"</code>, respectively. (An exception is thrown if you provide any other string to identify the class or method.)</p>
+  </li>
+  <li>Use the <code>native-image</code> utility to create a native executable, as follows:
+    <pre><code class="language-shell"> $JAVA_HOME/bin/native-image --no-fallback ReflectionExample
+</code></pre>
+    <blockquote>
+      <p><strong>NOTE:</strong> The <code>--no-fallback</code> option to <code>native-image</code> causes the utility to fail if it can not create an executable file.</p>
+    </blockquote>
+  </li>
+  <li>Run the resulting native executable, using the following command:
+    <pre><code class="language-bash"> ./reflectionexample StringReverser reverse "hello"
+</code></pre>
+    <p>You’ll see an exception, similar to</p>
+    <pre><code class="language-shell"> Exception in thread "main" java.lang.ClassNotFoundException: StringReverser
+     at java.lang.Class.forName(DynamicHub.java:1338)
+     at java.lang.Class.forName(DynamicHub.java:1313)
+     at ReflectionExample.main(ReflectionExample.java:25)
+</code></pre>
+    <p>This shows that, from its static analysis, the <code>native-image</code> tool was unable to determine that class <code>StringReverser</code>
+ is used by the application and therefore did not include it in the native executable.</p>
+  </li>
+</ol>
+
+<h2 id="example-with-configuration">Example with Configuration</h2>
+
+<p>The following steps demonstrate how to use the agent, and its output, to create a native executable that relies on reflection and requires configuration.</p>
+
+<ol>
+  <li>Create a directory named <em>META-INF/native-image</em> in the working directory:
+    <pre><code class="language-shell"> mkdir -p META-INF/native-image
+</code></pre>
+  </li>
+  <li>Run the application with the agent enabled, as follows:
+    <pre><code class="language-shell"> $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=META-INF/native-image ReflectionExample StringReverser reverse "hello"
+</code></pre>
+    <p>This command creates a file named <em>reflection-config.json</em> containing the name of the class <code>StringReverser</code> and its <code>reverse()</code> method.</p>
+    <pre><code class="language-json"> [
+     {
+     "name":"StringReverser",
+     "methods":[{"name":"reverse","parameterTypes":["java.lang.String"] }]
+     }
+ ]
+</code></pre>
+  </li>
+  <li>Build a native executable:
+    <pre><code class="language-shell"> $JAVA_HOME/bin/native-image ReflectionExample
+</code></pre>
+    <p>The <code>native-image</code> tool automatically uses configuration files in the <em>META-INF/native-image</em> directory.
+ However, we recommend that the <em>META-INF/native-image</em> directory is on the class path, either via a JAR file or using the <code>-cp</code> flag. (This avoids confusion for IDE users where a directory structure is defined by the IDE itself.)</p>
+  </li>
+  <li>Test your executable.
+    <pre><code class="language-shell"> ./reflectionexample StringReverser reverse "hello"
+ olleh
+ ./reflectionexample StringCapitalizer capitalize "hello"
+ Exception in thread "main" java.lang.ClassNotFoundException: StringCapitalizer
+     at java.lang.Class.forName(DynamicHub.java:1338)
+     at java.lang.Class.forName(DynamicHub.java:1313)
+     at ReflectionExample.main(ReflectionExample.java:25)
+</code></pre>
+    <p>Neither the tracing agent nor the <code>native-image</code> tool can ensure that the configuration file is complete.
+ The agent observes and records which program elements are accessed using reflection when you run the program. In this case, the <code>native-image</code> tool has not been configured to include references to class <code>StringCapitalizer</code>.</p>
+  </li>
+  <li>Update the configuration to include class <code>StringCapitalizer</code>.
+ You can manually edit the <em>reflection-config.json</em> file or re-run the tracing agent to update the existing configuration file using the <code>config-merge-dir</code> option, as follows:
+    <pre><code class="language-shell"> $JAVA_HOME/bin/java -agentlib:native-image-agent=config-merge-dir=META-INF/native-image ReflectionExample StringCapitalizer capitalize "hello"
+</code></pre>
+    <p>This command updates the <em>reflection-config.json</em> file to include the name of the class <code>StringCapitalizer</code> and its <code>capitalize()</code> method.</p>
+    <pre><code class="language-json"> [
+     {
+     "name":"StringCapitalizer",
+     "methods":[{"name":"capitalize","parameterTypes":["java.lang.String"] }]
+     },
+     {
+     "name":"StringReverser",
+     "methods":[{"name":"reverse","parameterTypes":["java.lang.String"] }]
+     }
+ ]
+</code></pre>
+  </li>
+  <li>Rebuild the native executable and run it.
+    <pre><code class="language-shell"> $JAVA_HOME/bin/native-image ReflectionExample
+ ./reflectionexample StringCapitalizer capitalize "hello"
+</code></pre>
+
+    <p>The application should now work as intended.</p>
+  </li>
+</ol>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="/22.3/reference-manual/native-image/metadata/AutomaticMetadataCollection/#tracing-agent">Assisted Configuration with Tracing Agent</a></li>
+  <li><a href="/22.3/reference-manual/native-image/metadata/#reflection">Reachability Metadata: Reflection</a></li>
+  <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/reflect/package-summary.html">java.lang.reflect Javadoc</a></li>
+</ul>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.3/resources/js/main.js'></script>
+  </body>
+
+</html>

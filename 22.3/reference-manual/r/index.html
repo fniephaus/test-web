@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.3/assets/main.css'>
+  <script src='/22.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.3/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.3/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="graalvm-r-runtime">GraalVM R Runtime</h1>
+
+<p>GraalVM provides a GNU-compatible R runtime to run R programs directly or in the REPL mode.
+It can run R code at <a href="/22.3/reference-manual/r/Performance/">unparalleled performance</a>, and seamlessly <a href="#graalvm-integration">integrates with the GraalVM ecosystem</a>.
+The project name behind GraalVM’s R runtime development is <a href="https://github.com/oracle/fastr">FastR</a>.</p>
+
+<p><strong>The GraalVM R runtime is an experimental GraalVM component.</strong></p>
+
+<h2 id="installing-r">Installing R</h2>
+
+<p>The R language runtime is not provided by default, and can be added to GraalVM with the <a href="/22.3/reference-manual/graalvm-updater/">GraalVM Updater</a>, <code>gu</code>, tool:</p>
+<pre><code class="language-shell">gu install r
+</code></pre>
+
+<p>After this step, the <code>R</code> and <code>Rscript</code> launchers will become available in the <code>GRAALVM_HOME/bin</code> directory.</p>
+
+<p>The R language home directory, which will be further referenced as <code>$R_HOME</code>, is located in <code>languages/R</code>.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>GraalVM’s R runtime requires <a href="https://zlib.net/">zlib</a> and the <a href="https://www.openmprtl.org/">OpenMP runtime library</a>.
+Zlib is default part of MacOS and most modern Linux distributions.
+The following commands should install the OpenMP runtime library:</p>
+
+<ul>
+  <li>Ubuntu 18.04 and 19.10: <code>apt-get install libgomp1</code></li>
+  <li>Oracle Linux 7 and 8: <code>yum install libgomp</code></li>
+  <li>macOS: <code>libgomp</code> should be already installed</li>
+</ul>
+
+<p>As of version 20.1.0 and later, GraalVM’s R runtime on Linux supports and bundles the GFortran version 3 runtime libraries.
+On macOS it bundles and supports the GFortran version 8.3.0 runtime libraries.
+It is not necessary to install the runtime libraries.
+However, note that a runtime library is only compatible with the GFortran compiler of that same library version or later.</p>
+
+<p>On a Linux system, <code>$R_HOME/bin/configure_fastr</code> can be used to check that the necessary libraries are installed, and if not, it will suggest how to install them.</p>
+
+<p>Moreover, to install R packages that contain C/C++ or Fortran code, compilers for those languages must be present on the target system.
+The following packages satisfy the dependencies of the most common R packages:</p>
+
+<ul>
+  <li>Ubuntu 18.04 and 19.10:
+    <pre><code class="language-shell">apt-get install build-essential gfortran libxml2 libc++-dev
+</code></pre>
+  </li>
+  <li>Oracle Linux 7 and 8:
+    <pre><code class="language-shell">yum groupinstall 'Development Tools' &amp;&amp; yum install gcc-gfortran bzip2 libxml2-devel
+</code></pre>
+  </li>
+  <li>macOS
+    <pre><code class="language-shell">brew install gcc
+</code></pre>
+  </li>
+</ul>
+
+<p>Note: If the <code>gfortran</code> executable is not on your system path, you will need to configure
+the full path to it in <code>$R_HOME/etc/Makeconf</code>, the <code>FC</code> variable.</p>
+
+<h3 id="search-paths-for-packages">Search Paths for Packages</h3>
+<p>The default R library location is within the GraalVM installation directory.
+In order to allow installation of additional packages for users who do not have write access to the GraalVM installation directory, edit the <code>R_LIBS_USER</code> variable in the <code>$GRAALVM_HOME/etc/Renviron</code> file.</p>
+
+<h2 id="running-r">Running R</h2>
+
+<p>Run R code directly or in the REPL mode with the <code>R</code> and <code>Rscript</code> commands:</p>
+<pre><code class="language-shell">R [polyglot options] [R options] [filename]
+</code></pre>
+<pre><code class="language-shell">Rscript [polyglot options] [R options] [filename]
+</code></pre>
+
+<p>The GraalVM R runtime uses the same <a href="/22.3/reference-manual/polyglot-programming/#polyglot-options">polyglot options</a> as other GraalVM languages runtimes and the same R options as <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Invoking-R-from-the-command-line">GNU R</a>, e.g., <code>bin/R --vanilla</code>.
+Use <code>--help</code> to print the list of supported options. The most important options include:</p>
+<ul>
+  <li><code>--jvm</code>: to enable Java interoperability</li>
+  <li><code>--polyglot</code>: to enable interoperability with other GraalVM languages</li>
+  <li><code>--vm.Djava.net.useSystemProxies=true</code>: to pass any options to the JVM; this will be translated to <code>-Djava.net.useSystemProxies=true</code>.</li>
+</ul>
+
+<p>Note: Unlike other GraalVM languages runtimes, R does not yet ship with a <a href="/22.3/reference-manual/native-image/">Native Image</a> version of its runtime.
+Therefore the <code>--native</code> option, which is the default, will still start <code>Rscript</code> on top of the JVM,
+but for the sake of future compatibility the Java interoperability will not be available in this case.</p>
+
+<p>You can optionally build the native image:</p>
+<pre><code class="language-shell">gu rebuild-images R
+</code></pre>
+<p>The native launcher for R is intended only for curious users and experiments.
+There are known issues and limitations. Once the native launcher is built, you can use
+the <code>--jvm</code> flag to run R again in the JVM mode.</p>
+
+<h2 id="graalvm-integration">GraalVM Integration</h2>
+
+<p>The R language integration with the GraalVM ecosystem includes:</p>
+<ul>
+  <li>seamless interoperability with other GraalVM languages and with Java</li>
+  <li>debugging with <a href="/22.3/tools/chrome-debugger/">Chrome DevTools</a></li>
+  <li><a href="/22.3/tools/profiling/">CPU and memory profiling</a></li>
+  <li><a href="/22.3/tools/visualvm/">VisualVM integration</a></li>
+</ul>
+
+<p>To start debugging R code, start the launcher with the <code>--inspect</code> option:</p>
+<pre><code class="language-shell">Rscript --inspect myScript.R
+</code></pre>
+<p>Note: The GNU-compatible debugging using, for example, <code>debug(myFunction)</code>, is also supported.</p>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.3/resources/js/main.js'></script>
+  </body>
+
+</html>

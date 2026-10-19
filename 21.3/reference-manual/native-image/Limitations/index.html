@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/21.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/21.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/21.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/21.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/21.3/assets/main.css'>
+  <script src='/21.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/21.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/21.3/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/21.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/21.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/21.3/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="native-image-compatibility-and-optimization-guide">Native Image Compatibility and Optimization Guide</h1>
+
+<p>Native Image uses a different way of executing Java programs than users of the Java HotSpot VM are used to.
+It distinguishes between <em>image build time</em> and <em>image run time</em>.
+At image build time, a static analysis finds all methods that are reachable from the entry point of the application.
+These (and only these) methods are then ahead-of-time compiled into a native image.
+Because of the different optimization model, Java programs can behave somewhat differently when compiled into a native image.</p>
+
+<p>Native Image is an optimization that reduces the memory footprint and startup time of an application.
+This requires a closed-world assumption, where all code is known at image build time, i.e., no new code is loaded at run time.
+As with most optimizations, not all applications are amenable for that optimization.
+If an application is not optimizable, then a so-called fallback image is generated that launches the Java HotSpot VM, i.e., requires a JDK for execution.</p>
+
+<h2 id="class-metadata-features-require-configuration">Class Metadata Features (Require Configuration)</h2>
+
+<p>The following features generally require the configuration at image build time in order to use the closed-world optimization.
+This configuration ensures that the minimum amount of space necessary is used in the native image binary.</p>
+
+<p>If one of the following features is used without providing a configuration at image build time, a fallback image is generated.</p>
+
+<h3 id="dynamic-class-loading">Dynamic Class Loading</h3>
+<p>Any class to be accessed by name at image run time must be enumerated at image build time.
+For example, a call to <code>Class.forName("myClass”)</code> must have <code>myClass</code> in a <a href="/21.3/reference-manual/native-image/BuildConfiguration/">configuration file</a>.
+If the configuration file is used, but does not include a class that is requested for dynamic class loading, a <code>ClassNotFoundException</code> will be thrown, as if the class was not found on the class path or was inaccessible.</p>
+
+<h3 id="reflection">Reflection</h3>
+<p>This category includes listing methods and fields of a class; invoking methods and accessing fields reflectively; and using other classes in the package <code>java.lang.reflect</code>.</p>
+
+<p>Individual classes, methods, and fields that should be accessible via reflection need to be known ahead-of-time.
+Native Image tries to resolve these elements through a static analysis that detects calls to the Reflection API.
+Where the analysis fails the program elements reflectively accessed at run time must be specified during native image generation in a <a href="/21.3/reference-manual/native-image/BuildConfiguration/">configuration file</a> or by using <a href="http://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/RuntimeReflection.html"><code>RuntimeReflection</code></a> from a <a href="http://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html"><code>Feature</code></a>.
+For more details, read the <a href="/21.3/reference-manual/native-image/Reflection/">Reflection support</a> guide.</p>
+
+<p>Reflection can be used without restrictions during a native image generation, for example, in class initializers.</p>
+
+<h3 id="dynamic-proxy">Dynamic Proxy</h3>
+<p>This category includes generating dynamic proxy classes and allocating instances of dynamic proxy classes using the <code>java.lang.reflect.Proxy</code> API.
+Dynamic class proxies are supported with the closed-world optimization as long as the bytecode is generated ahead-of-time.
+This means that the list of interfaces that define dynamic proxies needs to be known at image build time.
+Native Image employs a simple static analysis that intercepts calls to <code>java.lang.reflect.Proxy.newProxyInstance(ClassLoader, Class&lt;?&gt;[], InvocationHandler)</code> and <code>java.lang.reflect.Proxy.getProxyClass(ClassLoader, Class&lt;?&gt;[])</code> and tries to determine the list of interfaces automatically.
+Where the analysis fails the lists of interfaces can be specified in a <a href="/21.3/reference-manual/native-image/BuildConfiguration/">configuration file</a>.
+For more details, read the <a href="/21.3/reference-manual/native-image/DynamicProxy/">Dynamic Proxies support</a> guide.</p>
+
+<h3 id="jni-java-native-interface">JNI (Java Native Interface)</h3>
+<p>Native code may access Java objects, classes, methods and fields by name, in a similar way to using the reflection API in Java code.
+For the same reasons, any Java artifacts accessed by name via JNI must be specified during a native image generation in a <a href="/21.3/reference-manual/native-image/BuildConfiguration/">configuration file</a>.
+For more details, read the <a href="/21.3/reference-manual/native-image/JNI/">JNI Implementation</a> guide.</p>
+
+<p>As an alternative, and in addition to JNI, Native Image provides its own native interface that is much simpler than JNI and with lower overhead.
+It allows calls between Java and C, and access of C data structures from Java code.
+However, it does not allow access of Java data structures from C code.
+For more details, read the <a href="http://www.graalvm.org/sdk/javadoc/">JavaDoc of the package <code>org.graalvm.nativeimage.c</code> and its subpackages</a>.</p>
+
+<h3 id="serialization">Serialization</h3>
+<p>Java serialization requires class metadata information in order to function and must be specified during a native image generation in a <a href="/21.3/reference-manual/native-image/BuildConfiguration/">configuration file</a>.
+However, Java serialization has been a persistent source of security vulnerabilities.
+The Java architects have announced that the existing serialization mechanism will be replaced with a new mechanism avoiding these problems in the near future.</p>
+
+<h2 id="features-incompatible-with-closed-world-optimization">Features Incompatible with Closed-World Optimization</h2>
+
+<p>Some Java features are not yet supported with the closed-world optimization, and if used, lead to a fallback image.</p>
+
+<h3 id="invokedynamic-bytecode-and-method-handles"><code>invokedynamic</code> Bytecode and Method Handles</h3>
+<p>Under the closed-world assumption, all methods that are called and their call sites must be known.
+<code>invokedynamic</code> and method handles can introduce calls at run time or change the method that is invoked.</p>
+
+<p>Note that <code>invokedynamic</code> use cases generated by <code>javac</code> for, e.g., Java lambda expressions and string concatenation are supported because they do not change called methods at image run time.</p>
+
+<h3 id="security-manager">Security Manager</h3>
+<p>The Java security manager is no longer recommended as a way to isolate less trusted code from more trusted code in the same process.
+This is because almost all typical hardware architectures are susceptible to side-channel attacks to access data that is restricted via the security manager.
+Using separate processes is now recommended for these cases.</p>
+
+<h2 id="features-that-may-operate-differently-in-native-image">Features That May Operate Differently in Native Image</h2>
+
+<p>Native Image implements some Java features in a different way than the Java HotSpot VM.</p>
+
+<h3 id="signal-handlers">Signal Handlers</h3>
+
+<p>Registering a signal handler requires to start a new thread that handles the signal and invokes the shutdown hooks.
+By default, no signal handlers are registered when building a native image, unless they are registered explicitly by the user.
+For example, it is not recommended to register the default signal handlers when building a shared library, but it is desirable to include signal handlers when building native images for containerized environments, like Docker containers.</p>
+
+<p>To register the default signal handlers, pass the <code>--install-exit-handlers</code> option to the <code>native-image</code> builder.
+This option gives you the same signal handlers as a JVM does.</p>
+
+<h3 id="class-initializers">Class Initializers</h3>
+<p>By default, classes are initialized at image run time.
+This ensures compatibility, but limits some optimizations.
+For faster startup and better peak performance, it is desirable to initialize classes at image build time.
+Class initialization behaviour can be adjusted using the options <code>--initialize-at-build-time</code> or <code>--initialize-at-run-time</code> for specific classes and packages or for all classes.
+See <code>native-image --help</code> for details.
+Classes of the JDK class libraries are handled for you and do not need special consideration from the user.</p>
+
+<p>Native Image users should be aware that class initialization at image build time may break specific assumptions in existing code.
+For example, files loaded in a class initializer may not be in the same place at image build time as at image run time.
+Also, certain objects such as a file descriptors or running threads must not be stored into a native image binary.
+If such objects are reachable at image build time, image generation fails with an error.</p>
+
+<h3 id="finalizers">Finalizers</h3>
+<p>The Java base class <code>java.lang.Object</code> defines the method <code>finalize()</code>.
+It is called by the garbage collector on an object when garbage collection determines that there are no more references to the object.
+A subclass overrides the <code>finalize()</code> method to dispose of system resources or to perform other cleanup.</p>
+
+<p>Finalizers are deprecated since Java 9.
+They are complicated to implement, and have badly designed semantics.
+For example, the finalizer can make the object reachable again by storing it in a static field.
+Therefore, finalizers are not invoked.
+It is recommended to replace finalizers with weak references and reference queues for use in any Java VM.</p>
+
+<h3 id="threads">Threads</h3>
+<p>Native Image does not implement long-deprecated methods in <code>java.lang.Thread</code> such as <code>Thread.stop()</code>.</p>
+
+<h3 id="unsafe-memory-access">Unsafe Memory Access</h3>
+<p>Fields that are accessed using <code>sun.misc.Unsafe</code> need to be marked as such for the static analysis if classes are initialized at image build time.
+In most cases, that happens automatically: field offsets stored in <code>static final</code> fields are automatically rewritten from the hosted value (the field offset for the VM that the image generator is running on) to the native image value, and as part of that rewrite the field is marked as <code>Unsafe</code>-accessed.
+For non-standard patterns, field offsets can be recomputed manually using the annotation <code>RecomputeFieldValue</code>.</p>
+
+<h3 id="debugging-and-monitoring">Debugging and Monitoring</h3>
+<p>Java has some optional specifications that a Java implementation can use for debugging and monitoring Java programs, including JVMTI.
+They help you monitor the VM at run time for events like compilation, for example, which do not occur in most native images.
+These interfaces are built on the assumption that Java bytecode is available at run time, which is not the case for native images built with the closed-world optimization.
+Because the native image builder generates a native binary, users must use native debuggers and monitoring tools (like GDB or VTune) rather than tools targeted for Java.
+JVMTI and other bytecode-based tools are not supported with Native Image.</p>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/21.3/resources/js/main.js'></script>
+  </body>
+
+</html>

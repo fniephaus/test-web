@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.3/assets/main.css'>
+  <script src='/22.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.3/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="wrapper wrapper-content">
+  <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/index.html" class="link-back"><i>&#9664;</i>Table of Contents</a>
+
+      <h1 id="python-code-parsing-and-pyc-files">Python Code Parsing and pyc Files</h1>
+
+<p>This guide elaborates on how Python files are parsed on the GraalVM Python runtime.</p>
+
+<h2 id="creating-and-managing-pyc-files">Creating and Managing pyc Files</h2>
+
+<h4 id="pyc-files-are-created-automatically-by-the-graalvm-python-runtime-when-no-or-an-invalid-pyc-file-is-found-matching-the-desired-py-file"><code>.pyc</code> files are created automatically by the GraalVM Python runtime when no or an invalid <code>.pyc</code> file is found matching the desired <code>.py</code> file.</h4>
+
+<p>When a Python source file (module) is imported during an execution for the first time, the appropriate <code>.pyc</code> file is created automatically.
+If the same module is imported again, then the already created <code>.pyc</code> file is used.
+That means that there are no <code>.pyc</code> files for source files that were not executed (imported) yet.
+The creation of <code>.pyc</code> files is done entirely through the <a href="https://www.graalvm.org/sdk/javadoc/org/graalvm/polyglot/io/FileSystem.html">FileSystem API</a>, so that embedders can manage the file system access.</p>
+
+<p>Every subsequent execution of a script will reuse the already existing <code>.pyc</code> files, or will generate a new one.
+A <code>.pyc</code> file is regenerated if the timestamp or hashcode of the original source file is changed.
+The hashcode is generated only based on the Python source by calling <code>source.hashCode()</code>, which is the JDK hash code over the array of source file bytes, calculated with <code>java.util.Arrays.hashCode(byte[])</code>.</p>
+
+<p>The <code>.pyc</code> files are also regenerated if a magic number in the Python parser is changed.
+The magic number is hard-coded in the Python source and can not be changed by the user (unless of course that user has access to the bytecode of Python).</p>
+
+<p>The developers of GraalVM’s Python runtime change the magic number when the bytecode format changes.
+This is an implementation detail, so the magic number does not have to correspond to the version of GraalVM’s Python runtime (just like in CPython).
+The magic number of pyc is a function of the concrete Python runtime Java code that is running.</p>
+
+<p>Note that if you use <code>.pyc</code> files, you will need to allow write-access to GraalVM’s Python runtime at least when switching versions or changing the original source code.
+Otherwise, the regeneration of source files will fail and every import will have the overhead of accessing the old <code>.pyc</code> file, parsing the code, serializing it, and trying (and failing) to write out a new <code>.pyc</code> file.</p>
+
+<p>A <code>*.pyc</code> file is never deleted by GraalVM’s Python runtime, only regenerated.
+It is regenerated when the appropriate source file is changed (timestamp of last modification or hashcode of the content) or the magic number of the Python imnplementation parser changes.
+Magic number changes will be communicated in the release notes so that embedders or system administrators can delete old <code>.pyc</code> files when upgrading.</p>
+
+<p>The folder structure created for <code>.pyc</code> files looks like this:</p>
+<pre><code class="language-python">top_folder
+    __pycache__
+         sourceA.graalpy.pyc
+         sourceB.graalpy.pyc
+    sourceA.py
+    sourceB.py
+    sub_folder
+        __pycache__
+            sourceX.graalpy.pyc
+        sourceX.py
+</code></pre>
+
+<p>By default the <code>__pycache__</code> directory is created on the same directory level as a source code file and in this directory all <code>.pyc</code> files from the same directory are stored.
+This folder may store <code>.pyc</code> files created with different versions of Python (including, e.g., CPython), so the user may see files ending in <code>*.cpython3-6.pyc</code> for example.</p>
+
+<p><code>.pyc</code> files are largely managed automatically by the runtime in a manner compatible to CPython. Like on CPython there are options to specify their location, and if they should be written at all, and both of these options can be changed by guest code.</p>
+
+<p>The creation of <code>*.pyc</code> files can be controlled in the same ways as on CPython
+(c.f. https://docs.python.org/3/using/cmdline.html):</p>
+
+<ul>
+  <li>GraalVM’s Python launcher (<code>graalpy</code>) reads the <code>PYTHONDONTWRITEBYTECODE</code>
+environment variable. If this is set to a non-empty string, Python will not
+try to write <code>.pyc</code> files when importing modules.</li>
+  <li>The launcher command line option <code>-B</code>, if given, has the same effect as the
+above.</li>
+  <li>A guest language code can change the attribute <code>dont_write_bytecode</code> of the
+<code>sys</code> built-in module at runtime to change the behavior for subsequent
+imports.</li>
+  <li>The launcher reads the <code>PYTHONPYCACHEPREFIX</code> environment variable. If set,
+the <code>__pycache__</code> directory will be created at the path pointed to by the
+prefix, and a mirror of the directory structure of the source tree will be
+created on-demand to house the <code>.pyc</code> files.</li>
+  <li>A guest language code can change the attribute <code>pycache_prefix</code> of the <code>sys</code>
+module at runtime to change the location for subsequent imports.</li>
+</ul>
+
+<p>Since the embedder cannot use environment variables or CPython options to
+communicate these options to GraalVM’s implementation of Python, these options are made available as
+these language options:</p>
+
+<ul>
+  <li><code>python.DontWriteBytecodeFlag</code> - equivalent to <code>-B</code> or <code>PYTHONDONTWRITEBYTECODE</code></li>
+  <li><code>python.PyCachePrefix</code> - equivalent to <code>PYTHONPYCACHEPREFIX</code></li>
+</ul>
+
+<p>Note that a Python context will not enable writing <code>.pyc</code> files by default.
+The <code>graalpy</code> launcher enables it by default, but if this is desired in the embedding use case, care should be taken to ensure that the <code>__pycache__</code> location is properly managed and the files in that location are secured against manipulation just like the source <code>.py</code> files they were derived from.</p>
+
+<p>Note also that to upgrade the application sources to GraalVM Enteprise’s Python runtime, old <code>.pyc</code>
+files must be removed by the embedder as required.</p>
+
+<h2 id="security-considerations">Security Considerations</h2>
+
+<p>All file operations (obtaining the data, timestamps, and writing <code>pyc</code> files)
+are done through the <a href="https://www.graalvm.org/sdk/javadoc/org/graalvm/polyglot/io/FileSystem.html">FileSystem API</a>. Embedders can modify all of these operations by means of custom (e.g., read-only) <code>FileSystem</code> implementations.
+The embedder can also effectively disable the creation of <code>.pyc</code> files by disabling I/O permissions for GraalVM’s Python runtime.</p>
+
+<p>If the <code>.pyc</code> files are not readable, their location is not writable.
+If the <code>.pyc</code> files’ serialization data or magic numbers are corrupted in any way, the deserialization fails and we just parse the <code>.py</code> file again.
+This comes with a minor performance hit <em>only</em> for the parsing of modules, which should not be significant for most applications (provided the application does actual work besides loading Python code).</p>
+
+      </div>
+  </div>
+</div>
+
+</div>
+
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.3/resources/js/main.js'></script>
+  </body>
+
+</html>
