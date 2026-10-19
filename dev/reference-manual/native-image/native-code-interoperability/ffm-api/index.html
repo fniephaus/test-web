@@ -31,8 +31,6 @@
   <script src='/resources/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
   <script src='/resources/lib/highlight/highlight.pack.js'></script>
   <script src='/resources/lib/purl/purl.js'></script>
-  <script src='/resources/lib/fiddle/fiddle.js' defer></script>
-  <link rel="stylesheet" href='/resources/styles/fiddle.css'>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
@@ -189,7 +187,7 @@ $(document).ready(function(){
         <span class="value-text" id="valueText">Version</span>
       </div>
       <ul tabindex="0" class="select-container" id="selectContainer" onblur="toggleOptions(event)">
-        <li class="select-option" onclick="selected('GraalVM 25.4 (Innovation)', 'latest');">GraalVM 25.4 (Innovation)</li>
+        <li class="select-option" onclick="selected('GraalVM 25.5 (Innovation)', 'latest');">GraalVM 25.5 (Innovation)</li>
         <li class="select-option" onclick="selected('GraalVM 25.0 (LTS)', 'jdk25');">GraalVM 25.0 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 21 (LTS)', 'jdk21');">GraalVM for JDK 21 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 17 (LTS)', 'jdk17');">GraalVM for JDK 17 (LTS)</li>
@@ -991,6 +989,11 @@ After that, transfer the sorted off-heap array back into a Java <code>int</code>
 <p>If the <em>target method</em> of an upcall is a static method, use a <code>directUpcall</code> for better performance.
 This creates an optimized variant of the upcall stub that’s usually much faster and should be preferred.</p>
 
+<p>Direct upcalls are used only when the registered function descriptor matches the descriptor passed to <code>Linker.upcallStub</code>, ignoring layout names.
+Foreign configuration files represent pointers as <code>void*</code> and cannot specify pointer target layouts.
+To use a direct upcall with <code>AddressLayout.withTargetLayout(...)</code>, register the descriptor programmatically in a <a href="#register-stubs-in-a-custom-feature">custom feature</a>.
+If no matching direct upcall is registered, Native Image invokes the callback through its runtime method handle using the regular upcall stub registered for that native calling convention.</p>
+
 <pre><code class="language-json">{
   "foreign": {
     "downcalls": [
@@ -1098,6 +1101,17 @@ You can specify the configuration file to <code>native-image</code> in two ways:
 </ul>
 
 <p>Please also refer to the general description of <a href="/dev/reference-manual/native-image/metadata/">Reachability Metadata</a> and to <a href="/dev/reference-manual/native-image/metadata/AutomaticMetadataCollection/#specify-configuration-files-as-arguments">Specify Configuration Files as Argument</a> for more information.</p>
+
+<p>Entries in <code>downcalls</code>, <code>upcalls</code>, and <code>directUpcalls</code> can include a <code>condition</code> with a <code>typeReached</code> class name, as described in <a href="/dev/reference-manual/native-image/metadata/#conditional-metadata-entries">Conditional Metadata Entries</a>.
+When you use <code>native-image-utils generate</code> to process or merge configuration files, it preserves these conditions, function descriptors, target methods, and linker options.
+Equivalent registrations are compared by the contents of their linker options, including nested options such as <code>critical.allowHeapAccess</code>.
+Registrations with different conditions remain distinct; merging does not minimize registrations across conditions.
+Combining equivalent conditional and unconditional registrations preserves both conditions rather than producing indistinguishable unconditional duplicates.</p>
+
+<p>Direct upcalls can be registered with or without a function descriptor.
+For the same condition, target method, and linker options, a registration without a descriptor subsumes registrations with individual descriptors.
+Registrations with other conditions or linker options remain separate.
+Preserving linker options in the configuration tools does not extend the options the image builder accepts for upcalls.</p>
     
       <h4 id="automatic-metadata-collection-using-the-tracing-agent">
         
@@ -1110,6 +1124,12 @@ You can specify the configuration file to <code>native-image</code> in two ways:
 <p>The FFM API configuration can be collected automatically using the <a href="/dev/reference-manual/native-image/metadata/AutomaticMetadataCollection/">Tracing Agent</a> that is part of GraalVM.
 The agent tracks all usages of FFM API that creates upcalls or downcalls during application execution on a regular Java VM.
 When the application completes and the JVM exits, the agent writes configuration to the <em>reachability-metadata.json</em> file in the specified output directory.</p>
+
+<p>When you enable <a href="/dev/reference-manual/native-image/metadata/ExperimentalAgentOptions/#generating-conditional-configuration-using-the-agent">conditional configuration</a>, the agent records downcalls, upcalls, and direct upcalls with the <code>typeReached</code> conditions inferred from their calling contexts.
+This applies both to a single agent run and to partial runs combined with <code>native-image-utils generate-conditional</code>.</p>
+
+<p>If you use <code>conditional-config-class-filter-file</code> to filter foreign registrations, include the condition class and, for direct upcalls, the target class.
+The same rule applies to <code>--class-name-filter</code> when generating conditional configuration from multiple runs.</p>
     
       <h4 id="register-stubs-in-a-custom-feature">
         
@@ -1508,7 +1528,7 @@ This is because, in both cases, the image build would <em>freeze</em> native add
               <li class="footer-list__item">
                 SDK Javadocs:
                 <a href="https://www.graalvm.org/23.1/javadoc/sdk/" class="javadoc" target="_blank">21</a> or
-                <a href="https://www.graalvm.org/25.4/javadoc/sdk/" class="javadoc" target="_blank">25.4</a>
+                <a href="https://www.graalvm.org/25.5/javadoc/sdk/" class="javadoc" target="_blank">25.5</a>
               </li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/workshops" target="_blank">Workshops</a></li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos" target="_blank">Demos</a></li>
@@ -1521,7 +1541,6 @@ This is because, in both cases, the image build would <em>freeze</em> native add
           <div class="grow">
             <ul class="footer-list">
               <li class="footer-list__item"><a href="https://docs.oracle.com/en/graalvm/index.html" target="_blank">Oracle Help Center</a></li>
-              <li class="footer-list__item"><a href="https://labs.oracle.com/" target="_blank">Oracle Labs</a></li>
               <li class="footer-list__item"><a href="/graalvm-brand-guidelines/">Brand Guidelines</a></li>
             </ul>
           </div>

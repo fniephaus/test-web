@@ -31,8 +31,6 @@
   <script src='/resources/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
   <script src='/resources/lib/highlight/highlight.pack.js'></script>
   <script src='/resources/lib/purl/purl.js'></script>
-  <script src='/resources/lib/fiddle/fiddle.js' defer></script>
-  <link rel="stylesheet" href='/resources/styles/fiddle.css'>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
@@ -189,7 +187,7 @@ $(document).ready(function(){
         <span class="value-text" id="valueText">Version</span>
       </div>
       <ul tabindex="0" class="select-container" id="selectContainer" onblur="toggleOptions(event)">
-        <li class="select-option" onclick="selected('GraalVM 25.4 (Innovation)', 'latest');">GraalVM 25.4 (Innovation)</li>
+        <li class="select-option" onclick="selected('GraalVM 25.5 (Innovation)', 'latest');">GraalVM 25.5 (Innovation)</li>
         <li class="select-option" onclick="selected('GraalVM 25.0 (LTS)', 'jdk25');">GraalVM 25.0 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 21 (LTS)', 'jdk21');">GraalVM for JDK 21 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 17 (LTS)', 'jdk17');">GraalVM for JDK 17 (LTS)</li>
@@ -773,19 +771,21 @@ console.log(fib(32))
   <li><code>--engine.TraceCompilation=&lt;boolean&gt;</code> Prints forced compilations.</li>
 </ul>
 
-<p>The compilation of roots may be forced when an image is stored using the <code>--engine.CacheCompile=&lt;policy&gt;</code> option. The supported policies are:</p>
+<p>The <code>--engine.CacheCompile=&lt;policy&gt;</code> option controls compilation before persisting the engine.
+The supported policies are:</p>
 
 <ul>
-  <li><code>none</code>: No compilations will be persisted, and existing compilations will be invalidated.</li>
-  <li><code>compiled</code>: No compilations will be forced, but finished compilations will be persisted.</li>
-  <li><code>hot</code>: All started compilations will be completed and then persisted. (default)</li>
-  <li><code>aot</code>: All started, and AOT compilable roots will be forced to compile and persisted.</li>
-  <li><code>executed</code>: All executed and all AOT compilable roots will be forced to compile.</li>
+  <li><code>none</code>: Invalidate existing compilations and persist no compiled code.</li>
+  <li><code>compiled</code>: Persist existing compiled code without forcing new compilations.
+Cancel unfinished compilations and wait for them to terminate.</li>
+  <li><code>hot</code> (default): Wait for pending compilations, then compile roots that meet the runtime compilation thresholds.
+Also compile the parent roots of valid on-stack replacement (OSR) compilations.</li>
+  <li><code>aot</code>: Like <code>hot</code>, plus uninitialized roots that support AOT preparation.</li>
+  <li><code>executed</code>: Like <code>aot</code>, but compile initialized roots regardless of compilation thresholds.</li>
 </ul>
 
-<p>By default, all started compilations in the compile queue will be completed and then persisted.
-Whether a function root is AOT compilable is determined by the language.
-A language supports AOT by implementing <code>RootNode.prepareForAOT()</code>.</p>
+<p>OSR roots themselves are not forced to compile.
+Whether a root supports AOT preparation is determined by the language through <code>RootNode.prepareForAOT()</code>.</p>
 
 <p>An update policy can be specified if both load and store operations are set using the <code>--engine.CacheUpdate=&lt;policy&gt;</code> option.
 Available policies are:</p>
@@ -1012,7 +1012,7 @@ However, it is possible to use the polyglot embedding API to simulate this use-c
               <li class="footer-list__item">
                 SDK Javadocs:
                 <a href="https://www.graalvm.org/23.1/javadoc/sdk/" class="javadoc" target="_blank">21</a> or
-                <a href="https://www.graalvm.org/25.4/javadoc/sdk/" class="javadoc" target="_blank">25.4</a>
+                <a href="https://www.graalvm.org/25.5/javadoc/sdk/" class="javadoc" target="_blank">25.5</a>
               </li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/workshops" target="_blank">Workshops</a></li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos" target="_blank">Demos</a></li>
@@ -1025,7 +1025,6 @@ However, it is possible to use the polyglot embedding API to simulate this use-c
           <div class="grow">
             <ul class="footer-list">
               <li class="footer-list__item"><a href="https://docs.oracle.com/en/graalvm/index.html" target="_blank">Oracle Help Center</a></li>
-              <li class="footer-list__item"><a href="https://labs.oracle.com/" target="_blank">Oracle Labs</a></li>
               <li class="footer-list__item"><a href="/graalvm-brand-guidelines/">Brand Guidelines</a></li>
             </ul>
           </div>

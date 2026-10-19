@@ -1,0 +1,38 @@
+<h1 id="installation-on-linux-platforms">Installation on Linux Platforms</h1>
+
+<p>Oracle GraalVM is available for Linux on x64 and AArch64 architectures. 
+You can install Oracle GraalVM on Linux from an archive (<em>.tar.gz</em>) for the current user into any location, without affecting other JDK installations.</p>
+
+<h3 id="note-on-aarch64-distribution">Note on AArch64 Distribution</h3>
+<p>This distribution can be installed on Oracle Linux and Red Hat Enterprise Linux (RHEL) systems for the AArch64 architecture.</p>
+
+<p>Follow these steps to install Oracle GraalVM:</p>
+
+<ol>
+  <li>
+    <p>Navigate to <a href="https://www.oracle.com/java/technologies/downloads/">Oracle Java Downloads</a>. 
+Select the preferred Oracle GraalVM version, <strong>21</strong> for the Java version, <strong>Linux</strong> for the operating system, and the architecture. Start downloading.</p>
+  </li>
+  <li>
+    <p>Change directory to the location where you want to install Oracle GraalVM, then move the <em>.tar.gz</em> file to that directory.</p>
+  </li>
+  <li>Unzip the archive:
+    <pre><code class="language-shell"> tar -xzf graalvm-jdk-&lt;version&gt;_linux-&lt;architecture&gt;.tar.gz
+</code></pre>
+  </li>
+  <li>There can be multiple JDKs installed on your machine. The next step is to configure your runtime environment:
+    <ul>
+      <li>Set the <code>JAVA_HOME</code> environment variable to resolve to the installation directory:
+        <pre><code class="language-shell"> export JAVA_HOME=/path/to/&lt;graalvm&gt;
+</code></pre>
+      </li>
+      <li>Set the value of the <code>PATH</code> environment variable to the GraalVM <em>bin</em> directory:
+        <pre><code class="language-shell"> export PATH=/path/to/&lt;graalvm&gt;/bin:$PATH
+</code></pre>
+      </li>
+    </ul>
+  </li>
+  <li>To check whether the installation was successful, run the <code>java -version</code> command.</li>
+</ol>
+
+<p>Optionally, you can use Oracle GraalVM as the default JRE or JDK installation in your Java IDE.</p>

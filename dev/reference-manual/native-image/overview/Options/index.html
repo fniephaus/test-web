@@ -31,8 +31,6 @@
   <script src='/resources/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
   <script src='/resources/lib/highlight/highlight.pack.js'></script>
   <script src='/resources/lib/purl/purl.js'></script>
-  <script src='/resources/lib/fiddle/fiddle.js' defer></script>
-  <link rel="stylesheet" href='/resources/styles/fiddle.css'>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
@@ -189,7 +187,7 @@ $(document).ready(function(){
         <span class="value-text" id="valueText">Version</span>
       </div>
       <ul tabindex="0" class="select-container" id="selectContainer" onblur="toggleOptions(event)">
-        <li class="select-option" onclick="selected('GraalVM 25.4 (Innovation)', 'latest');">GraalVM 25.4 (Innovation)</li>
+        <li class="select-option" onclick="selected('GraalVM 25.5 (Innovation)', 'latest');">GraalVM 25.5 (Innovation)</li>
         <li class="select-option" onclick="selected('GraalVM 25.0 (LTS)', 'jdk25');">GraalVM 25.0 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 21 (LTS)', 'jdk21');">GraalVM for JDK 21 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 17 (LTS)', 'jdk17');">GraalVM for JDK 17 (LTS)</li>
@@ -1117,6 +1115,55 @@ These deprecated URL protocol options are omitted from the generated table; see 
 
 <!-- END: build-options-table -->
     
+      <h2 id="argument-files">
+        
+        
+          Argument Files <a href="#argument-files" class="anchor_heading"><svg class='anchor-icon' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><path d='M10 13a5 5 0 0 0 7.07 0l3.54-3.54a5 5 0 0 0-7.07-7.07L10 5'/><path d='M14 11a5 5 0 0 0-7.07 0L3.39 14.54a5 5 0 1 0 7.07 7.07L14 19'/></svg></a>
+        
+        
+      </h2>
+
+<p>Native Image argument files use UTF-8 and follow the <a href="https://docs.oracle.com/en/java/javase/25/docs/specs/man/java.html#java-command-line-argument-files">Java launcher argument-file specification</a>.
+All of its syntax rules apply.
+To enable option-value continuations, put <code># native-image: value-continuations</code> on the first line of the file.
+The marker must match exactly.
+A standalone <code># native-image:</code> directive must start the first line; unknown settings or misplaced directives are errors.</p>
+
+<p>An option ending in <code>=...</code> starts an option-value continuation.
+Subsequent arguments within the file are joined with commas until an empty or whitespace-only line, another option ending in <code>=...</code>, or the end of the file.
+Comment-only lines do not end the continuation.
+Indentation does not affect continuation boundaries; options that do not end in <code>=...</code> are also consumed as continuation values.
+A continuation with no entries produces an empty option value.</p>
+
+<p>Continuation headers are recognized after Java-style tokenization removes quotes, so <code>-H:IncludeResources="..."</code> also starts a continuation.
+To pass <code>...</code> as a literal option value, specify the option directly on the command line or in an argument file without the marker.</p>
+
+<p>For example, <em>preserve.args</em> can contain:</p>
+
+<pre><code class="language-text"># native-image: value-continuations
+
+# Library scope
+-H:Preserve=...
+    package=my.library.*
+    module=java.logging
+
+-H:IncludeResources=...
+    my/library/.*
+    my/application/.*
+</code></pre>
+
+<p>Running <code>native-image @preserve.args -cp classes Main</code> expands the file into:</p>
+
+<pre><code class="language-text">-H:Preserve=package=my.library.*,module=java.logging
+-H:IncludeResources=my/library/.*,my/application/.*
+</code></pre>
+
+<p>You can also use <code>@file</code> in the <code>Args</code> property of <em>native-image.properties</em>.
+File paths must be relative to the directory containing the properties file; for properties embedded in a JAR, the referenced file is read from the same JAR.
+For macro options, paths are relative to the macro option directory.
+References must stay within the containing class-path or module-path entry, or macro option directory; references that escape it are rejected.
+Expanded options retain the origin of the properties file and its restrictions.</p>
+    
       <h2 id="list-of-useful-options">
         
         
@@ -1472,7 +1519,7 @@ Like other Java system properties, you can override it at runtime.</p>
               <li class="footer-list__item">
                 SDK Javadocs:
                 <a href="https://www.graalvm.org/23.1/javadoc/sdk/" class="javadoc" target="_blank">21</a> or
-                <a href="https://www.graalvm.org/25.4/javadoc/sdk/" class="javadoc" target="_blank">25.4</a>
+                <a href="https://www.graalvm.org/25.5/javadoc/sdk/" class="javadoc" target="_blank">25.5</a>
               </li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/workshops" target="_blank">Workshops</a></li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos" target="_blank">Demos</a></li>
@@ -1485,7 +1532,6 @@ Like other Java system properties, you can override it at runtime.</p>
           <div class="grow">
             <ul class="footer-list">
               <li class="footer-list__item"><a href="https://docs.oracle.com/en/graalvm/index.html" target="_blank">Oracle Help Center</a></li>
-              <li class="footer-list__item"><a href="https://labs.oracle.com/" target="_blank">Oracle Labs</a></li>
               <li class="footer-list__item"><a href="/graalvm-brand-guidelines/">Brand Guidelines</a></li>
             </ul>
           </div>

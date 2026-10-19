@@ -31,8 +31,6 @@
   <script src='/resources/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
   <script src='/resources/lib/highlight/highlight.pack.js'></script>
   <script src='/resources/lib/purl/purl.js'></script>
-  <script src='/resources/lib/fiddle/fiddle.js' defer></script>
-  <link rel="stylesheet" href='/resources/styles/fiddle.css'>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
@@ -189,7 +187,7 @@ $(document).ready(function(){
         <span class="value-text" id="valueText">Version</span>
       </div>
       <ul tabindex="0" class="select-container" id="selectContainer" onblur="toggleOptions(event)">
-        <li class="select-option" onclick="selected('GraalVM 25.4 (Innovation)', 'latest');">GraalVM 25.4 (Innovation)</li>
+        <li class="select-option" onclick="selected('GraalVM 25.5 (Innovation)', 'latest');">GraalVM 25.5 (Innovation)</li>
         <li class="select-option" onclick="selected('GraalVM 25.0 (LTS)', 'jdk25');">GraalVM 25.0 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 21 (LTS)', 'jdk21');">GraalVM for JDK 21 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 17 (LTS)', 'jdk17');">GraalVM for JDK 17 (LTS)</li>
@@ -809,12 +807,13 @@ The accepted values are:
 - `--engine.TriggerUncaughtExceptionHandlerForCancel` : Propagates cancel execution exception into UncaughtExceptionHandler. For testing purposes only.
 - `--engine.UseConservativeContextReferences` : Enables conservative context references. This allows invalid sharing between contexts. For testing purposes only.
 - `--engine.UsePreInitializedContext=true|false` : Use pre-initialized context when it's available (default: true).
-- `--engine.DebugCacheCompile=none|compiled|hot|aot|executed` : Policy to use to force compilation for executed call targets before persisting the engine. Possible values are:
-  - 'none':     No compilations will be persisted and existing compilations will be invalidated.
-  - 'compiled': No compilations will be forced but finished compilations will be persisted.
-  - 'hot':      (default) All started compilations will be completed and then persisted.
-  - 'aot':      All started and AOT compilable roots will be forced to compile and persisted.
-  - 'executed': All executed and all AOT compilable roots will be forced to compile.
+- `--engine.DebugCacheCompile=none|compiled|hot|aot|executed` : Compilation policy to apply before persisting the engine. Possible values are:
+  - 'none':     Invalidate existing compilations and persist no compiled code.
+  - 'compiled': Persist existing compiled code without forcing new compilations. Cancel unfinished compilations and wait for them to terminate.
+  - 'hot':      (default) Wait for pending compilations, then compile roots that meet the runtime compilation thresholds. Also compile the parent roots of valid on-stack replacement (OSR) compilations.
+  - 'aot':      Like 'hot', plus uninitialized roots that support AOT preparation.
+  - 'executed': Like 'aot', but compile initialized roots regardless of compilation thresholds.
+OSR roots themselves are not forced to compile.
 - `--engine.DebugCacheLoad` : Prepares the engine to take the stored engine from the static field instead of reading it from disk.
 - `--engine.DebugCachePreinitializeContext=true|false` : Preinitialize a new context with all languages that support it and that were used during the run (default: true).
 - `--engine.DebugCacheStore` : Prepares the engine for caching and stores it a static field instead of writing it to disk.
@@ -1090,7 +1089,7 @@ The accepted values are:
               <li class="footer-list__item">
                 SDK Javadocs:
                 <a href="https://www.graalvm.org/23.1/javadoc/sdk/" class="javadoc" target="_blank">21</a> or
-                <a href="https://www.graalvm.org/25.4/javadoc/sdk/" class="javadoc" target="_blank">25.4</a>
+                <a href="https://www.graalvm.org/25.5/javadoc/sdk/" class="javadoc" target="_blank">25.5</a>
               </li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/workshops" target="_blank">Workshops</a></li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos" target="_blank">Demos</a></li>
@@ -1103,7 +1102,6 @@ The accepted values are:
           <div class="grow">
             <ul class="footer-list">
               <li class="footer-list__item"><a href="https://docs.oracle.com/en/graalvm/index.html" target="_blank">Oracle Help Center</a></li>
-              <li class="footer-list__item"><a href="https://labs.oracle.com/" target="_blank">Oracle Labs</a></li>
               <li class="footer-list__item"><a href="/graalvm-brand-guidelines/">Brand Guidelines</a></li>
             </ul>
           </div>

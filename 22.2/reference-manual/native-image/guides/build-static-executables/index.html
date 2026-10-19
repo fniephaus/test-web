@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.2/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.2/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.2/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.2/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.2/assets/main.css'>
+  <script src='/22.2/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.2/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.2/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.2/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.2/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.2/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="build-a-statically-linked-or-mostly-statically-linked-native-executable">Build a Statically Linked or Mostly-Statically Linked Native Executable</h1>
+
+<p>GraalVM Native Image by default builds dynamically linked binaries: at build time it loads your application classes and interfaces and hooks them together in a process of dynamic linking.</p>
+
+<p>However, you can create a statically linked or mostly-static linked native executable, depending on your needs.</p>
+
+<p><strong>A static native executable</strong> is a statically linked binary that can be used without any additional library dependencies.
+A static native executable is easy to distribute and deploy on a slim or distroless container (a scratch container).
+You can create a static native executable by statically linking it against <a href="https://musl.libc.org/">musl-libc</a>, a lightweight, fast and simple <code>libc</code> implementation.</p>
+
+<p><strong>A mostly-static native executable</strong> is a binary that links everything except the standard C library, <code>glibc</code>. This is an alternative option to staticly linking everything.
+This approach is ideal for deployment on a distroless container image.</p>
+
+<blockquote>
+  <p>Note: This currently only works when linked against <code>glibc</code>.</p>
+</blockquote>
+
+<p>This guide shows how you can take advantage of Native Image linking options including fully dynamic, fully static, and mostly static (except <code>libc</code>) to generate an executable ideal for your deployment scenario.</p>
+
+<h3 id="table-of-contents">Table of Contents</h3>
+
+<ul>
+  <li><a href="#prerequisites-and-preparation">Prerequisites</a></li>
+  <li><a href="#build-a-static-native-executable">Build a Static Binary</a></li>
+  <li><a href="#build-a-mostly-static-executable">Build a Mostly Static Binary</a></li>
+</ul>
+
+<h2 id="prerequisites-and-preparation">Prerequisites and Preparation</h2>
+
+<p>The following prerequisites should be met:</p>
+
+<ul>
+  <li>Linux AMD64 operating system</li>
+  <li>GraalVM distribution for Java 11 of higher with <a href="/22.2/reference-manual/native-image/#install-native-image">Native Image support</a></li>
+  <li>A 64-bit <code>musl</code> toolchain, <code>make</code>, and <code>configure</code></li>
+  <li>The latest <code>zlib</code> library</li>
+</ul>
+
+<p>As a preparation step, install the <code>musl</code> toolchain, compile and install <code>zlib</code> into the toolchain.</p>
+
+<ol>
+  <li>Download the <code>musl</code> toolchain from <a href="https://musl.cc/">musl.cc</a>. (We recommend <a href="http://more.musl.cc/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz">this one</a>). Extract the toolchain to a directory of your choice. This directory will be referred as <code>$TOOLCHAIN_DIR</code>.</li>
+  <li>Download the latest <code>zlib</code> library sources from <a href="https://zlib.net/">zlib.net</a> and extract them. (This documentation uses <code>zlib-1.2.11</code>.)</li>
+  <li>Create a new environment variable, named <code>CC</code>:
+    <pre><code class="language-bash"> CC=$TOOLCHAIN_DIR/bin/gcc
+</code></pre>
+  </li>
+  <li>Change into the <code>zlib</code> directory, and then run the following commands to compile and install <code>zlib</code> into the toolchain:
+    <pre><code class="language-bash"> ./configure --prefix=$TOOLCHAIN_DIR --static
+ make
+ make install
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="build-a-static-native-executable">Build a Static Native Executable</h2>
+
+<p>Assume you have the following source code saved in the <code>EnvMap.java</code> file:</p>
+
+<pre><code class="language-java">import java.util.Map;
+
+public class EnvMap {
+    public static void main (String[] args) {
+        var filter = args.length &gt; 0 ? args[0] : "";
+        Map&lt;String, String&gt; env = System.getenv();
+        for (String envName : env.keySet()) {
+            if(envName.contains(filter)) {
+                System.out.format("%s=%s%n",
+                                envName,
+                                env.get(envName));
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>This application iterates over your environment variables and prints out the ones that contain the <code>String</code> of characters passed as a command line argument.</p>
+
+<ol>
+  <li>First, ensure the directory named <code>$TOOLCHAIN_DIR/bin</code> is present on your <code>PATH</code>.
+ To verify this, run the following command:
+    <pre><code class="language-bash"> x86_64-linux-musl-gcc
+</code></pre>
+    <p>You should see output similar to the following:</p>
+    <pre><code class="language-bash"> x86_64-linux-musl-gcc: fatal error: no input files
+ compilation terminated.
+</code></pre>
+  </li>
+  <li>Compile the file:
+    <pre><code class="language-shell"> javac EnvMap.java
+</code></pre>
+  </li>
+  <li>Build a static native executable by running this command:
+    <pre><code class="language-shell"> native-image --static --libc=musl EnvMap
+</code></pre>
+    <p>This produces a native executable with statically linked system libraries.
+ You can pass other arguments before a class or JAR file.</p>
+  </li>
+</ol>
+
+<h2 id="build-a-mostly-static-native-executable">Build a Mostly-Static Native Executable</h2>
+
+<p>With GraalVM Native Image you can build a mostly-static native executable that statically links everything except <code>libc</code>.
+Statically linking all your libraries except <code>glibc</code> ensures your application has all the libraries it needs to run on any Linux <code>glibc</code>-based distribution.</p>
+
+<p>To build a mostly-static native executable, use this command:</p>
+
+<pre><code class="language-shell">native-image -H:+StaticExecutableWithDynamicLibC [other arguments] &lt;Class&gt;
+</code></pre>
+
+<p>To build a  a mostly-static native executable for the above <code>EnvMap</code> demo, run:</p>
+
+<pre><code class="language-shell">native-image -H:+StaticExecutableWithDynamicLibC EnvMap
+</code></pre>
+
+<h3 id="frequently-asked-questions">Frequently Asked Questions</h3>
+
+<h4 id="what-is-the-recommended-base-docker-image-for-deploying-a-static-or-mostly-static-native-executable">What is the recommended base Docker image for deploying a static or mostly-static native executable?</h4>
+
+<p>A fully static native executable gives you the most flexibility to choose a base container image - it can run on anything including a <code>FROM scratch</code> image.
+A mostly-static native executable requires a container image that provides <code>glibc</code>, but has no additional requirements.
+In both cases, choosing the base container image generally depends on your native executable’s specific requirements.</p>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68">GraalVM Native Image, Spring and Containerisation</a> interactive lab to build a mostly static executable of a Spring Boot application.</li>
+</ul>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.2/resources/js/main.js'></script>
+  </body>
+
+</html>

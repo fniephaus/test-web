@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/21.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/21.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/21.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/21.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/21.3/assets/main.css'>
+  <script src='/21.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/21.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/21.3/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/21.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/21.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/21.3/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="graalvm-community-images">GraalVM Community Images</h1>
+
+<p>To support container-based development, GraalVM Community container images are published in the <a href="https://github.com/orgs/graalvm/packages">GitHub Container Registry</a>.
+Learn here how to start using GraalVM Community images for Docker containers.</p>
+
+<ol>
+  <li>Having the Docker daemon running, pull the image from GitHub with <code>docker pull</code>:
+    <pre><code class="language-shell">docker pull ghcr.io/graalvm/graalvm-ce:latest
+</code></pre>
+  </li>
+  <li>Alternatively, use as the base image in <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>:
+    <pre><code class="language-shell">FROM ghcr.io/graalvm/graalvm-ce:latest
+</code></pre>
+  </li>
+</ol>
+
+<p>There are different GraalVM Community container images provided depending on the architecture and the Java version.
+GraalVM binaries are built for Linux, macOS, and Windows platforms on x86 64-bit systems, and for Linux on ARM 64-bit systems.
+The images are multi-arch (<code>aarch64</code> or <code>amd64</code> will be pulled depending on Docker host architecture), and named per a <em>platform-jdk-version</em> naming scheme, for example, <code>ghcr.io/graalvm/graalvm-ce:latest:ol8-java11-21.2.0</code>.
+A complete list can be found on the <a href="https://github.com/orgs/graalvm/packages/container/graalvm-ce/versions">All versions</a> page.</p>
+
+<p>The images are based on Oracle Linux and has GraalVM Community downloaded, unzipped and made available.
+It means that Java, JavaScript, Node.js and the LLVM runtime are available out of the box.</p>
+
+<p>You can start a container and enter the <code>bash</code> session with the following run command:</p>
+<pre><code class="language-shell">docker run -it --rm ghcr.io/graalvm/graalvm-ce:21.2.0 bash
+</code></pre>
+<p>Check that <code>java</code>, <code>js</code> and other commands work as expected.</p>
+<pre><code class="language-shell">→ docker run -it --rm ghcr.io/graalvm/graalvm-ce:21.2.0 bash
+bash-4.4# java -version
+openjdk version "11.0.12" 2021-07-20
+OpenJDK Runtime Environment GraalVM CE 21.2.0 (build 11.0.12+6-jvmci-21.2-b06)
+OpenJDK 64-Bit Server VM GraalVM CE 21.2.0 (build 11.0.12+6-jvmci-21.2-b06, mixed mode, sharing)
+bash-4.4# js -version
+GraalVM JavaScript (GraalVM CE Native 21.2.0)
+&gt; 1 + 1
+2
+&gt; quit()
+bash-4.4# lli --version
+LLVM 10.0.0 (GraalVM CE Native 21.2.0)
+bash-4.4#
+</code></pre>
+
+<p>Please note that the image contains only the components immediately available in the GraalVM Community core download.
+However, the <a href="/21.3/reference-manual/graalvm-updater/">GraalVM Updater, <code>gu</code></a>, utility is included in the container image and may be used to install additional languages and runtimes like Node.js, Ruby, R, Python or WebAssembly.</p>
+
+<p>For example, the following command installs the Ruby support (the output below is truncated for brevity):</p>
+
+<pre><code class="language-shell">docker run -it --rm ghcr.io/graalvm/graalvm-ce:21.2.0 bash
+bash-4.4# gu install ruby
+Downloading: Component catalog
+Processing component archive: Component ruby
+Downloading: Component ruby
+[######              ]
+...
+</code></pre>
+
+<p>Here is a sample command that maps the <code>/absolute/path/to/directory/no/trailing/slash</code> directory from the host system to the <code>/path/inside/container</code> inside the container.</p>
+
+<pre><code class="language-shell">docker run -it --rm -v /absolute/path/to/directory/no/trailing/slash:/path/inside/container ghcr.io/graalvm/graalvm-ce:21.2.0 bash
+</code></pre>
+
+<p>If you want to create Docker images that contain GraalVM with Ruby, R, or Python, you can use a Dockerfile like the example below, which uses <code>ghcr.io/graalvm/graalvm-ce:21.2.0</code> as the base image, installs the Ruby support using the <code>gu</code> utility, then creates and runs a sample Ruby program.</p>
+
+<pre><code class="language-shell">FROM ghcr.io/graalvm/graalvm-ce:21.2.0
+RUN gu install ruby
+WORKDIR /workdir
+RUN echo 'puts "Hello from Ruby!\nVersion: #{RUBY_DESCRIPTION}"' &gt; app.rb
+CMD ruby app.rb
+</code></pre>
+
+<p>If you put the above snippet in a Dockerfile in the current directory, you can build and run it with the following commands:</p>
+
+<pre><code class="language-shell">docker build -t ruby-demo .
+...
+docker run -it --rm ruby-demo
+Hello from Ruby!
+Version: truffleruby 21.2.0, like ruby 2.7.3, GraalVM CE Native [x86_64-darwin]
+</code></pre>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/21.3/resources/js/main.js'></script>
+  </body>
+
+</html>

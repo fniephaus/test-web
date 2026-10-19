@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.3/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.3/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.3/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.3/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.3/assets/main.css'>
+  <script src='/22.3/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.3/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.3/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.3/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.3/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.3/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="include-resources-in-a-native-executable">Include Resources in a Native Executable</h1>
+
+<p>The following steps illustrate how to include a resource in a native executable. The application <code>fortune</code> simulates the traditional <code>fortune</code> Unix program (for more information, see <a href="https://en.wikipedia.org/wiki/Fortune_(Unix)">fortune</a>).</p>
+
+<ol>
+  <li>
+    <p>Save the following Java source code as a file named <em>Fortune.java</em>:</p>
+
+    <pre><code class="language-java"> import java.io.BufferedReader;
+ import java.io.InputStreamReader;
+ import java.util.ArrayList;
+ import java.util.Random;
+ import java.util.Scanner;
+
+ public class Fortune {
+
+     private static final String SEPARATOR = "%";
+     private static final Random RANDOM = new Random();
+     private ArrayList&lt;String&gt; fortunes = new ArrayList&lt;&gt;();
+
+     public Fortune(String path) {
+         // Scan the file into the array of fortunes
+         Scanner s = new Scanner(new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(path))));
+         s.useDelimiter(SEPARATOR);
+         while (s.hasNext()) {
+             fortunes.add(s.next());
+         }
+     }
+        
+     private void printRandomFortune() throws InterruptedException {
+         int r = RANDOM.nextInt(fortunes.size()); //Pick a random number
+         String f = fortunes.get(r);  //Use the random number to pick a random fortune
+         for (char c: f.toCharArray()) {  // Print out the fortune
+           System.out.print(c);
+             Thread.sleep(100); 
+         }
+     }
+      
+     public static void main(String[] args) throws InterruptedException {
+         Fortune fortune = new Fortune("/fortunes.u8");
+         fortune.printRandomFortune();
+     }
+ }
+</code></pre>
+  </li>
+  <li>
+    <p>Download the <a href="https://github.com/oracle/graal/blob/3ed4a7ebc5004c51ae310e48be3828cd7c7802c2/docs/reference-manual/native-image/assets/fortunes.u8"><em>fortunes.u8</em></a> resource file and save it in the same directory as <em>Fortune.java</em>.</p>
+  </li>
+  <li>
+    <p>Compile the Java source code:</p>
+
+    <pre><code class="language-shell"> $JAVA_HOME/bin/javac Fortune.java
+</code></pre>
+  </li>
+  <li>
+    <p>Build a native executable by specifying the resource path:</p>
+
+    <pre><code class="language-shell"> $JAVA_HOME/bin/native-image Fortune -H:IncludeResources=".*u8$"
+</code></pre>
+  </li>
+  <li>
+    <p>Run the executable image:</p>
+
+    <pre><code class="language-shell"> ./fortune
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="/22.3/reference-manual/native-image/dynamic-features/Resources/">Accessing Resources in Native Image</a></li>
+</ul>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.3/resources/js/main.js'></script>
+  </body>
+
+</html>

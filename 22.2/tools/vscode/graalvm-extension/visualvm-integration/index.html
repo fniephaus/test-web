@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.2/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.2/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.2/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.2/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.2/assets/main.css'>
+  <script src='/22.2/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.2/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.2/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.2/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.2/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.2/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="visualvm-and-vs-code-integration">VisualVM and VS Code Integration</h1>
+
+<p>GraalVM Tools for Java extension provides integration with <a href="https://visualvm.github.io">VisualVM</a>, which is the all-in-one Java (and polyglot) monitoring and troubleshooting tool.
+This brings the visual Java tooling to VS Code.</p>
+
+<p><img src="/22.2/docs/tools/vscode/graalvm/images/vscode_visualvm.png" alt="VisualVM and VS Code Integration" /></p>
+
+<p>It you go to <strong>View</strong>, then <strong>Command Palette</strong>, and search for “VisualVM”, the following actions related to VisualVM are available:</p>
+
+<p><img src="/22.2/docs/tools/vscode/graalvm/images/visualvm_commands.png" alt="VisualVM Commands available from Command Palette" /></p>
+
+<p>To start monitoring from VS Code, do the following:</p>
+
+<ol>
+  <li>Click <strong>Gr</strong> in the activity panel, install the latest GraalVM release, and activate it, as described <a href="/22.2/tools/vscode/graalvm-extension/#graalvm-installation-wizard">here</a>.</li>
+  <li>
+    <p>Run your Java application (with or without debugging), the process ID will be discovered automatically. You can see that in the VisualVM pane in VS Code:</p>
+
+    <p><img src="/22.2/docs/tools/vscode/graalvm/images/visualvm_commands.png" alt="Process ID detected" /></p>
+
+    <p>While the project is starting, the Process node in VisualVM pane displays the project name with a “pid pending” label. 
+Once the project process starts, the Process node is updated to show its process ID (PID).</p>
+    <blockquote>
+      <p>Note: VisualVM in VS Code screens the system and searches for the project process during the project startup.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click the play button:</p>
+
+    <p><img src="/22.2/docs/tools/vscode/graalvm/images/open_visualvm.png" alt="Open VisualVM from VS Code" /></p>
+
+    <ul>
+      <li>It starts VisualVM if no PID is selected in the Process node.</li>
+      <li>It starts VisualVM and opens the PID if selected in the Process node.</li>
+    </ul>
+  </li>
+  <li>
+    <p>If you continue and invoke the actions like Thread dump, Heap dump, CPU sampler, Memory sampler, JFR, the prompt will ask you which process to monitor by VisualVM:</p>
+
+    <p><img src="/22.2/docs/tools/vscode/graalvm/images/select_java_process_to_monitor.png" alt="Select Java process to monitor by VisualVM" /></p>
+  </li>
+</ol>
+
+<p>You can manually request checking Java processes that run concurrently by clicking the loop icon in the <strong>VisualVM</strong>:<strong>Process</strong> field. It starts reading Java processes, and then asks to select which process to monitor.</p>
+
+<p>By default, VisualVM should not open when a Java process is started, but you can configure another behavior. In the VisualVM pane, click the edit button and select the action to perform when the project is started.</p>
+
+<p><img src="/22.2/docs/tools/vscode/graalvm/images/command_when_java_process_started.png" alt="Select action to perform when Java project is started" /></p>
+
+<h2 id="visualvm-pane">VisualVM Pane</h2>
+
+<p>The VisualVM pane provides the following actions and features:</p>
+
+<p><strong>Start VisualVM</strong></p>
+
+<p>The action to start the VisualVM tool is bundled with an active GraalVM installation.
+If a process has already been selected for monitoring, VisualVM opens the process view at the defined tab.
+If a process selected for monitoring is not running any more, invoking the action just clears the process selection and shows a notification.
+Subsequent action invocation starts VisualVM again without a process context.</p>
+
+<p><strong>More Actions… -&gt; Preselect [Overview/Monitor/Threads/Sampler] view</strong></p>
+
+<p>The choices to define which tab will be selected when opening the process view.</p>
+
+<p><img src="/22.2/docs/tools/vscode/graalvm/images/visualvm_pane.png" alt="VisualVM Pane in VS Code" /></p>
+
+<p><strong>More Actions… -&gt; Bring VisualVM window to front</strong></p>
+
+<p>When selected, the VisualVM window is made the topmost window every time an action is invoked on VisualVM.
+It may have no effect in certain window systems.</p>
+
+<p><strong>More Actions… -&gt; Enable Go to Source integration</strong></p>
+
+<p>Only available when there is a project open in VS Code.
+When selected, the VisualVM is configured to open source code back in VS Code editor on <strong>Go to Source</strong> action invocation in various VisualVM views.
+The VisualVM <strong>Options | Sources</strong> settings are populated by the current project’s source roots, active GraalVM installation sources, and VS Code is set to be the <em>sources viewer</em>.</p>
+
+<p>Note that <strong>Go to Source</strong> in VisualVM will open sources defined in the VS Code project and the active GraalVM sources.
+Sources of the project libraries and other dependencies cannot be opened from VisualVM.
+Unselect the <strong>Enable Go to Source</strong> integration choice to enable manual source roots and sources viewer definition in VisualVM <strong>Options | Sources</strong> settings.</p>
+
+<blockquote>
+  <p>Note: <strong>Go to Source</strong> action is currently not available in some VisualVM views and has some limitations for certain Java language features. <a href="https://visualvm.github.io/sourcessupport.html">See Sources Support</a> for details.</p>
+</blockquote>
+
+<p><strong>Process</strong></p>
+
+<p>A node to track the process selected for monitoring by VisualVM.
+By default no process is selected, showing the <em>not selected</em> value.
+A process can be selected for monitoring using the <strong>Select process</strong> action available for the Process node, by invoking any action which requires the process selection, using the <strong>Open Process In VisualVM</strong> in Command Palette, or by starting the project using the special <strong>Launch VisualVM &amp; Java 8+ Application</strong> launch configuration.</p>
+
+<p>When selecting a process for monitoring, list of local Java processes started by the current user is displayed (populated using the <code>jps</code> tool from the active GraalVM).
+For each process the main class is displayed if available, along with the process ID.
+If the process is configured to display a custom name in VisualVM (<code>-Dvisualvm.display.name=CustomName</code>), the custom name is displayed instead of the main class.
+Each process item also shows a fully qualified main class name together with the arguments passed to the process, if available.</p>
+
+<p>Once the selected process has terminated, the node is cleared on first invocation of either Start VisualVM or any action which requires the process selection.</p>
+
+<p><strong>When Started</strong></p>
+
+<p>A node to define the action to perform when the process is started.
+This feature requires starting the project using the <strong>Launch VisualVM &amp; Java 8+ Application</strong> launch configuration.
+The following choices are available:</p>
+
+<ul>
+  <li><strong>Do nothing</strong>: no action is taken when the process is started</li>
+  <li><strong>Open process</strong>: the process is opened in VisualVM and the defined tab is selected</li>
+  <li><strong>Start CPU sampler</strong>: the process is opened in VisualVM, the Sampler tab is selected, and the CPU sampling session is started using the defined settings</li>
+  <li><strong>Start Memory sampler</strong>: the process is opened in VisualVM, the Sampler tab is selected, and the memory sampling session is started using the defined settings</li>
+  <li><strong>Start JFR recording</strong>: the process is opened in VisualVM, and the flight recording is started using the defined settings</li>
+</ul>
+
+<p>By default, the Open process choice is selected.
+This means that once the project process is started (using the <strong>Launch VisualVM &amp; Java 8+ Application</strong> launch configuration), VisualVM is started as well, the project process is opened, and defined tab selected. Use the <strong>Configure</strong> action to change the default choice.</p>
+
+<p><strong>Thread Dump</strong></p>
+
+<p>A node and action to take and display a thread dump from the process selected for monitoring.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the <strong>Take thread dump</strong> action just clears the process selection and shows a notification.
+Subsequent action invocation will request another process selection.</p>
+
+<p><strong>Heap Dump</strong></p>
+
+<p>A node and action to take and display a heap dump from the process selected for monitoring.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the <strong>Take heap dump</strong> action just clears the process selection and shows a notification.
+Subsequent action invocation will request another process selection.</p>
+
+<p><strong>CPU Sampler</strong></p>
+
+<p>A node and actions to start, snapshot, and stop the CPU sampling session using the defined settings for the process selected for monitoring.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the CPU sampler actions just clears the process selection and shows a notification.
+Subsequent actions invocation will request another process selection.</p>
+
+<p>The following actions are available for the CPU sampler:</p>
+
+<ul>
+  <li><strong>Start CPU sampling</strong>: starts a new CPU sampling session if not already running, using the defined settings, and opens the process in VisualVM at the Sampler tab</li>
+  <li><strong>Take snapshot of sampler results</strong>: takes and displays a results snapshot if the CPU sampling session is already running and some results have been collected so far</li>
+  <li>
+    <p><strong>Stop sampling</strong>: stops the CPU sampling session if running
+The CPU sampler node can be further expanded to access the CPU sampling settings.
+The following settings can be configured using the Configure action:</p>
+
+    <ul>
+      <li><strong>Filter</strong></li>
+    </ul>
+
+    <p>A definition of the CPU sampling filter. The filter controls which data are collected by the CPU sampler, and will be available for analysis in the live results and snapshot. The following choices are available:</p>
+
+    <ul>
+      <li><strong>Include all classes</strong>: data from all classes are collected, including project classes, classes of project libraries and other dependencies, and JDK classes</li>
+      <li><strong>Exclude JDK classes</strong>: data from all classes are collected, except of the JDK classes (like <code>java.*</code>, <code>com.sun.*</code>, <code>org.graalvm.*</code>, etc.)</li>
+      <li><strong>Include only project classes</strong>: only data from classes defined by the current project are collected</li>
+    </ul>
+
+    <p>By default, Include all classes choice is selected.
+Typically, this is an optimal choice, as the sampler results can be further filtered using custom filters once collected.</p>
+
+    <ul>
+      <li><strong>Sampling rate</strong>
+Definition of the CPU sampling rate.
+The sampling rate controls which methods are “visible” to the sampler engine - the higher the sampling rate is, the shorter executing methods can be tracked, but the higher overhead is imposed to the monitored process, and its execution biased. Available values are 20 ms - 10.000 ms.
+By default, 100 ms value is selected.
+Typically, this is the optimal choice when searching for a performance bottleneck, while letting the process run at almost full speed.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Memory Sampler</strong></p>
+
+<p>A node and actions to start, snapshot, and stop the memory sampling session using the defined settings for the process selected for monitoring.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the Memory sampler actions just clears the process selection and shows a notification.
+Subsequent actions invocation will request another process selection.</p>
+
+<p>The following actions are available for the Memory sampler:</p>
+
+<ul>
+  <li><strong>Start memory sampling</strong>: starts a new memory sampling session if not already running, using the defined settings, and opens the process in VisualVM at the Sampler tab</li>
+  <li><strong>Take snapshot of sampler results</strong>: takes and displays a results snapshot if the memory sampling session is already running and some results have been collected so far</li>
+  <li><strong>Stop sampling</strong>: stops the memory sampling session if running</li>
+</ul>
+
+<p>The Memory sampler node can be further expanded to access the memory sampling settings.
+The following settings can be configured using the Configure action:</p>
+
+<ul>
+  <li><strong>Sampling rate</strong>
+  Definition of the memory sampling rate.
+  The sampling rate controls how frequently a class histogram will be obtained from the process and displayed in VisualVM. Available values are 100 ms - 10.000 ms. By default, 1.000 ms value is selected.
+  Typically, this is an optimal choice for evaluating which classes and instances are currently allocated on heap and whether they are eventually released at the expected time.</li>
+</ul>
+
+<p><strong>JDK Flight Recorder</strong></p>
+
+<p>A node and actions to start, dump, and stop the JDK Flight Recorder (JFR) session using the defined settings for the process selected for monitoring.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the JFR actions just clears the process selection and shows a notification.
+Subsequent actions invocation will request another process selection.</p>
+
+<p>The following actions are available for the JFR:</p>
+
+<ul>
+  <li><strong>Start flight recording</strong>: starts a flight recording session if not already running, using the defined settings, and opens the process in VisualVM at the defined tab</li>
+  <li><strong>Dump flight recording data</strong>: dumps and displays the flight recording data collected so far if the flight recording session is already running</li>
+  <li><strong>Stop flight recording</strong>: stops the flight recording session if running</li>
+</ul>
+
+<p>The JFR node can be further expanded to access the flight recorder settings.
+The following settings can be configured using the Configure action:</p>
+
+<ul>
+  <li>
+    <p><strong>Settings</strong>
+  Definition of the flight recorder configuration.
+  Flight recorder configurations control the amount of data that is recorded by defining settings for each event type.
+  The following predefined configurations are available:</p>
+
+    <ul>
+      <li>default - collect a predefined set of information with low overhead</li>
+      <li>profile - collect more data than the default settings, but with more overhead and impact on performance
+By default, the default configuration is selected.
+Typically, this is an optimal choice for evaluating the behavior of the monitored process.</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Note: If the current active GraalVM installation is older than GraalVM 21.2.0, only the Process node and When started node are available in the VisualVM pane. The When started node only provides Do nothing and Open process choices. More actions… menu does not provide the Bring VisualVM to front and Enable Go to Source integration actions. Make sure to use the most recent GraalVM release to access all features.</p>
+</blockquote>
+
+<h2 id="available-commands">Available Commands</h2>
+
+<p>The following quick actions related to VisualVM become available if you install active the most recent GraalVM in VS Code:</p>
+
+<p><img src="/22.2/docs/tools/vscode/graalvm/images/visualvm_command_palette.png" alt="VisualVM Commands available from Command Palette" /></p>
+
+<p><strong>VisualVM: Start VisualVM</strong></p>
+
+<p>Start the VisualVM tool bundled with the active GraalVM installation.
+If a process has already been selected for monitoring, VisualVM opens the process view at the defined tab.
+If the process selected for monitoring is not running any more, invoking the action just clears the process selection and shows a notification.
+Subsequent action invocation starts VisualVM again without a process context.</p>
+
+<p><strong>VisualVM: Open Process In VisualVM</strong></p>
+
+<p>Request process selection and opens the selected process in VisualVM at the defined tab.</p>
+
+<p><strong>VisualVM: Take thread dump</strong></p>
+
+<p>Take and display a thread dump from the process selected for monitoring.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the <strong>Take thread dump</strong> action just clears the process selection and shows a notification.
+Subsequent action invocation will request another process selection.</p>
+
+<p><strong>VisualVM: Take heap dump</strong></p>
+
+<p>Take and display a heap dump from the process selected for monitoring.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the <strong>Take heap dump</strong> action just clears the process selection and shows a notification.
+Subsequent action invocation will request another process selection.</p>
+
+<p><strong>VisualVM: Start CPU sampling</strong></p>
+
+<p>Start a new CPU sampling session for the process selected for monitoring, if not already running, using the defined settings, and open the process in VisualVM at the Sampler tab.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the <strong>Start CPU sampling</strong> action just clears the process selection and shows a notification.
+Subsequent action invocation will request another process selection.</p>
+
+<p><strong>VisualVM: Start memory sampling</strong></p>
+
+<p>Start a new memory sampling session for the process selected for monitoring, if not already running, using the defined settings, and open the process in VisualVM at the Sampler tab.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the <strong>Start memory sampling</strong> action just clears the process selection and shows a notification.
+Subsequent action invocation will request another process selection.</p>
+
+<p><strong>VisualVM: Start flight recording</strong></p>
+
+<p>Start a flight recording session for the process selected for monitoring, if not already running, using the defined settings, and opens the process in VisualVM at the defined tab.
+Process selection will be requested if no process has been selected for monitoring yet.
+If the process selected for monitoring is not running any more, invoking the <strong>Start flight recording</strong> action just clears the process selection and shows a notification.
+Subsequent action invocation will request another process selection.</p>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.2/resources/js/main.js'></script>
+  </body>
+
+</html>

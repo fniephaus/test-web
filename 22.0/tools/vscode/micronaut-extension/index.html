@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content='/22.0/resources/img/graalvm.png' />
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+  <title>
+    
+      GraalVM
+    
+  </title>
+  <meta name="description" content="GraalVM is an advanced JDK with ahead-of-time Native Image compilation."/>
+
+  <link rel="icon" id="favicon" href='/22.0/resources/img/favicon/favicon-light/favicon-light.ico'>
+
+  <link rel="manifest" href='/22.0/resources/img/favicon/site.webmanifest'>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src='/22.0/resources/lib/jquery/jquery-3.6.1.min.js'></script>
+  <link rel="stylesheet" href='/22.0/assets/main.css'>
+  <script src='/22.0/resources/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/22.0/resources/lib/highlight/highlight.pack.js'></script>
+  <script src='/22.0/resources/lib/purl/purl.js'></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+  <body class="preload">
+
+    <div>
+      <header  class="header header--content"  role="banner">
+
+  
+
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="d-flex">
+          <a href="https://www.graalvm.org/">
+            <img src='/22.0/resources/img/logo_header.svg' alt="GraalVM logo">
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="docsnote">
+        <div class="docsnote__body">
+          <div class="docsnote__column">
+            <div class="docsnote__card">
+              <div class="container">
+                <div class="rightside">
+                  <img src='/22.0/resources/img/note-icon-docs-light.svg'>
+                  <p class="docsnote__subtitle">
+                    This documentation is for an old GraalVM version. See the 
+                    <a href="#" onclick="selected('latest', 'latest'); return false;">latest version</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+      <main class="content content--home wrapper" aria-label="Content">
+        <div class="container-fluid container-fluid--custom-sm">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+      <br>
+      <a href="/22.0/" class="link-back"><i>&#9664;</i>Table of Contents</a>
+      <h1 id="graalvm-tools-for-micronaut-extension">GraalVM Tools for Micronaut Extension</h1>
+
+<p><a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.micronaut">GraalVM Tools for Micronaut</a> provides complete support for developing applications on the <a href="https://micronaut.io/">Micronaut framework</a> in Visual Studio Code (VS Code).</p>
+
+<p>This extension, in combination with the <a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm">GraalVM Tools for Java extension</a>, brings native support for the Micronaut framework in VS Code. Consequently, it opens many more possibilities for Java developers such as turning Micronaut applications into native executables, debugging with different debugging protocols, and polyglot programming.</p>
+
+<p>In addition to Micronaut and full Java development support, key features include:</p>
+
+<ul>
+  <li>Micronaut project creation wizard</li>
+  <li>Editing and debugging capabilities for Micronaut projects</li>
+  <li>Code completion and navigation for Micronaut configuration (YAML) files and Java (available with <a href="https://marketplace.visualstudio.com/items?itemName=asf.apache-netbeans-java">Apache NetBeans Language Server extension</a>)</li>
+  <li>Ability to build Micronaut projects ahead-of-time into native executables with GraalVM Native Image</li>
+  <li>Continuous mode of operation: an application will reload automatically when source code is changed</li>
+  <li>Building Docker images</li>
+  <li>Kubernetes support</li>
+</ul>
+
+<p>The extension is a Technology Preview.</p>
+
+<h2 id="extension-installation">Extension Installation</h2>
+
+<p>To install the GraalVM Tools for Micronaut extension in VS Code, do the following:</p>
+
+<ol>
+  <li>Navigate to Extensions in the left-hand side Activity Bar.</li>
+  <li>Search for “Micronaut” in the search field.</li>
+  <li>Once found, click <strong>Install</strong> to install the GraalVM Tools for Micronaut extension from the <a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.micronaut">VS Code Marketplace</a>.</li>
+  <li>Reload when required.</li>
+</ol>
+
+<blockquote>
+  <p>Note: The Micronaut extension requires the <a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm">GraalVM Tools for Java</a> extension for more features support such as building native executables, and polyglot programming. It will be installed in the background.</p>
+</blockquote>
+
+<p>When installed, the extension checks whether there is a registered GraalVM installation, and eventually requests to download it or point to a local installation (see <a href="/22.0/tools/vscode/graalvm-extension/#graalvm-installation-wizard">GraalVM Installation and Setup in VS Code</a>).</p>
+
+<p>The entrypoint to the Micronaut extension is the Micronaut Tools page which opens as soon as the extension is installed or using the Command Palette command <strong>Micronaut: Show Micronaut Tools Page</strong>.</p>
+
+<p><img src="/22.0/docs/tools/vscode/micronaut/images/micronaut_tools_page.png" alt="Micronaut Tools Page" /></p>
+
+<h2 id="extension-settings">Extension Settings</h2>
+
+<p>The GraalVM Tools for Micronaut extension contributes the following settings in VS Code:</p>
+<ul>
+  <li><strong>micronaut.home</strong> - the optional path to the Micronaut CLI installation</li>
+  <li><strong>micronaut.showWelcomePage</strong> - show the Micronaut Tools Page on extension activation</li>
+</ul>
+
+<h2 id="micronaut-commands">Micronaut Commands</h2>
+
+<p>Invoke the Micronaut commands from <strong>View</strong>, <strong>Command Palette</strong> (Command Palette can be also opened by pressing F1, or the <code>Ctrl+Shift+P</code> hot keys combination for Linux, and <code>Command+Shift+P</code> for macOS), then search for “Micronaut”. 
+The following commands are available for Micronaut project development:</p>
+
+<ul>
+  <li><strong>Micronaut: Show Micronaut Tools Page</strong>: show the Micronaut Tools Page</li>
+  <li>
+    <p><strong>Micronaut: Create Micronaut Project</strong> create a Micronaut project based on <a href="https://micronaut.io/launch">project creation wizard</a></p>
+
+    <p><img src="/22.0/docs/tools/vscode/micronaut/images/micronaut-vs-code-commands.png" alt="Micronaut VS Code Commands" /></p>
+  </li>
+</ul>
+
+<h2 id="create-a-micronaut-project">Create a Micronaut Project</h2>
+
+<p>The GraalVM Tools for Micronaut extension enables the <a href="https://micronaut.io/launch/">Micronaut Launch</a> application that enables you to create Micronaut projects directly in VS Code.
+It supports generating Micronaut applications, CLI applications, and other types of applications.</p>
+
+<p>To create a new project, go to <strong>View</strong>, <strong>Command Palette</strong>, search for “micronaut” and invoke the <strong>Micronaut: Create Micronaut Project</strong> command.
+The wizard will prompt you to:</p>
+
+<ul>
+  <li>pick the application type</li>
+  <li>pick the Micronaut version</li>
+  <li>pick the Java version</li>
+  <li>provide a project name</li>
+  <li>provide a base package name</li>
+  <li>pick the project language (Java, Kotlin, or Groovy)</li>
+  <li>
+    <p>pick the project features:</p>
+
+    <p><img src="/22.0/docs/tools/vscode/micronaut/images/micronaut-project-features_view.png" alt="Micronaut Project Features" /></p>
+  </li>
+  <li>pick the build tool (Maven or Gradle)</li>
+  <li>pick the test framework (JUnit, Spock, or Kotlintest)</li>
+</ul>
+
+<p>Finally, you are asked to select the destination directory on your local disk and whether to open the created project in a new window or add it to the current workspace.</p>
+
+<p>The GUI part of the Micronaut extension adds a new view to the Explorer activity, which shows Micronaut projects in the current workspace.</p>
+
+<p>Besides the project creation wizard, you can use the console CLI.
+If you provide a path to the <a href="https://micronaut-projects.github.io/micronaut-starter/latest/guide/#installation">Micronaut CLI installation</a>, you can create a project using the <code>mn</code> executable.</p>
+
+<h2 id="package-and-run-micronaut-applications">Package and Run Micronaut Applications</h2>
+
+<p>The GraalVM Tools for Micronaut extension provides complete support for application development and debugging in VS Code for Micronaut developers, including regular features like auto completion, code navigation, refactoring, etc.</p>
+
+<p>You can package a Micronaut application into a runnable JAR in different ways. 
+For user’s convenience, there is a quick command available:</p>
+
+<ol>
+  <li>
+    <p>Go to <strong>View</strong>, <strong>Command Palette</strong>, and invoke the <strong>Micronaut: Build…</strong> quick action.</p>
+
+    <p><img src="/22.0/docs/tools/vscode/micronaut/images/micronaut-build-commands.png" alt="Micronaut Build Commands" /></p>
+  </li>
+  <li>
+    <p>Select the <strong>compile</strong> build target from a list of available ones to compile the source code of the application.</p>
+  </li>
+  <li>
+    <p>When compilation completes, invoke the <strong>Micronaut: Build…</strong> quick action again, and select <strong>package</strong> target, which will package the compiled code into a distributive format.</p>
+  </li>
+</ol>
+
+<p>Alternatively, open the entry-point class of your Micronaut application, find its <code>main</code> method, and click <strong>Run Main</strong> above:</p>
+
+<p><img src="/22.0/docs/tools/vscode/micronaut/images/run_main_method.png" alt="Run main method" /></p>
+
+<p>Lastly, you can package and run your application at the same time calling the Maven or  Gradle jobs explicitly from the command line.</p>
+
+<ul>
+  <li>
+    <p>If your project is built with Maven, it will run the <code>./mvnw mn:run</code> job.</p>
+  </li>
+  <li>
+    <p>If your project is built with Gradle, it will run the <code>./gradlew run</code> job.</p>
+  </li>
+</ul>
+
+<h2 id="debug-micronaut-applications">Debug Micronaut Applications</h2>
+
+<p>To debug a Micronaut application, first create a launch configuration:</p>
+
+<ol>
+  <li>Open the file to be debugged or run.</li>
+  <li>Switch to the Debug view by clicking the bug icon in the left-hand side panel. The newly opened window will suggest you create a <em>launch.json</em> file.</li>
+  <li>Select the <strong>Java 8+</strong> environment.</li>
+  <li>Start debugging. Press <code>F5</code> or navigate to <strong>Run</strong>, then <strong>Start Debugging</strong>.</li>
+</ol>
+
+<h2 id="transform--micronaut-applications-into-native-executables">Transform  Micronaut Applications into Native Executables</h2>
+
+<p>The Micronaut support for VS Code in combination with <a href="https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm">GraalVM Tools for Java extension</a> opens many more possibilities for Java developers. Thanks to the tight integration with <a href="/22.0/reference-manual/native-image/">GraalVM Native Image</a>, you can compile a Micronaut application ahead-of-time turning it into a native executable.</p>
+
+<p>When you have GraalVM installed with the Native Image support in VS Code (see <a href="/22.0/tools/vscode/graalvm-extension/#graalvm-installation-wizard">GraalVM Installation and Setup in VS Code</a>, the following quick actions become available:</p>
+<ul>
+  <li><strong>Micronaut: Build …</strong> - build a Micronaut project with the user-selected targets</li>
+  <li><strong>Micronaut: Build Native Image</strong> - build a native executable from a Micronaut project</li>
+</ul>
+
+<p>To build a native executable of your Micronaut application:</p>
+
+<ol>
+  <li>
+    <p>Ensure you <a href="/22.0/tools/vscode/graalvm-extension/#graalvm-installation-wizard">installed GraalVM and made it the default runtime and debug environment</a>.</p>
+  </li>
+  <li>
+    <p>Add the Native Image component to GraalVM.</p>
+  </li>
+  <li>
+    <p>Go to <strong>View</strong>, <strong>Command Palette</strong>, and invoke the <strong>Micronaut: Build…</strong> quick action.</p>
+
+    <p><img src="/22.0/docs/tools/vscode/micronaut/images/micronaut-build-commands.png" alt="Micronaut Build Commands" /></p>
+  </li>
+  <li>
+    <p>Select the <strong>nativeImage</strong> build target from a list of available ones.</p>
+
+    <ul>
+      <li>
+        <p>If your project is built with Maven, it will run the <code>mvnw package -Dpackaging=native-image</code> job. A native executable will be built into the <code>/target/native-image/</code> directory.</p>
+      </li>
+      <li>
+        <p>If your project is built with Gradle, it will run the <code>gradlew nativeCompile</code> job. A native executable will be written to the <code>/build/native/nativeCompile/</code> directory.</p>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>Alternatively, you could invoke the <strong>Micronaut: Build Native Image</strong> quick action directly.</p>
+
+<p>GraalVM Native Image creates an executable file with all the application classes, dependent library classes, dependent JDK classes, and a snapshot of the application heap. Whilst building a native executable can take some time, the benefits include a dramatic reduction in startup time and reduced overall memory consumption.</p>
+
+<blockquote>
+  <p>Note: The time to build an executable depends on application size and complexity and may take some time on low powered machines.</p>
+</blockquote>
+
+<p>To run your Micronaut application as a native executable, open <strong>Terminal</strong>, <strong>New Teminal</strong> and execute:</p>
+
+<ul>
+  <li>If you used Maven: <code>./target/executable</code></li>
+  <li>If you used Gradle: <code>./build/native/nativeCompile/executable</code></li>
+</ul>
+
+<p>For more information, visit the <a href="https://guides.micronaut.io/micronaut-creating-first-graal-app/guide/index.html#creatingGraalImage">Micronaut documentation</a> about how to create a Hello World Micronaut GraalVM application.</p>
+
+<h2 id="build-docker-images-and-deploy-micronaut-applications-to-a-docker-registry">Build Docker Images and Deploy Micronaut Applications to a Docker Registry</h2>
+
+<p>With the GraalVM Tools for Micronaut extension, you can build a Docker image of a Micronaut application, or even create a Docker image containing an executable generated by <a href="/22.0/reference-manual/native-image/">GraalVM Native Image</a> and deploy it in a container.</p>
+
+<p>The Micronaut support in VS Code allows to build and deploy Docker images to a Docker registry.</p>
+
+<p><img src="/22.0/docs/tools/vscode/micronaut/images/micronaut-deploy-commands.png" alt="Micronaut Deploy Commands" /></p>
+
+<ul>
+  <li>To deploy a dockerized Micronaut application, go to <strong>View</strong>, then <strong>Command Palette</strong>, and invoke the <strong>Micronaut: Deploy…</strong> command.</li>
+  <li>To deploy a dockerized Micronaut application, select the <strong>dockerPush</strong> command.</li>
+  <li>To build and push a Docker image with a native executable of a  Micronaut application, invoke the <strong>dockerPushNative</strong> command.</li>
+</ul>
+
+<p>Besides that, you can also push your dockerized Micronaut application or as a native executable to a Docker Registry from the VS Code Terminal window.
+A particular Docker Registry can be configured in the build, see the <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/deploy.html">Micronaut Deploying Application</a> documentation.</p>
+
+<h2 id="deploy-run-and-debug-micronaut-applications-in-a-kubernetes-cluster">Deploy, Run, and Debug Micronaut Applications in a Kubernetes Cluster</h2>
+
+<p>GraalVM Tools for Micronaut provides all of the necessary tooling for a complete developer experience in VS Code, including Kubernetes support for automated deployment, scaling and management of containers. You can deploy a containerized Micronaut application into a Kubernetes cluster to a container registry, interactively run and debug it directly from VS Code. The following quick commands are available for you:</p>
+
+<p><img src="/22.0/docs/tools/vscode/micronaut/images/create_k8s_deployment.png" alt="Quick commands for Kubernetes deployments" /></p>
+
+<h3 id="feedback">Feedback</h3>
+
+<ul>
+  <li><a href="https://github.com/graalvm/vscode-extensions/issues/new?labels=enhancement">Request a feature</a></li>
+  <li><a href="https://github.com/graalvm/vscode-extensions/issues/new?labels=bug">File a bug</a></li>
+</ul>
+
+<h3 id="privacy-policy">Privacy Policy</h3>
+
+<p>Read the <a href="https://www.oracle.com/legal/privacy/privacy-policy.html">Oracle Privacy Policy</a> to learn more.</p>
+
+<h3 id="known-issues">Known Issues</h3>
+
+<p>The GraalVM Tools for Micronaut Extension extension is Technology Preview, meaning the functionality may not be complete.</p>
+
+      </div>
+  </div>
+</div>
+      </main>
+      <footer class="footer footer__mobile">
+  <div class="container-fluid container-fluid--custom-sm">
+    <div class="row footer-content">
+      <div class="footer__columns">
+        <div class="footer__columns-item">
+          <h6 class="title-footer">API Documentation</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://www.graalvm.org/sdk/javadoc/">GraalVM SDK Javadoc</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/truffle/javadoc/">GraalVM Truffle Javadoc</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__columns-item">
+          <h6 class="title-footer">Learn More</h6>
+          <div class="grow">
+            <ul class="footer-list">
+              <li class="footer-list__item"><a href="https://github.com/oracle/graal/" target="_blank">Open Source Repository</a></li>
+              <li class="footer-list__item"><a href="https://www.graalvm.org/release-notes/" target="_blank">Release notes</a></li>
+              <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos/"
+                  target="_blank">Demos</a></li>
+              <li class="footer-list__item"><a href="https://medium.com/graalvm" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="copyright">
+            Copyright © 2024, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks. Other names may be trademarks of their respective owners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='/22.0/resources/js/main.js'></script>
+  </body>
+
+</html>

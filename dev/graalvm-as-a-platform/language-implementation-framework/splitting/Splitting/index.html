@@ -31,8 +31,6 @@
   <script src='/resources/lib/sticky-sidebar/sticky-sidebar.min.js'></script>
   <script src='/resources/lib/highlight/highlight.pack.js'></script>
   <script src='/resources/lib/purl/purl.js'></script>
-  <script src='/resources/lib/fiddle/fiddle.js' defer></script>
-  <link rel="stylesheet" href='/resources/styles/fiddle.css'>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
@@ -189,7 +187,7 @@ $(document).ready(function(){
         <span class="value-text" id="valueText">Version</span>
       </div>
       <ul tabindex="0" class="select-container" id="selectContainer" onblur="toggleOptions(event)">
-        <li class="select-option" onclick="selected('GraalVM 25.4 (Innovation)', 'latest');">GraalVM 25.4 (Innovation)</li>
+        <li class="select-option" onclick="selected('GraalVM 25.5 (Innovation)', 'latest');">GraalVM 25.5 (Innovation)</li>
         <li class="select-option" onclick="selected('GraalVM 25.0 (LTS)', 'jdk25');">GraalVM 25.0 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 21 (LTS)', 'jdk21');">GraalVM for JDK 21 (LTS)</li>
         <li class="select-option" onclick="selected('GraalVM for JDK 17 (LTS)', 'jdk17');">GraalVM for JDK 17 (LTS)</li>
@@ -696,29 +694,145 @@ You can find more information on how to correctly report polymorphic specializat
 <p>Detection of suitable splitting candidates relies on the languages reporting polymorphic specializations.
 Once the specialization is reported, you can assume that the polymorphism is coming from somewhere in the caller chain of the call target hosting the newly polymorphic node, and that by splitting the right call target (or call targets) you can return this node to a monomorphic state.</p>
 
-<p>You then identify the call targets for which the splitting could result in monomorphization and mark them as “needs split”. During further execution, if the interpreter is about to execute a direct call to a call target that is marked as “needs split”, that call target will be split (provided there are no outstanding factors preventing it such as the <a href="http://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/nodes/RootNode.html#isCloningAllowed">root node not being allowed to be split</a>,
-the AST being too big, etc.).
-This results in a new call target with a clean profile (i.e., all its nodes are returned to an uninitialized state) to be
-re-profiled specifically for this call site, since it is the only call site calling this new call target.</p>
+<p>The runtime automatically registers standard direct call nodes. Other call-site implementations do not participate in caller tracking or splitting. Caller tracking retains only whether there are zero, one, or multiple known callers; the sole caller is held weakly.</p>
 
-<p>Following recursive algorithm (expressed as pseudo code) is a simplified version of the approach used to decide which call targets need to be marked “needs split”.
-This algorithm is applied to every call target once one of its nodes reports a polymorphic specialization.
-The full implementation can be found in <code>com.oracle.truffle.runtime.OptimizedCallTarget#maybeSetNeedsSplit</code>.</p>
+<p>Reporting a polymorphic specialization only identifies and marks call targets for which splitting could result in monomorphization. No call target is cloned while the report is processed.</p>
 
-<pre><code class="language-java">setNeedsSplit(callTarget)
+<p>When a root is prepared for compilation and splitting is enabled, it scans its direct call-site nodes. <code>RootNode.visitCloneableNodes</code> visits the ordinary AST by default. Roots that store cloneable nodes outside ordinary child fields override this method and also visit those node trees. A call site whose target is marked is split, provided there are no outstanding factors preventing it such as the <a href="http://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/nodes/RootNode.html#isCloningAllowed">root node not being allowed to be split</a>, the AST being too big, or insufficient splitting budget. Only direct call sites in the root being prepared are considered. Newly cloned targets are not scanned. After execution, a cloned target’s own root compilation preparation can split its outgoing direct calls; inline preparation does not split.</p>
+
+<p>If at least one call site is split, compilation preparation is rejected once. This allows the new targets, whose nodes have been returned to an uninitialized state, to execute and gather call-site-specific profiles before the next compilation attempt.</p>
+
+<p>The following pseudo code summarizes the two phases:</p>
+
+<pre><code class="language-java">reportPolymorphicSpecialize(callTarget)
     if callTarget.needsSplit
         return false
-    if sizeof(knownCallers(callTarget)) == 0
+    if numberOfKnownCallers(callTarget) == 0
         return false
     if callCount(callTarget) == 1
         return false
 
-    if sizeof(knownCallers(callTarget)) &gt; 1
+    if numberOfKnownCallers(callTarget) &gt; 1
         callTarget.needsSplit = true
     else
-        callTarget.needsSplit = setNeedsSplit(caller(callTarget))
+        callTarget.needsSplit = reportPolymorphicSpecialize(caller(callTarget))
 
     return callTarget.needsSplit
+
+prepareForCompilation(compilationRoot)
+    if splitting is disabled
+        return true
+
+    return !splitMarkedCalls(compilationRoot)
+
+splitMarkedCalls(root)
+    split = false
+    for callSite in directCallSites(root)
+        if callSite.currentTarget.needsSplit
+            clonedTarget = split(callSite)
+            if clonedTarget != null
+                split = true
+                splitMarkedCalls(clonedTarget)
+    return split
+</code></pre>
+    
+      <h2 id="runtime-implementation-flow">
+        
+        
+          Runtime Implementation Flow <a href="#runtime-implementation-flow" class="anchor_heading"><svg class='anchor-icon' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><path d='M10 13a5 5 0 0 0 7.07 0l3.54-3.54a5 5 0 0 0-7.07-7.07L10 5'/><path d='M14 11a5 5 0 0 0-7.07 0L3.39 14.54a5 5 0 1 0 7.07 7.07L14 19'/></svg></a>
+        
+        
+      </h2>
+
+<p>The following flow maps the algorithm to its runtime implementation:</p>
+
+<pre><code class="language-text">Node specialization becomes polymorphic
+    ↓
+Node.reportPolymorphicSpecialize()
+    ↓
+OptimizedRuntimeSupport.reportPolymorphicSpecialize(source)
+    ↓
+Find the source node's enclosing RootNode
+    ↓
+Find that root's OptimizedCallTarget
+    ↓
+OptimizedCallTarget.polymorphicSpecialize(source)
+    ↓
+maybeSetNeedsSplit(depth = 0)
+    ↓
+Check:
+  - propagation depth not exceeded
+  - target not already marked
+  - target has known direct callers
+  - target has executed more than once
+    ↓
+Inspect compact incoming-call tracking
+    ↓
+┌──────────────────────────────────────────────────────────┐
+│ Exactly one known OptimizedDirectCallNode caller          │
+│     ↓                                                     │
+│ Find that call node's enclosing caller target             │
+│     ↓                                                     │
+│ Recursively call callerTarget.maybeSetNeedsSplit(depth+1) │
+│     ↓                                                     │
+│ If caller target needs splitting, mark this target too    │
+└──────────────────────────────────────────────────────────┘
+                         or
+┌───────────────────────────────────────────────────────────┐
+│ No unique caller, normally because multiple callers exist │
+│     ↓                                                     │
+│ Mark this target: needsSplit = true                       │
+└───────────────────────────────────────────────────────────┘
+    ↓
+Propagate the result back down the single-caller chain
+    ↓
+Return to normal interpreter execution
+    ↓
+No clone is created yet
+    ↓
+A caller reaches root compilation preparation
+    ↓
+OptimizedCallTarget.prepareForCompilation(rootCompilation=true, ...)
+    ↓
+Enter the compilation root's language without entering a language context
+    ↓
+TruffleSplittingStrategy.splitForCompilation(compilationRoot)
+    ↓
+RootNode.visitCloneableNodes(visitor)
+    ↓
+Collect OptimizedDirectCallNodes, including calls cached by Bytecode DSL operations
+    ↓
+For each direct call node:
+    read callNode.currentCallTarget
+    ↓
+Is currentCallTarget.needsSplit?
+    ├── No  → continue scanning
+    └── Yes
+          ↓
+        Check cloning, recursion, size, source-target, and budget constraints
+          ↓
+        Reserve splitting budget
+          ↓
+        Clone the marked target
+          ↓
+        Outgoing direct calls register as they are copied or reconstructed
+          ↓
+        Atomically verify the outer call node still points to the source
+          ↓
+        Transfer incoming caller registration:
+          sourceTarget.removeDirectCallNode(outerCallNode)
+          clonedTarget.addDirectCallNode(outerCallNode)
+          ↓
+        Publish:
+          outerCallNode.currentCallTarget = clonedTarget
+    ↓
+Did at least one split succeed?
+    ├── No  → continue ordinary compilation preparation
+    └── Yes → return false and abort this preparation
+                  ↓
+              Clones can execute and gather profiles
+                  ↓
+              A later preparation compiles the cloned structure
 </code></pre>
 
 <p>At the very beginning of the pseudo code you can have early termination conditions.
@@ -758,7 +872,7 @@ function main() {
 <p>In this example, the node representing <code>+</code> in the <code>add</code> function will turn polymorphic once <code>double</code> is called with the string argument <code>"foo"</code> and this will be reported to the runtime and our algorithm will be applied to <code>add</code>.
 All of the early return checks will fail (<code>add</code> is not marked “needs split”, it has known callers and this is not its first execution).
 Observe that <code>add</code> has only one caller (<code>double</code>), so you apply the algorithm to <code>double</code>.
-Early returns all fail, and since <code>double</code> has multiple callers, you mark it as “needs split” and on later iterations calls to <code>double</code> are split resulting in the following code representation of the run time state:</p>
+Early returns all fail, and since <code>double</code> has multiple callers, you mark it as “needs split”. When <code>callsDouble</code> is prepared for compilation, its calls to <code>double</code> are split, resulting in the following code representation of the run time state:</p>
 
 <pre><code>function add(arg1, arg2) {
     return arg1 + arg2; // + is polymorphic
@@ -831,8 +945,8 @@ function main() {
 }
 </code></pre>
 
-<p>Final note to observe at this point is that the splitting does not remove the original call targets, and that they still have polymorphism in their profiles.
-Thus, even if new calls to these call targets are created, they will also be split.
+<p>Final note to observe at this point is that splitting does not remove the original call targets, and they still have polymorphism in their profiles.
+A new call to one of these targets is split when its enclosing root is prepared for compilation.
 Consider if the <code>main</code> of the previous example looked as follows.</p>
 
 <pre><code>function main() {
@@ -844,8 +958,8 @@ Consider if the <code>main</code> of the previous example looked as follows.</p>
 }
 </code></pre>
 
-<p>Once the execution reaches the newly added line you do not want it to call the <code>add</code> function with the polymorphic <code>+</code> since the arguments here do not merit the polymorphism.
-Luckily, since <code>add</code> was already marked as “needs split”, it will remain so during the entire execution, and this final call to <code>add</code> will cause another split of the <code>add</code> function.</p>
+<p>If the root containing the newly added line is prepared for compilation, you do not want it to compile a call to the <code>add</code> function with the polymorphic <code>+</code> since the arguments here do not merit the polymorphism.
+Since <code>add</code> remains marked as “needs split”, preparation splits the final call site and delays compilation once so the new target can execute first.</p>
 
       </div>
       <div role="button" class="menu-btn menu-btn--sidebar js-show-sidebar" title="sweet hamburger">
@@ -962,7 +1076,7 @@ Luckily, since <code>add</code> was already marked as “needs split”, it will
               <li class="footer-list__item">
                 SDK Javadocs:
                 <a href="https://www.graalvm.org/23.1/javadoc/sdk/" class="javadoc" target="_blank">21</a> or
-                <a href="https://www.graalvm.org/25.4/javadoc/sdk/" class="javadoc" target="_blank">25.4</a>
+                <a href="https://www.graalvm.org/25.5/javadoc/sdk/" class="javadoc" target="_blank">25.5</a>
               </li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/workshops" target="_blank">Workshops</a></li>
               <li class="footer-list__item"><a href="https://github.com/graalvm/graalvm-demos" target="_blank">Demos</a></li>
@@ -975,7 +1089,6 @@ Luckily, since <code>add</code> was already marked as “needs split”, it will
           <div class="grow">
             <ul class="footer-list">
               <li class="footer-list__item"><a href="https://docs.oracle.com/en/graalvm/index.html" target="_blank">Oracle Help Center</a></li>
-              <li class="footer-list__item"><a href="https://labs.oracle.com/" target="_blank">Oracle Labs</a></li>
               <li class="footer-list__item"><a href="/graalvm-brand-guidelines/">Brand Guidelines</a></li>
             </ul>
           </div>
