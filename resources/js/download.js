@@ -88,13 +88,16 @@ const platforms = {
 
 const fullJavaVersions = {
   "17": "17.0.12",
-  "21": "21.0.12.1",
-  "25": "25.0.4.1",
+  "21": "21.0.13",
+  "25": "25.0.5",
   "25.4": "25.4.4.1.1",
 }
 
 const sdkmanJavaVersions = {
-  "25.4": "25.4.4+1.1",
+  "17": "17.0.12",
+  "21": "21.0.13",
+  "25": "25.0.5",
+  "25.4": "25.4.4+1",
 }
 
 const downloadArtifacts = {
@@ -129,8 +132,7 @@ docker pull container-registry.oracle.com/graalvm/jdk:${imageTag}`);
 function updateSDKMANSnippet(majorJavaVersion) {
   const fullJavaVersion = fullJavaVersions[majorJavaVersion];
   const sdkmanVersion = sdkmanJavaVersions[majorJavaVersion] || fullJavaVersion;
-  const comment = majorJavaVersion === "25.4" ? ' <span class="no-strip"># coming soon</span>' : '';
-  $("#dl-snippet-sdkman").html(`sdk install java ${sdkmanVersion}-graal${comment}`);
+  $("#dl-snippet-sdkman").text(`sdk install java ${sdkmanVersion}-graal`);
 }
 
 
