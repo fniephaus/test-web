@@ -531,8 +531,8 @@ $(document).ready(function(){
           <li class="toc-bullets-sub">
           
             
-            <a href="">
-              
+            <a href="/dev/graalvm-as-a-platform/language-implementation-framework/AuxiliaryEngineCachingEnterprise/">
+              Auxiliary Engine Caching
             </a>
           </li>
 
@@ -748,7 +748,7 @@ Similar to <code>Context</code> objects, the presence of active system threads d
 <p>In scenarios where a language implementation creates inner contexts using <a href="https://www.graalvm.org/truffle/javadoc/com/oracle/truffle/api/TruffleLanguage.Env.html#newInnerContextBuilder(java.lang.String...)">TruffleLanguage.Env.newInnerContextBuilder()</a>, both the Polyglot API <code>Context</code> representing this inner context and the <code>TruffleContext</code> must be unreachable to enable automatic closure.
 This situation is illustrated in the diagram below, showing an engine with one top-level context and one inner context. Strong references are represented by solid lines, and weak references by dashed lines.</p>
 
-<p><img src="/truffle/docs/context_references.png" alt="Context References" title="Context References" /></p>
+<p><img src="context_references.png" alt="Context References" title="Context References" /></p>
 
 <p>When an inner <code>Context</code> is no longer referenced by the embedder, and the corresponding <code>TruffleContext</code> instance is no longer referenced by its language implementation, weak references from <code>PolyglotContext</code> to <code>Context</code> and <code>TruffleContext</code> are added to a reference queue.
 During the next lifecycle event (such as when a new context is created or closed), this queue is processed, and any unreachable context is closed automatically.</p>
@@ -762,7 +762,6 @@ During the next lifecycle event (such as when a new context is created or closed
     </div>
   </div>
 </article>
-
 </div>
 
       </main>

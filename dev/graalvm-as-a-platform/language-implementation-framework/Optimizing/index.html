@@ -531,8 +531,8 @@ $(document).ready(function(){
           <li class="toc-bullets-sub">
           
             
-            <a href="">
-              
+            <a href="/dev/graalvm-as-a-platform/language-implementation-framework/AuxiliaryEngineCachingEnterprise/">
+              Auxiliary Engine Caching
             </a>
           </li>
 
@@ -1568,7 +1568,7 @@ jdk.graal.compiler.code.SourceStackTraceBailoutException$1: Deopt taken too many
 </code></pre>
 <p>This tells us that a deopt cycle was detected and the stacktrace points to the if condition testing the argument as the location of the repeated deopt. The information about the precise location of the <code>CompilerDirectives.transferToInterpreterAndInvalidate()</code> is lost, but the compiler knows one branch of the if statement leads to the repeated deopt that causes the deopt cycle and so the if condition is determined as the location of the deopt. If the compilation was dumped, the appropriate compilation graph would show the deoptimization node with id <code>270</code> is in the <code>false</code> branch of the if statement:</p>
 
-<p><img src="/truffle/docs/deoptcycle.png" alt="Deoptimization Cycle location" title="Deoptimization cycle location" /></p>
+<p><img src="./deoptcycle.png" alt="Deoptimization Cycle location" title="Deoptimization cycle location" /></p>
 
 <p>The sensitivity of the deoptimization cycle detection can be fine-tuned by the options <code>compiler.DeoptCycleDetectionThreshold</code> and <code>compiler.DeoptCycleDetectionAllowedRepeats</code>.</p>
 
@@ -1729,7 +1729,6 @@ C1 Visualizer.</p>
     </div>
   </div>
 </article>
-
 </div>
 
       </main>

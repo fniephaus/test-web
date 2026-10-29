@@ -615,10 +615,10 @@ You can use this application with other code examples to demonstrate more advanc
 <span class="kn">import</span> <span class="nn">org.graalvm.polyglot.*</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">function_js</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
-    <span class="nc">Value</span> <span class="n">function</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span> <span class="s">"x =&gt; x+1"</span><span class="o">);</span>
+<span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">Value</span> <span class="n">function</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span> <span class="s">"x =&gt; x+1"</span><span class="o">);</span>
     <span class="k">assert</span> <span class="n">function</span><span class="o">.</span><span class="na">canExecute</span><span class="o">();</span>
     <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="mi">41</span><span class="o">).</span><span class="na">asInt</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">42</span><span class="o">;</span>
@@ -672,10 +672,10 @@ You can use this application with other code examples to demonstrate more advanc
 <span class="kn">import</span> <span class="nn">org.graalvm.polyglot.*</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">function_python</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
-    <span class="nc">Value</span> <span class="n">function</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"python"</span><span class="o">,</span> <span class="s">"lambda x: x + 1"</span><span class="o">);</span>
+<span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">Value</span> <span class="n">function</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"python"</span><span class="o">,</span> <span class="s">"lambda x: x + 1"</span><span class="o">);</span>
     <span class="k">assert</span> <span class="n">function</span><span class="o">.</span><span class="na">canExecute</span><span class="o">();</span>
     <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="mi">41</span><span class="o">).</span><span class="na">asInt</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">42</span><span class="o">;</span>
@@ -775,10 +775,10 @@ Host languages, such as Java, can directly access guest language values embedded
 <span class="kn">import</span> <span class="nn">org.graalvm.polyglot.*</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">access_js_from_java</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
-    <span class="nc">Value</span> <span class="n">result</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span> 
+<span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">Value</span> <span class="n">result</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span> 
                     <span class="s">"({ "</span>                   <span class="o">+</span>
                         <span class="s">"id   : 42, "</span>       <span class="o">+</span>
                         <span class="s">"text : '42', "</span>     <span class="o">+</span>
@@ -789,10 +789,10 @@ Host languages, such as Java, can directly access guest language values embedded
     <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"id"</span><span class="o">).</span><span class="na">asInt</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">id</span> <span class="o">==</span> <span class="mi">42</span><span class="o">;</span>
 
-    <span class="nc">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"text"</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"text"</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">text</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"42"</span><span class="o">);</span>
 
-    <span class="nc">Value</span> <span class="n">array</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"arr"</span><span class="o">);</span>
+    <span class="n">Value</span> <span class="n">array</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"arr"</span><span class="o">);</span>
     <span class="k">assert</span> <span class="n">array</span><span class="o">.</span><span class="na">hasArrayElements</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">array</span><span class="o">.</span><span class="na">getArraySize</span><span class="o">()</span> <span class="o">==</span> <span class="mi">3</span><span class="o">;</span>
     <span class="k">assert</span> <span class="n">array</span><span class="o">.</span><span class="na">getArrayElement</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">asInt</span><span class="o">()</span> <span class="o">==</span> <span class="mi">42</span><span class="o">;</span>
@@ -846,10 +846,10 @@ Host languages, such as Java, can directly access guest language values embedded
 <span class="kn">import</span> <span class="nn">org.graalvm.polyglot.*</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">access_python_from_java</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
-    <span class="nc">Value</span> <span class="n">result</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"python"</span><span class="o">,</span> 
+<span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">Value</span> <span class="n">result</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"python"</span><span class="o">,</span> 
                     <span class="s">"type('obj', (object,), {"</span> <span class="o">+</span>
                         <span class="s">"'id'  : 42, "</span>         <span class="o">+</span>
                         <span class="s">"'text': '42', "</span>       <span class="o">+</span>
@@ -860,10 +860,10 @@ Host languages, such as Java, can directly access guest language values embedded
     <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"id"</span><span class="o">).</span><span class="na">asInt</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">id</span> <span class="o">==</span> <span class="mi">42</span><span class="o">;</span>
     
-    <span class="nc">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"text"</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"text"</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">text</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"42"</span><span class="o">);</span>
     
-    <span class="nc">Value</span> <span class="n">array</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"arr"</span><span class="o">);</span>
+    <span class="n">Value</span> <span class="n">array</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getMember</span><span class="o">(</span><span class="s">"arr"</span><span class="o">);</span>
     <span class="k">assert</span> <span class="n">array</span><span class="o">.</span><span class="na">hasArrayElements</span><span class="o">();</span>
     <span class="k">assert</span> <span class="n">array</span><span class="o">.</span><span class="na">getArraySize</span><span class="o">()</span> <span class="o">==</span> <span class="mi">3</span><span class="o">;</span>
     <span class="k">assert</span> <span class="n">array</span><span class="o">.</span><span class="na">getArrayElement</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">asInt</span><span class="o">()</span> <span class="o">==</span> <span class="mi">42</span><span class="o">;</span>
@@ -976,16 +976,16 @@ In this mode, the guest language code can access any resource that is accessible
 <span class="c1">// BEGIN-SNIPPET</span>
 <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span>               <span class="n">id</span>    <span class="o">=</span> <span class="mi">42</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="nc">String</span>            <span class="n">text</span>  <span class="o">=</span> <span class="s">"42"</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span>            <span class="n">text</span>  <span class="o">=</span> <span class="s">"42"</span><span class="o">;</span>
     <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span>             <span class="n">arr</span>   <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">42</span><span class="o">,</span> <span class="mi">3</span><span class="o">};</span>
-    <span class="kd">public</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">ret42</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">42</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">ret42</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">42</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
                                <span class="o">.</span><span class="na">allowAllAccess</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
                            <span class="o">.</span><span class="na">build</span><span class="o">())</span> <span class="o">{</span>
-        <span class="n">context</span><span class="o">.</span><span class="na">getBindings</span><span class="o">(</span><span class="s">"js"</span><span class="o">).</span><span class="na">putMember</span><span class="o">(</span><span class="s">"javaObj"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="o">());</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">getBindings</span><span class="o">(</span><span class="s">"js"</span><span class="o">).</span><span class="na">putMember</span><span class="o">(</span><span class="s">"javaObj"</span><span class="o">,</span> <span class="k">new</span> <span class="n">MyClass</span><span class="o">());</span>
         <span class="kt">boolean</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span>
                <span class="s">"    javaObj.id         == 42"</span>          <span class="o">+</span>
                <span class="s">" &amp;&amp; javaObj.text       == '42'"</span>        <span class="o">+</span>
@@ -1048,16 +1048,16 @@ In this mode, the guest language code can access any resource that is accessible
 <span class="c1">// BEGIN-SNIPPET</span>
 <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span>               <span class="n">id</span>    <span class="o">=</span> <span class="mi">42</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="nc">String</span>            <span class="n">text</span>  <span class="o">=</span> <span class="s">"42"</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span>            <span class="n">text</span>  <span class="o">=</span> <span class="s">"42"</span><span class="o">;</span>
     <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span>             <span class="n">arr</span>   <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">42</span><span class="o">,</span> <span class="mi">3</span><span class="o">};</span>
-    <span class="kd">public</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">ret42</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">42</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">ret42</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">42</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
                                <span class="o">.</span><span class="na">allowAllAccess</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
                            <span class="o">.</span><span class="na">build</span><span class="o">())</span> <span class="o">{</span>
-        <span class="n">context</span><span class="o">.</span><span class="na">getPolyglotBindings</span><span class="o">().</span><span class="na">putMember</span><span class="o">(</span><span class="s">"javaObj"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="o">());</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">getPolyglotBindings</span><span class="o">().</span><span class="na">putMember</span><span class="o">(</span><span class="s">"javaObj"</span><span class="o">,</span> <span class="k">new</span> <span class="n">MyClass</span><span class="o">());</span>
         <span class="kt">boolean</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"python"</span><span class="o">,</span>
                <span class="s">"import polyglot \n"</span>                            <span class="o">+</span>
                <span class="s">"javaObj =  polyglot.import_value('javaObj')\n"</span> <span class="o">+</span>
@@ -1181,9 +1181,9 @@ that the script returns a <code>boolean</code> value of <code>true</code> as a r
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">lookup_java_from_js</span> <span class="o">{</span>
 
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+<span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
                            <span class="o">.</span><span class="na">allowAllAccess</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
                        <span class="o">.</span><span class="na">build</span><span class="o">())</span> <span class="o">{</span>
     <span class="n">java</span><span class="o">.</span><span class="na">math</span><span class="o">.</span><span class="na">BigDecimal</span> <span class="n">v</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span>
@@ -1243,9 +1243,9 @@ that the script returns a <code>boolean</code> value of <code>true</code> as a r
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">lookup_java_from_python</span> <span class="o">{</span>
 
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+<span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
                            <span class="o">.</span><span class="na">allowAllAccess</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
                        <span class="o">.</span><span class="na">build</span><span class="o">())</span> <span class="o">{</span>
     <span class="n">java</span><span class="o">.</span><span class="na">math</span><span class="o">.</span><span class="na">BigDecimal</span> <span class="n">v</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"python"</span><span class="o">,</span>
@@ -1360,21 +1360,21 @@ JavaScript using the <code>new</code> keyword.</li>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">proxy_js</span> <span class="o">{</span>
 
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="kd">static</span> <span class="kd">class</span> <span class="nc">ComputedArray</span> <span class="kd">implements</span> <span class="nc">ProxyArray</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">get</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">static</span> <span class="kd">class</span> <span class="nc">ComputedArray</span> <span class="kd">implements</span> <span class="n">ProxyArray</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">get</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">index</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;</span>
     <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">,</span> <span class="nc">Value</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">,</span> <span class="n">Value</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nf">UnsupportedOperationException</span><span class="o">();</span>
     <span class="o">}</span>
     <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getSize</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Long</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">Long</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
-        <span class="nc">ComputedArray</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ComputedArray</span><span class="o">();</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">ComputedArray</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComputedArray</span><span class="o">();</span>
         <span class="n">context</span><span class="o">.</span><span class="na">getBindings</span><span class="o">(</span><span class="s">"js"</span><span class="o">).</span><span class="na">putMember</span><span class="o">(</span><span class="s">"arr"</span><span class="o">,</span> <span class="n">arr</span><span class="o">);</span>
         <span class="kt">long</span> <span class="n">result</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span>
                     <span class="s">"arr[1] + arr[1000000000]"</span><span class="o">)</span>
@@ -1434,23 +1434,23 @@ JavaScript using the <code>new</code> keyword.</li>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">proxy_python</span> <span class="o">{</span>
 
 <span class="c1">// BEGIN-SNIPPET</span>
-<span class="kd">static</span> <span class="kd">class</span> <span class="nc">ComputedArray</span> <span class="kd">implements</span> <span class="nc">ProxyArray</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">get</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">static</span> <span class="kd">class</span> <span class="nc">ComputedArray</span> <span class="kd">implements</span> <span class="n">ProxyArray</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">get</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">index</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;</span>
     <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">,</span> <span class="nc">Value</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="kt">long</span> <span class="n">index</span><span class="o">,</span> <span class="n">Value</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nf">UnsupportedOperationException</span><span class="o">();</span>
     <span class="o">}</span>
     <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getSize</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Long</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">Long</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
                                <span class="o">.</span><span class="na">allowAllAccess</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
                            <span class="o">.</span><span class="na">build</span><span class="o">())</span> <span class="o">{</span>
-        <span class="nc">ComputedArray</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ComputedArray</span><span class="o">();</span>
+        <span class="n">ComputedArray</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComputedArray</span><span class="o">();</span>
         <span class="n">context</span><span class="o">.</span><span class="na">getPolyglotBindings</span><span class="o">().</span><span class="na">putMember</span><span class="o">(</span><span class="s">"arr"</span><span class="o">,</span> <span class="n">arr</span><span class="o">);</span>
         <span class="kt">long</span> <span class="n">result</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"python"</span><span class="o">,</span>
                <span class="s">"import polyglot\n"</span> <span class="o">+</span>
@@ -1585,11 +1585,11 @@ In order to avoid accidentally exposed methods, no host access is allowed by def
 <span class="kd">static</span>
 <span class="c1">// BEGIN-SNIPPET</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
-    <span class="nc">Employee</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span><span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;}</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span><span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;}</span>
 
     <span class="nd">@HostAccess</span><span class="o">.</span><span class="na">Export</span>
-    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -1598,20 +1598,20 @@ In order to avoid accidentally exposed methods, no host access is allowed by def
 <span class="c1">//BEGIN-SNIPPET</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Services</span> <span class="o">{</span>
     <span class="nd">@HostAccess</span><span class="o">.</span><span class="na">Export</span>
-    <span class="kd">public</span> <span class="nc">Employee</span> <span class="nf">createEmployee</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Employee</span> <span class="nf">createEmployee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nf">Employee</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
     <span class="o">}</span>
     
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exitVM</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
-        <span class="nc">Services</span> <span class="n">services</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Services</span><span class="o">();</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">Services</span> <span class="n">services</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Services</span><span class="o">();</span>
         <span class="n">context</span><span class="o">.</span><span class="na">getBindings</span><span class="o">(</span><span class="s">"js"</span><span class="o">).</span><span class="na">putMember</span><span class="o">(</span><span class="s">"services"</span><span class="o">,</span> <span class="n">services</span><span class="o">);</span>
-        <span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span>
+        <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span>
                 <span class="s">"let emp = services.createEmployee('John Doe');"</span> <span class="o">+</span> 
                 <span class="s">"emp.getName()"</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
         <span class="k">assert</span> <span class="n">name</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"John Doe"</span><span class="o">);</span>
@@ -1619,7 +1619,7 @@ In order to avoid accidentally exposed methods, no host access is allowed by def
         <span class="k">try</span> <span class="o">{</span>
             <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span> <span class="s">"services.exitVM()"</span><span class="o">);</span>
             <span class="k">assert</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">PolyglotException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">PolyglotException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
             <span class="k">assert</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span>
                     <span class="s">"Unknown identifier: exitVM"</span><span class="o">);</span>
         <span class="o">}</span>
@@ -3403,7 +3403,6 @@ public final class CHANGE_NAME_EngineFactory implements ScriptEngineFactory {
     </div>
   </div>
 </article>
-
 </div>
 
       </main>
