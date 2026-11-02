@@ -1,0 +1,44 @@
+environment: community
+theme: minima
+title: GraalVM
+email: graal-users@oss.oracle.com
+description: GraalVM is an advanced JDK with ahead-of-time Native Image compilation.
+url: ""
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+# theme: minima
+plugins:
+  - jekyll-redirect-from
+  - jekyll-relative-links
+  - jekyll-sitemap
+
+exclude:
+  - robots.txt
+  - docs/README.md
+  - docs/enterprise-overview
+  - docs/getting-started/graalvm-enterprise
+  - docs/Publications.md
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - repos
+  - vendor
+  - "*.sh"
+  - "*.rb"
+  - "*.py"
+
+kramdown:
+  input: GFM
+  syntax_highlighter: none
+  syntax_highlighter_opts:
+    disable: true
+
+autoprefixer:
+  browsers:
+  - last 3 versions
+  only_production: true
+
+defaults:
+  sitemap: false

@@ -1,0 +1,36 @@
+table {
+  //position: relative;
+  margin-top: 30px;
+  table-layout: fixed;
+  width: 100%;
+
+  @include media-breakpoint-down(md) {
+    table-layout: auto!important;
+  }
+
+  @include media-breakpoint-up(md) {
+    margin-top: 0;
+  }
+
+  thead {
+    th {
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      background-color: rgba(242, 243, 249, 0.5);
+    }
+  }
+
+  td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+  }
+}
+
+.results-table {
+  white-space: nowrap;
+  overflow-x: auto;
+  margin-bottom: 30px;
+}

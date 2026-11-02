@@ -1,0 +1,61 @@
+.content {
+  padding-top: 72px;
+  height: 100%;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 60px;
+  }
+
+  &--home {
+    padding-top: 110px;
+  }
+}
+
+.content-section {
+  position: relative;
+  padding: 20px 0;
+
+  @include media-breakpoint-up(md) {
+    padding: 40px 0;
+  }
+
+  &--top-0 {
+    padding-top: 0;
+  }
+
+  &--gray {
+    background-color: #f9fafb;
+  }
+
+  &--blue {
+    background-color: $oracle-blue;
+
+    p {
+      color: #fff
+    }
+  }
+}
+
+.section-heading {
+  position: relative;
+  padding: 20px 0;
+  background-image: linear-gradient(173deg, #03687f 0%, #005b70 100%);
+  z-index: 1;
+
+  @include media-breakpoint-up(md) {
+    padding: 36px 0;
+  }
+}
+
+.section-downloads {
+  background-color: #f7f8fb;
+}
+
+.content-section-news {
+  background-color: #016b80;
+  padding: 60px 0;
+
+  @include media-breakpoint-up(sm) {
+    padding: 60px 20px;
+  }
+}

@@ -1,0 +1,10 @@
+assets
+docs
+graalvm-as-a-platform
+guides
+reference-manual
+reference-manuals
+resources
+security-guide
+tools
+index.html

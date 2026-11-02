@@ -1,0 +1,158 @@
+.toc-bullets {
+  padding-top: 20px;
+  padding-left: 0;
+  margin-bottom: 0;
+
+  li {
+    font-size: 0.8rem;
+    list-style-type: none;
+    padding-left: 0;
+    &:before { display: none; }
+
+    a {
+      text-decoration: none;
+      color: #757c8b;
+      padding: 4px 0;
+      display: block;
+      transition: color .2s;
+      &:hover {
+        text-decoration: none;
+        color: #4a5366;
+      }
+    }
+
+    &.toc-bullets-focused {
+      color: #4a5366;
+      font-weight: 600;
+      a {
+        color: #4a5366;
+        font-weight: 600;
+      }
+    }
+
+    &.toc-bullets-sub {
+      &:first-of-type { margin-top: 5px; }
+      a { padding-left: 20px; }
+    }
+
+    &.toc-bullets-sub-3 {
+      a { padding-left: 40px; }
+    }
+
+    &.toc-bullets-main {
+      &.toc-bullets-highlight a {
+        color: #4a5366;
+        font-weight: 600;
+      }
+    }
+
+    &.toc-bullets-highlight a {
+      color: #4a5366;
+      font-weight: 600;
+    }
+  }
+
+  &--horizontal {
+    position: relative;
+    padding: 5px 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(#000000, .15);
+    white-space: nowrap;
+    overflow-x: auto;
+
+    @include media-breakpoint-up(md) {
+      overflow: visible;
+    }
+
+    li {
+      border-bottom: 0;
+      display: inline-block;
+
+      & + li { margin-left: 30px; }
+
+      a {
+        color: #8e99a8;
+        font-size: 15px;
+        line-height: 32px;
+      }
+
+      &.toc-bullets-highlight {
+        a {
+          color: #171F26;
+          font-weight: 600;
+        }
+      }
+    }
+
+    &.toc-bullets--horizontal-stiky {
+      position: fixed;
+      left: 0;
+      top: 72px;
+      width: 100%;
+      padding-top: 0;
+      z-index: 10;
+      background-color: #ffffff;
+
+      @include media-breakpoint-up(md) {
+        top: 74px;
+      }
+    }
+  }
+}
+
+// TOC for Advanced Tools page
+
+section.content-section.toc {
+    padding-bottom: 50px;
+    /* Portrait and Landscape iPhones 4, 5, 5SE */
+    @media only screen
+      and (min-device-width: 320px)
+      and (max-device-width: 480px)
+      and (-webkit-min-device-pixel-ratio: 2) {
+        padding-bottom: 0;
+        }
+    /* Portrait and Landscape iPhones 6+, 7+ and 8+ */
+    @media only screen
+      and (min-device-width: 414px)
+      and (max-device-width: 736px)
+      and (-webkit-min-device-pixel-ratio: 3) {
+        padding-bottom: 0;
+      }
+}
+ul.tools-toc {
+    padding-left: 10px;
+    margin: 0;
+}
+
+.tools a.menu__link {
+    color: #193e47;
+    font-size: 1em;
+    line-height: 1.8em;
+    font-weight: 400;
+    cursor: pointer;
+    &:hover {
+      color: #d9810c;
+    }
+}
+
+li.tools {
+  float: left;
+  padding: 0px 35px 0 10px;
+    &::before {
+    content: none;
+  }
+  /* Portrait and Landscape iPhones 4, 5, 5SE */
+  @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+      float: inherit;
+      }
+  /* Portrait and Landscape iPhones 6+, 7+ and 8+ */
+  @media only screen
+    and (min-device-width: 414px)
+    and (max-device-width: 736px)
+    and (-webkit-min-device-pixel-ratio: 3) {
+      float: inherit;
+    }
+}
