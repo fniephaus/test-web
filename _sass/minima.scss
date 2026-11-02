@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+// Import partials.
+@import "minima/utilities/variables",
+"minima/utilities/mixins",
+
+"minima/base/base",
+"minima/base/typography",
+"minima/base/buttons",
+"minima/base/anchor_headings",
+
+"minima/layout/header",
+"minima/layout/footer",
+"minima/layout/sidebar",
+"minima/layout/content",
+"minima/layout/layout",
+"minima/layout/grid",
+"minima/layout/row",
+"minima/layout/container",
+"minima/layout/display",
+"minima/layout/home",
+
+"minima/modules/titles",
+"minima/modules/copyright",
+"minima/modules/toc-bullets",
+"minima/modules/page-heading",
+"minima/modules/tabs",
+"minima/modules/tables",
+"minima/modules/old-version-note",
+
+"minima/plugins/syntax-highlighting",
+"minima/plugins/extra"
+;

@@ -1,0 +1,13 @@
+.d-flex {
+  div[class*='col-'] {
+    margin-bottom: 20px;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: 30px;
+    }
+
+    .wrapper-content & {
+      margin-bottom: 0;
+    }
+  }
+}

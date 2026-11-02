@@ -1,0 +1,6 @@
+# BEGIN-SNIPPET
+import polyglot
+array = polyglot.eval(language="ruby", string="[1,2,42,4]")
+print(array[2])
+# END-SNIPPET
+

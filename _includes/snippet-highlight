@@ -1,0 +1,89 @@
+
+<div class="snippet-container">
+  <div>
+    <span href="" class="copy-button" onclick="copySnippet(this);">
+      <img src="{{ "/resources/img/copy.svg" | relative_url }}" title='Copy' />
+    </span>
+  </div>
+
+  <!--
+  {{ include.tabtype }}
+  {{ include.path }}
+  -->
+
+  {% if include.tabtype == "java" %}
+
+  {% highlight java %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% elsif include.tabtype == "javascript" %}
+
+  {% highlight javascript %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% elsif include.tabtype == "ruby" %}
+
+  {% highlight ruby %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+  
+  {% elsif include.tabtype == "python" %}
+
+  {% highlight python %}
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% elsif include.tabtype == "r" %}
+
+  {% highlight ruby %} 
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+  
+  {% elsif include.tabtype == "c" %}
+
+  {% highlight c %} 
+  {% include {{ include.path }} %}
+  {% endhighlight %}
+
+  {% else %}
+
+  Unknown snippet type! {{ include.tabtype }}
+
+  {% endif %}
+
+  <script>
+  var beginPattern = "BEGIN-SNIPPET";
+  var endPattern = "END-SNIPPET";
+  var parent = document.currentScript.parentElement;
+  var dropMode = true;
+  function cleanWhitespace(element) {
+    textNodes = element.contents().filter(
+      function() { return (this.nodeType == 3 && /\s+\n\s+\n\s+/.test(this.nodeValue)); }
+    ).replaceWith("\n\n");
+    return element;
+  }
+  $(parent).find("figure > pre > code > span").each(function() {
+    var span = $(this);
+    if (dropMode) {
+      this.parentElement.removeChild(this);
+      if (span.text().includes(beginPattern)) {
+        dropMode = false;
+      }
+    } else {
+      if (span.text().includes(endPattern)) {
+        dropMode = true;
+      }
+      if (dropMode) {
+        this.parentElement.removeChild(this);
+      }
+    }
+  });
+  $(parent).find("figure > pre > code").each(function() {
+    $(this).html($(this).html().trim());
+    cleanWhitespace($(this));
+  });
+  </script>
+
+</div>

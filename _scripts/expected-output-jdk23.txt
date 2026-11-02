@@ -1,0 +1,15 @@
+assets
+docs
+getting-started
+graalvm-as-a-platform
+guides
+introduction
+native-image
+overview
+reference-manual
+resources
+security-guide
+support
+tools
+truffle
+index.html

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {% include head.html %}
+
+  <body class="preload">
+
+    <div>
+      {% include header.html %}
+      <main class="content content--home wrapper" aria-label="Content">
+        {{ content }}
+      </main>
+      {% include footer.html %}
+    </div>
+
+    <div class="overlay"></div>
+
+    <script src='{{ "/resources/js/main.js" | relative_url }}'></script>
+  </body>
+
+</html>
