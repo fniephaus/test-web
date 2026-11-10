@@ -3,7 +3,7 @@
 This repository contains the sources for the [GraalVM website](https://www.graalvm.org/): layouts, includes, styles, static pages, redirects, public release notes, images, and the scripts that assemble the site.
 
 The GraalVM documentation rendered by the website is not duplicated here.
-During a build, it is pulled from the Graal repository's release branches such as `release/graal-vm/25.4` and `release/graal-vm/25.0`, or from `master` for the development documentation version.
+During a build, it is pulled from the Graal repository's release branches such as `release/graal-vm/25.5` and `release/graal-vm/25.0`, or from `master` for the development documentation version.
 
 The `jekyll-build` branch is the source branch for website changes.
 The `master` branch contains generated site output and is updated by the publishing workflow.

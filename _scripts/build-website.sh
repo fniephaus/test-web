@@ -6,20 +6,20 @@ cp pages/native-image/libraries-and-frameworks-with-header.md pages/native-image
 
 # Build LATEST version documentation from the current development branch.
 # Build non-versioned site and the redirects for non-versioned URLs.
-./_scripts/pull-extra.sh release/graal-vm/25.4
+./_scripts/pull-extra.sh release/graal-vm/25.5
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-version-to-permalinks --add-versioned-redirects docs truffle/docs espresso/docs web-image/docs pages/redirects
 bundle exec jekyll build --config _configs/config_community_latest.yml
 
-# Build JDK 25.4 documentation
-./_scripts/pull-extra.sh release/graal-vm/25.4
+# Build JDK 25.5 documentation
+./_scripts/pull-extra.sh release/graal-vm/25.5
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-version-to-permalinks --add-versioned-redirects docs truffle/docs espresso/docs web-image/docs pages/redirects
-bundle exec jekyll build --destination jdk25.4 --config _configs/config_community_jdk25i.yml
-./_scripts/merge_sitemaps.rb _site/sitemap.xml jdk25.4/sitemap.xml https://www.graalvm.org/jdk25.4/
-rsync -av jdk25.4/jdk25.4 _site/
-rsync -av --exclude "*.html" jdk25.4/docs _site/
-rm -rf jdk25.4
+bundle exec jekyll build --destination jdk25.5 --config _configs/config_community_jdk25i.yml
+./_scripts/merge_sitemaps.rb _site/sitemap.xml jdk25.5/sitemap.xml https://www.graalvm.org/jdk25.5/
+rsync -av jdk25.5/jdk25.5 _site/
+rsync -av --exclude "*.html" jdk25.5/docs _site/
+rm -rf jdk25.5
 
 # Build JDK 25.0 documentation
 ./_scripts/pull-extra.sh release/graal-vm/25.0
