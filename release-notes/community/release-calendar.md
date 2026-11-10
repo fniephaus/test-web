@@ -24,20 +24,23 @@ The most recent feature release supersedes all previous feature releases.
 Critical Patch Updates (CPUs) for Oracle GraalVM are published on the third Tuesday of January, April, July, and October, in line with the Oracle CPU release schedule.
 Starting with 25.1, GraalVM feature releases are published on the Tuesday of the following week to allow additional time for testing.
 
-All active releases receive patch updates.
+**Critical Security Patch Update (CSPU)**
+
+CSPUs provide targeted fixes for critical security issues on a monthly basis, allowing users to address high-priority vulnerabilities without waiting for the next quarterly release. Each CSPU is smaller and more focused, making it easier to apply critical fixes quickly. Quarterly Critical Patch Updates will continue to include all fixes released in prior CSPUs.
 
 ## Planned Releases
 
+All active releases receive patch updates.
+
 | Date               | Type          | Oracle GraalVM                   | GraalVM Community Edition | GraalPy (Python version) |
 |--------------------|---------------|----------------------------------|---------------------------|--------------------------|
-| October 20, 2026   | CPU           | 17.0.21, 21.0.13, 25.0.5         | -                         | -                        |
-| October 27, 2026   | Feature + CPU | 25.5.5                           | 25.5.5                    | 25.5.5 (3.14*)           |
-| November 24, 2026  | Feature       | 25.6.5                           | 25.6.5                    | 25.6.5 (3.14*)           |
-| January 19, 2027   | CPU           | 17.0.22, 21.0.14, 25.0.6	        | -                         |  -                       |
-| January 26, 2027   | Feature + CPU | 25.7.6                           | 25.7.6                    | 25.7.6 (3.14*)           |
-| February 23, 2027  | Feature       | 25.8.6                           | 25.8.6                    | 25.8.6 (3.14*)           |
+| November 17, 2026  | CSPU          | 25.0.5.1, 21.0.13.1, 17.0.21.1   | -                         | -                        |
+| November 24, 2026  | Feature       | 25.6.5.1                         | 25.6.5.1                  | 25.6.5 (3.13)            |
+| January 19, 2027   | CPU           | 25.0.6, 21.0.14, 17.0.22         | -                         |  -                       |
+| January 26, 2027   | Feature       | 25.7.6                           | 25.7.6                    | 25.7.6 (3.13)            |
+| February 23, 2027  | Feature       | 25.8.6                           | 25.8.6                    | 25.8.6 (3.13)            |
 
-\* GraalPy supports a new Python version once it enters the security-fix phase. See [Python versions](https://devguide.python.org/versions/) for the Python release schedule.
+GraalPy supports a new Python version once it enters the security-fix phase. See [Python versions](https://devguide.python.org/versions/) for the Python release schedule.
 
 ### Understanding Release Numbering
 
@@ -51,9 +54,13 @@ For example, GraalVM 25.1.**3**, released on June 25, 2026, corresponds to the t
 
 | Date               | Type          | Oracle GraalVM           | GraalVM Community Edition | Graal Languages |
 |--------------------|---------------|--------------------------|---------------------------|-----------------|
-| September 22, 2026 | Feature       | 25.4.4.1.1              | 25.4.4.1.1                | 25.4.4.1.1 (3.13) |
+| November 3, 2026   | Feature       | 25.5.5.0.3               | 25.5.5.0.3                | 25.5.5.0.3 (3.13)|
+| October 20, 2026   | CPU           | 25.0.5, 21.0.13, 17.0.21 | -                         | -               |
+| September 22, 2026 | Feature       | 25.4.4.1.1              | 25.4.4.1.1                 | 25.4.4.1.1 (3.13) |
+| September 15, 2026 | CSPU          | 17.0.20.1.1, 21.0.12.1.1, 25.0.4.1.1 | -             | -               |
 | August 25, 2026    | Feature       | 25.3.4.1                 | 25.3.4.1                  | 25.3.4.1 (3.13) |
-| July 28, 2026      | Feature + CPU | 25.2.4                   | 25.2.4                    | 25.2.4 (3.12)   |
+| August 18, 2026    | CSPU          | 17.0.20.1, 21.0.12.1, 25.0.4.1 | -                   | -               |
+| July 28, 2026      | Feature       | 25.2.4                   | 25.2.4                    | 25.2.4 (3.12)   |
 | July 21, 2026      | CPU           | 17.0.20, 21.0.12, 25.0.4 | -                         | -               |
 | June 30, 2026      | Feature       | 25.1.3                   | 25.1.3                    | 25.1.3 (3.12)   |
 | April 21, 2026     | CPU           | 17.0.19, 21.0.11, 25.0.3 | -                         | 25.0.3          |
@@ -81,6 +88,8 @@ For example, GraalVM 25.1.**3**, released on June 25, 2026, corresponds to the t
 
 | Date              | Type         | GraalVM Enterprise Edition | GraalVM Community Edition |
 |-------------------|--------------|----------------------------|---------------------------|
+| September 15, 2026| CSPU         | 21.3.19.1.1                | -                         |
+| August 18, 2026   | CSPU         | 21.3.19.1                  | -                         |
 | July 21, 2026     | CPU          | 21.3.19                    | -                         |
 | April 21, 2026    | CPU          | 21.3.18                    | -                         |
 | January 20, 2026  | CPU          | 21.3.17                    | -                         |

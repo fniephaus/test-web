@@ -22,7 +22,7 @@ trap cleanup EXIT
 # index.md is the public website home page.
 
 # Build non-versioned site and the redirects for non-versioned URLs.
-./_scripts/pull-extra.sh release/graal-vm/25.4
+./_scripts/pull-extra.sh release/graal-vm/25.5
 ruby _scripts/process_front_matter.rb --add-title pages release-notes
 ruby _scripts/process_front_matter.rb --add-title --add-version-to-permalinks --add-versioned-redirects docs truffle/docs espresso/docs web-image/docs pages/redirects
 bundle exec jekyll build --config _configs/config_community_latest.yml
