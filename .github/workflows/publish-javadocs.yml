@@ -154,6 +154,7 @@ jobs:
           for version in 25i; do
             source="${{ github.workspace }}/javadocs/$version/javadoc"
             destination="${{ github.workspace }}/gh-pages/$version/javadoc"
+            mkdir -p "$destination"
             if [[ ! -d "$source" ]]; then
               echo "Missing Javadocs for $version: $source" >&2
               exit 1
