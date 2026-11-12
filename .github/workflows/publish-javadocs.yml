@@ -17,23 +17,23 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - version: 25.5
+          - version: '25.5'
             labs_jdk_version: latest
             compiler_project: jdk.graal.compiler
             compiler_packages: jdk.graal.compiler.graphio,jdk.graal.compiler.options,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
             compiler_javadoc_directory: src/jdk.graal.compiler
-          - version: 25.0
+          - version: '25.0'
             labs_jdk_version: latest
             compiler_project: jdk.graal.compiler
             compiler_packages: jdk.graal.compiler.graphio,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
             compiler_javadoc_directory: src/jdk.graal.compiler
-          - version: 23.1
-            labs_jdk_version: 21
+          - version: '23.1'
+            labs_jdk_version: '21'
             compiler_project: jdk.internal.vm.compiler
             compiler_packages: org.graalvm.graphio
             compiler_javadoc_directory: src/jdk.internal.vm.compiler
-          - version: 23.0
-            labs_jdk_version: 17
+          - version: '23.0'
+            labs_jdk_version: '17'
             compiler_project: org.graalvm.graphio
             compiler_packages: org.graalvm.graphio
             compiler_javadoc_directory: src/org.graalvm.graphio
