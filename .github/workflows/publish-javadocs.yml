@@ -17,26 +17,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - version: '25.5'
+          - version: '25i'
             labs_jdk_version: latest
             compiler_project: jdk.graal.compiler
             compiler_packages: jdk.graal.compiler.graphio,jdk.graal.compiler.options,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
             compiler_javadoc_directory: src/jdk.graal.compiler
-          - version: '25.0'
-            labs_jdk_version: latest
-            compiler_project: jdk.graal.compiler
-            compiler_packages: jdk.graal.compiler.graphio,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
-            compiler_javadoc_directory: src/jdk.graal.compiler
-          - version: '23.1'
-            labs_jdk_version: '21'
-            compiler_project: jdk.internal.vm.compiler
-            compiler_packages: org.graalvm.graphio
-            compiler_javadoc_directory: src/jdk.internal.vm.compiler
-          - version: '23.0'
-            labs_jdk_version: '17'
-            compiler_project: org.graalvm.graphio
-            compiler_packages: org.graalvm.graphio
-            compiler_javadoc_directory: src/org.graalvm.graphio
 
     concurrency:
       group: build-publish-javadocs-${{ matrix.version }}
@@ -52,13 +37,9 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: oracle/graal
-          ref: 'release/graal-vm/${{ matrix.version }}'
+          ref: master
           path: graal
           fetch-depth: 1
-
-      - name: Fetch Graal tags
-        working-directory: graal
-        run: git fetch --quiet --no-tags origin '+refs/tags/*:refs/tags/*'
 
       - name: Determine mx version
         run: |
@@ -171,7 +152,7 @@ jobs:
         working-directory: website
         shell: bash
         run: |
-          for version in 25.5 25.0 23.1 23.0; do
+          for version in 25i; do
             source="${{ github.workspace }}/javadocs/$version/javadoc"
             destination="${{ github.workspace }}/gh-pages/$version/javadoc"
             if [[ ! -d "$source" ]]; then
@@ -183,10 +164,7 @@ jobs:
 
           cd "${{ github.workspace }}/gh-pages"
           git add --all -- \
-            25.5/javadoc \
-            25.0/javadoc \
-            23.1/javadoc \
-            23.0/javadoc
+            25i/javadoc
 
           if git diff --cached --quiet; then
             echo 'No Javadoc changes to publish.'
