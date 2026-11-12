@@ -81,9 +81,8 @@ jobs:
       - name: Fetch LabsJDK
         run: |
           set -euo pipefail
-          cd graal
           mkdir jdk-dl
-          "$MX_DIRECTORY/mx" --java-home= fetch-jdk \
+          "$MX_DIRECTORY/mx" -p graal/vm --java-home= fetch-jdk \
             --jdk-id "labsjdk-ce-${{ matrix.labs_jdk_version }}" \
             --to jdk-dl \
             --alias "$JAVA_HOME"
