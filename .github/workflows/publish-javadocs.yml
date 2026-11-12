@@ -1,0 +1,199 @@
+name: Deploy Javadocs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 0 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Javadocs ${{ matrix.version }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - version: '25.5'
+            labs_jdk_version: latest
+            compiler_project: jdk.graal.compiler
+            compiler_packages: jdk.graal.compiler.graphio,jdk.graal.compiler.options,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
+            compiler_javadoc_directory: src/jdk.graal.compiler
+          - version: '25.0'
+            labs_jdk_version: latest
+            compiler_project: jdk.graal.compiler
+            compiler_packages: jdk.graal.compiler.graphio,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
+            compiler_javadoc_directory: src/jdk.graal.compiler
+          - version: '23.1'
+            labs_jdk_version: '21'
+            compiler_project: jdk.internal.vm.compiler
+            compiler_packages: org.graalvm.graphio
+            compiler_javadoc_directory: src/jdk.internal.vm.compiler
+          - version: '23.0'
+            labs_jdk_version: '17'
+            compiler_project: org.graalvm.graphio
+            compiler_packages: org.graalvm.graphio
+            compiler_javadoc_directory: src/org.graalvm.graphio
+
+    concurrency:
+      group: build-publish-javadocs-${{ matrix.version }}
+      cancel-in-progress: false
+
+    env:
+      GRAAL_DIRECTORY: ${{ github.workspace }}/graal
+      MX_DIRECTORY: ${{ github.workspace }}/mx
+      JAVA_HOME: ${{ github.workspace }}/jdk
+
+    steps:
+      - name: Check out Graal sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: oracle/graal
+          ref: 'release/graal-vm/${{ matrix.version }}'
+          path: graal
+          fetch-depth: 1
+
+      - name: Fetch Graal tags
+        working-directory: graal
+        run: git fetch --quiet --no-tags origin '+refs/tags/*:refs/tags/*'
+
+      - name: Determine mx version
+        run: |
+          MX_VERSION=$(jq -r '.mx_version' "$GRAAL_DIRECTORY/common.json")
+          echo "MX_VERSION=$MX_VERSION" >> "$GITHUB_ENV"
+
+      - name: Check out mx
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: graalvm/mx
+          ref: ${{ env.MX_VERSION }}
+          path: mx
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.8'
+
+      - name: Fetch LabsJDK
+        run: |
+          set -euo pipefail
+          mkdir jdk-dl
+          "$MX_DIRECTORY/mx" -p graal/vm --java-home= fetch-jdk \
+            --jdk-id oraclejdk-latest \
+            --to jdk-dl \
+            --alias "$JAVA_HOME"
+
+      - name: Build Javadocs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mx() {
+            "$MX_DIRECTORY/mx" --java-home="$JAVA_HOME" "$@"
+          }
+
+          build_javadoc() {
+            local suite="$1"
+            pushd "$GRAAL_DIRECTORY/$suite" >/dev/null
+            mx build
+            mx javadoc
+            popd >/dev/null
+          }
+
+          build_javadoc sdk
+          build_javadoc truffle
+          build_javadoc tools
+
+          pushd "$GRAAL_DIRECTORY/compiler" >/dev/null
+          mx build
+          mx javadoc \
+            --projects "${{ matrix.compiler_project }}" \
+            --packages "${{ matrix.compiler_packages }}"
+          popd >/dev/null
+
+          compiler_javadoc="$GRAAL_DIRECTORY/compiler/${{ matrix.compiler_javadoc_directory }}/javadoc"
+          if [[ ! -d "$compiler_javadoc" ]]; then
+            echo "Compiler Javadoc directory does not exist: $compiler_javadoc" >&2
+            exit 1
+          fi
+
+          destination="$GITHUB_WORKSPACE/javadocs/${{ matrix.version }}/javadoc"
+          mkdir -p "$destination"
+
+          for component in sdk truffle tools; do
+            source="$GRAAL_DIRECTORY/$component/javadoc"
+            if [[ ! -d "$source" ]]; then
+              echo "Javadoc directory does not exist: $source" >&2
+              exit 1
+            fi
+            rsync --archive --delete "$source/" "$destination/$component/"
+          done
+          rsync --archive --delete "$compiler_javadoc/" "$destination/graphio/"
+
+      - name: Upload Javadocs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: javadocs-${{ matrix.version }}
+          path: javadocs
+          if-no-files-found: error
+
+  publish:
+    name: Publish Javadocs to gh-pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: publish-javadocs
+      cancel-in-progress: false
+
+    steps:
+      - name: Check out gh-pages
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: gh-pages
+          path: gh-pages
+          fetch-depth: 1
+
+      - name: Download Javadocs
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: javadocs-*
+          path: javadocs
+          merge-multiple: true
+
+      - name: Publish generated Javadocs
+        working-directory: website
+        shell: bash
+        run: |
+          for version in 25.5 25.0 23.1 23.0; do
+            source="${{ github.workspace }}/javadocs/$version/javadoc"
+            destination="${{ github.workspace }}/gh-pages/$version/javadoc"
+            if [[ ! -d "$source" ]]; then
+              echo "Missing Javadocs for $version: $source" >&2
+              exit 1
+            fi
+            rsync --archive --delete "$source/" "$destination/"
+          done
+
+          cd "${{ github.workspace }}/gh-pages"
+          git add --all -- \
+            25.5/javadoc \
+            25.0/javadoc \
+            23.1/javadoc \
+            23.0/javadoc
+
+          if git diff --cached --quiet; then
+            echo 'No Javadoc changes to publish.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Update Javadocs on $(date)"
+          git push origin gh-pages
