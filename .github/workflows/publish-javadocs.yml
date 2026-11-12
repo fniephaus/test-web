@@ -83,7 +83,7 @@ jobs:
           set -euo pipefail
           mkdir jdk-dl
           "$MX_DIRECTORY/mx" -p graal/vm --java-home= fetch-jdk \
-            --jdk-id "labsjdk-ce-${{ matrix.labs_jdk_version }}" \
+            --jdk-id oraclejdk-latest \
             --to jdk-dl \
             --alias "$JAVA_HOME"
 
