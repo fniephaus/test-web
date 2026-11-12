@@ -4,6 +4,9 @@ on:
   push:
     paths-ignore:
       - '.github/**'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'README.md'
   workflow_dispatch:
 
 concurrency:
