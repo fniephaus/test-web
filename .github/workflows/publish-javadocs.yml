@@ -79,13 +79,14 @@ jobs:
           python-version: '3.8'
 
       - name: Fetch LabsJDK
-        working-directory: graal
         run: |
           set -euo pipefail
-          mkdir -p "$JAVA_HOME"
+          cd graal
+          mkdir jdk-dl
           "$MX_DIRECTORY/mx" --java-home= fetch-jdk \
             --jdk-id "labsjdk-ce-${{ matrix.labs_jdk_version }}" \
-            --to "$JAVA_HOME"
+            --to jdk-dl \
+            --alias "$JAVA_HOME"
 
       - name: Build Javadocs
         shell: bash
