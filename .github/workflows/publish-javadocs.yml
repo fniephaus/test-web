@@ -11,7 +11,7 @@ permissions:
 jobs:
   build:
     name: Javadocs ${{ matrix.version }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     strategy:
       fail-fast: false
@@ -52,7 +52,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: oracle/graal
-          ref: release/graal-vm/${{ matrix.version }}
+          ref: 'release/graal-vm/${{ matrix.version }}'
           path: graal
           fetch-depth: 1
 
