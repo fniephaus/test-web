@@ -149,7 +149,6 @@ jobs:
           merge-multiple: true
 
       - name: Publish generated Javadocs
-        working-directory: website
         shell: bash
         run: |
           for version in 25i; do
