@@ -82,11 +82,10 @@ jobs:
         working-directory: graal
         run: |
           set -euo pipefail
-          mkdir -p jdk-dl
+          mkdir -p "$JAVA_HOME"
           "$MX_DIRECTORY/mx" --java-home= fetch-jdk \
             --jdk-id "labsjdk-ce-${{ matrix.labs_jdk_version }}" \
-            --to jdk-dl \
-            --alias "$JAVA_HOME"
+            --to "$JAVA_HOME"
 
       - name: Build Javadocs
         shell: bash
