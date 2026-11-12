@@ -18,25 +18,21 @@ jobs:
       matrix:
         include:
           - version: 25.5
-            graal_ref: release/graal-vm/25.5
             labs_jdk_version: latest
             compiler_project: jdk.graal.compiler
             compiler_packages: jdk.graal.compiler.graphio,jdk.graal.compiler.options,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
             compiler_javadoc_directory: src/jdk.graal.compiler
           - version: 25.0
-            graal_ref: release/graal-vm/25.0
             labs_jdk_version: latest
             compiler_project: jdk.graal.compiler
             compiler_packages: jdk.graal.compiler.graphio,org.graalvm.word,org.graalvm.collections,com.oracle.truffle.compiler,org.graalvm.nativeimage,com.oracle.svm.core.annotate
             compiler_javadoc_directory: src/jdk.graal.compiler
           - version: 23.1
-            graal_ref: release/graal-vm/23.1
             labs_jdk_version: 21
             compiler_project: jdk.internal.vm.compiler
             compiler_packages: org.graalvm.graphio
             compiler_javadoc_directory: src/jdk.internal.vm.compiler
           - version: 23.0
-            graal_ref: release/graal-vm/23.0
             labs_jdk_version: 17
             compiler_project: org.graalvm.graphio
             compiler_packages: org.graalvm.graphio
@@ -56,7 +52,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: oracle/graal
-          ref: ${{ matrix.graal_ref }}
+          ref: release/graal-vm/${{ matrix.version }}
           path: graal
           fetch-depth: 1
 
@@ -83,6 +79,7 @@ jobs:
           python-version: '3.8'
 
       - name: Fetch LabsJDK
+        working-directory: graal
         run: |
           set -euo pipefail
           mkdir -p jdk-dl
