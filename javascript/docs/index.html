@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:image" content='/javascript/assets/img/graalvm.png' />
   
-  <title> - Documentation</title><link rel="canonical" href="/docs/"><link rel="apple-touch-icon" sizes="180x180" href='/javascript/assets/img/favicons/apple-touch-icon.png'>
+  <title>GraalJS - Documentation</title><link rel="canonical" href="/docs/"><link rel="apple-touch-icon" sizes="180x180" href='/javascript/assets/img/favicons/apple-touch-icon.png'>
   <link rel="icon" type="image/png" sizes="32x32" href='/javascript/assets/img/favicons/favicon-32x32.png'>
   <link rel="icon" type="image/png" sizes="16x16" href='/javascript/assets/img/favicons/favicon-16x16.png'>
 
@@ -333,7 +333,6 @@ Learn more <a href="https://github.com/oracle/graaljs/blob/master/README.md#stan
   <li><a href="#migration-guide-from-rhino-to-graaljs">Migration Guide from Rhino</a></li>
   <li><a href="#scriptengine-implementation">Work with ScriptEngine</a></li>
 </ul>
-
 
 <h2 id="java-interoperability"><a href="#java-interoperability"></a><a href="#java-interoperability" class="anchor-link">Java Interoperability</a></h2>
 
@@ -722,7 +721,6 @@ See a combined example:</p>
   <li><a href="#graaljs-compatibility">GraalJS Compatibility</a></li>
   <li><a href="#multithreading">Multithreading Support</a></li>
 </ul>
-
 
 <h2 id="graaljs-compatibility"><a href="#graaljs-compatibility"></a><a href="#graaljs-compatibility" class="anchor-link">GraalJS Compatibility</a></h2>
 
@@ -1215,7 +1213,6 @@ This API might change without notice. Do not use for production purposes.</p>
   <li><a href="#java-interoperability">Java Interoperability</a></li>
 </ul>
 
-
 <h2 id="using-javascript-modules-and-packages-in-graaljs"><a href="#using-javascript-modules-and-packages-in-graaljs"></a><a href="#using-javascript-modules-and-packages-in-graaljs" class="anchor-link">Using JavaScript Modules and Packages in GraalJS</a></h2>
 
 <p>GraalJS is compatible with the latest ECMAScript standard, and can be run in a variety of Java-based embedding scenarios.
@@ -1454,7 +1451,6 @@ To this end, the application user code can use <code>globalThis</code> to patch 
   <li><a href="#graaljs-compatibility">GraalJS Compatibility</a></li>
 </ul>
 
-
 <h2 id="multithreading"><a href="#multithreading"></a><a href="#multithreading" class="anchor-link">Multithreading</a></h2>
 
 <p>Running JavaScript on GraalVM supports multithreading.
@@ -1489,7 +1485,6 @@ The most notable ones describe how:</p>
 <ul>
   <li><a href="#java-interoperability">Java Interoperability</a></li>
 </ul>
-
 
 <h2 id="migration-guide-from-nashorn-to-graaljs"><a href="#migration-guide-from-nashorn-to-graaljs"></a><a href="#migration-guide-from-nashorn-to-graaljs" class="anchor-link">Migration Guide from Nashorn to GraalJS</a></h2>
 
@@ -1752,7 +1747,6 @@ The behavior around Java objects differs for <code>console.log</code> in Node mo
   <li><a href="#java-interoperability">Java Interoperability</a></li>
 </ul>
 
-
 <h2 id="nodejs-runtime"><a href="#nodejs-runtime"></a><a href="#nodejs-runtime" class="anchor-link">Node.js Runtime</a></h2>
 
 <p>GraalVM can run unmodified Node.js applications. 
@@ -1967,7 +1961,6 @@ In order for globally installed packages to function properly, you might need to
   <li><a href="#differences-between-nodejs-and-java-embeddings">Differences Between <code>node</code> Native Launcher and a Java <code>Context</code></a></li>
 </ul>
 
-
 <h2 id="differences-between-nodejs-and-java-embeddings"><a href="#differences-between-nodejs-and-java-embeddings"></a><a href="#differences-between-nodejs-and-java-embeddings" class="anchor-link">Differences Between Node.js and Java Embeddings</a></h2>
 
 <p>GraalVM provides a fully-compliant ECMAScript 2024 JavaScript runtime.
@@ -2045,7 +2038,6 @@ CommonJS modules are supported in Java mode under an experimental option.</li>
   <li><a href="#nodejs-runtime">Getting Started with Node.js</a></li>
   <li><a href="#using-javascript-modules-and-packages-in-graaljs">Using JavaScript Modules and Packages in GraalJS</a></li>
 </ul>
-
 
 <h2 id="operator-overloading"><a href="#operator-overloading"></a><a href="#operator-overloading" class="anchor-link">Operator Overloading</a></h2>
 
@@ -2202,7 +2194,6 @@ There are two exceptions to this:
   <li><a href="https://github.com/tc39/proposal-operator-overloading">ECMAScript operator overloading proposal</a></li>
 </ul>
 
-
 <h2 id="options"><a href="#options"></a><a href="#options" class="anchor-link">Options</a></h2>
 
 <p>Running JavaScript on GraalVM can be configured with several options.</p>
@@ -2337,7 +2328,6 @@ To use them, the <code>--experimental-options</code> option is required upfront.
   <li><a href="#setting-options-via-system-properties">Setting Options to ScriptEngine</a></li>
 </ul>
 
-
 <h2 id="migration-guide-from-rhino-to-graaljs"><a href="#migration-guide-from-rhino-to-graaljs"></a><a href="#migration-guide-from-rhino-to-graaljs" class="anchor-link">Migration Guide from Rhino to GraalJS</a></h2>
 
 <p>This document serves as a migration guide for code previously targeted to the Rhino engine.
@@ -2380,7 +2370,6 @@ For instance, you can query the <code>length</code> property (of JavaScript) but
   <li><a href="#migration-guide-from-nashorn-to-graaljs">Migration Guide from Nashorn to GraalJS</a></li>
   <li><a href="#java-interoperability">Java Interoperability</a></li>
 </ul>
-
 
 <h2 id="run-graaljs-on-a-stock-jdk"><a href="#run-graaljs-on-a-stock-jdk"></a><a href="#run-graaljs-on-a-stock-jdk" class="anchor-link">Run GraalJS on a Stock JDK</a></h2>
 
@@ -2438,7 +2427,6 @@ JavaScript source code with a long-enough run time will trigger the compilation 
 <ul>
   <li><a href="#graaljs">Getting Started with GraalJS on the JVM</a></li>
 </ul>
-
 
 <h2 id="scriptengine-implementation"><a href="#scriptengine-implementation"></a><a href="#scriptengine-implementation" class="anchor-link">ScriptEngine Implementation</a></h2>
 
@@ -2570,7 +2558,6 @@ It does come at the cost of a hard dependency on GraalJS, for example, the <code
 <ul>
   <li><a href="#graaljs-engine-options">GraalJS Command-line Options</a></li>
 </ul>
-
 
 <h2 id="frequently-asked-questions"><a href="#frequently-asked-questions"></a><a href="#frequently-asked-questions" class="anchor-link">Frequently Asked Questions</a></h2>
 

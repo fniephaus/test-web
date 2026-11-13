@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:image" content='/javascript/assets/img/graalvm.png' />
   
-  <title></title><link rel="canonical" href="/"><link rel="apple-touch-icon" sizes="180x180" href='/javascript/assets/img/favicons/apple-touch-icon.png'>
+  <title>GraalJS</title><link rel="canonical" href="/"><link rel="apple-touch-icon" sizes="180x180" href='/javascript/assets/img/favicons/apple-touch-icon.png'>
   <link rel="icon" type="image/png" sizes="32x32" href='/javascript/assets/img/favicons/favicon-32x32.png'>
   <link rel="icon" type="image/png" sizes="16x16" href='/javascript/assets/img/favicons/favicon-16x16.png'>
 
@@ -109,7 +109,7 @@
         </div>
         <div class="langpage__buttons">
           <a href="#getting-started" class="btn btn-primary lang-start">Quick Start</a>
-          <a href='/javascript/docs/' class="btn btn-primary lang-start">Documentation</a>
+          <a href="/javascript/docs/" class="btn btn-primary lang-start">Documentation</a>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@
         <div class="langpage__benefits-row">
           <div class="langpage__benefits-card">
             <div class="langpage__benefits-icon">
-              <img src='/javascript/assets/img/icon-set-general/coffee-beans-icon.svg' alt="coffee beans icon">
+              <img src="/javascript/assets/img/icon-set-general/coffee-beans-icon.svg" alt="coffee beans icon" />
             </div>
             <div class="langpage__benefits-title">
               <h4>JavaScript for Java
@@ -137,7 +137,7 @@
           </div>
           <div class="langpage__benefits-card">
             <div class="langpage__benefits-icon">
-              <img src='/javascript/assets/img/icon-set-general/compatibility.svg' alt="compatibility icon">
+              <img src="/javascript/assets/img/icon-set-general/compatibility.svg" alt="compatibility icon" />
             </div>
             <div class="langpage__benefits-title">
               <h4>ECMAScript Compliant</h4>
@@ -149,7 +149,7 @@
           </div>
           <div class="langpage__benefits-card">
             <div class="langpage__benefits-icon">
-              <img src='/javascript/assets/img/icon-set-general/speed-icon.svg' alt="performance icon">
+              <img src="/javascript/assets/img/icon-set-general/speed-icon.svg" alt="performance icon" />
             </div>
             <div class="langpage__benefits-title">
               <h4>Fastest JavaScript on the JVM</h4>
@@ -162,7 +162,7 @@
         <div class="langpage__benefits-row">
           <div class="langpage__benefits-card">
             <div class="langpage__benefits-icon">
-              <img src='/javascript/assets/img/icon-set-general/upgrade.svg' alt="upgrade up arrow icon">
+              <img src="/javascript/assets/img/icon-set-general/upgrade.svg" alt="upgrade up arrow icon" />
             </div>
             <div class="langpage__benefits-title">
               <h4>Modern JavaScript for the JVM</h4>
@@ -173,7 +173,7 @@
           </div>
           <div class="langpage__benefits-card">
             <div class="langpage__benefits-icon">
-              <img src='/javascript/assets/img/icon-set-general/home-code.svg' alt="code icon">
+              <img src="/javascript/assets/img/icon-set-general/home-code.svg" alt="code icon" />
             </div>
             <div class="langpage__benefits-title">
               <h4>Script Java with JavaScript</h4>
@@ -185,7 +185,7 @@
           </div>
           <div class="langpage__benefits-card">
             <div class="langpage__benefits-icon">
-              <img src='/javascript/assets/img/icon-set-general/wasm-integration-icon.svg' alt="wasm integration icon">
+              <img src="/javascript/assets/img/icon-set-general/wasm-integration-icon.svg" alt="wasm integration icon" />
             </div>
             <div class="langpage__benefits-title">
               <h4>WebAssembly Integration</h4>
@@ -208,63 +208,57 @@
         <div class="languages__example-card truffles__example-card">
           <div class="languages__example-box truffles__example-box">
             <div class="example-logo-box">
-              <img src='/javascript/assets/img/logos/maven-logo.svg' class="languages__example-logo truffles__example-logo">
+              <img src="/javascript/assets/img/logos/maven-logo.svg" class="languages__example-logo truffles__example-logo" />
             </div>
             <div class="languages__snippet truffles__snippet">
               <div class="language__example-subtitle truffle__example-subtitle">
                 <h4>1. Add GraalJS as a dependency from <a href="https://central.sonatype.com/artifact/org.graalvm.polyglot/js" target="_blank">Maven Central</a></h4>
               </div>
-              <pre><code class="xml">
-  &lt;dependency&gt;
-    &lt;groupId&gt;org.graalvm.polyglot&lt;/groupId&gt;
-    &lt;artifactId&gt;polyglot&lt;/artifactId&gt;
-    &lt;version&gt;25.3.4.1&lt;/version&gt;
-  &lt;/dependency&gt;
-  &lt;dependency&gt;
-    &lt;groupId>org.graalvm.polyglot&lt;/groupId&gt;
-    &lt;artifactId&gt;js&lt;/artifactId&gt;
-    &lt;version>25.3.4.1&lt;/version&gt;
-    &lt;type&gt;pom&lt;/type&gt;
-  &lt;/dependency&gt;
-                </code></pre>
-            </div>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.graalvm.polyglot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>polyglot<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>25.5.5.0.3<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.graalvm.polyglot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>js<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>25.5.5.0.3<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;type&gt;</span>pom<span class="nt">&lt;/type&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></figure>
+</div>
           </div>
           <div class="languages__example-box truffles__example-box">
             <div class="example-logo-box">
-              <img src='/javascript/assets/img/logos/gradle-logo.svg' class="languages__example-logo truffles__example-logo">
+              <img src="/javascript/assets/img/logos/gradle-logo.svg" class="languages__example-logo truffles__example-logo" />
             </div>
             <div class="languages__snippet truffles__snippet">
               <div class="language__text-secondary truffle__text-secondary">
                 <h4>or
                 </h4>
               </div>
-              <pre><code class="groovy">
-  implementation("org.graalvm.polyglot:polyglot:25.3.4.1")
-  implementation("org.graalvm.polyglot:js:25.3.4.1")
-                </code></pre>
-            </div>
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">implementation</span><span class="o">(</span><span class="s2">"org.graalvm.polyglot:polyglot:25.5.5.0.3"</span><span class="o">)</span>
+<span class="n">implementation</span><span class="o">(</span><span class="s2">"org.graalvm.polyglot:js:25.5.5.0.3"</span><span class="o">)</span></code></pre></figure>
+</div>
           </div>
           <div class="languages__example-box truffles__example-box">
             <div class="example-logo-box">
-              <img src='/javascript/assets/img/logos/java-logo.svg' class="languages__example-logo truffles__example-logo">
+              <img src="/javascript/assets/img/logos/java-logo.svg" class="languages__example-logo truffles__example-logo" />
             </div>
             <div class="languages__snippet truffles__snippet">
               <div class="language__example-subtitle truffle__example-subtitle">
                 <h4>2. Embed JavaScript code in Java</h4>
               </div>
-              <pre><code class="java">
-  import org.graalvm.polyglot.Context;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.graalvm.polyglot.Context</span><span class="o">;</span>
 
-  try (Context context = Context.create()) {
-      context.eval("js", "console.log('Hello from GraalJS!')");
-  }
-                </code></pre>
-            </div>
+  <span class="k">try</span> <span class="o">(</span><span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="o">.</span><span class="na">create</span><span class="o">())</span> <span class="o">{</span>
+      <span class="n">context</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">"js"</span><span class="o">,</span> <span class="s">"console.log('Hello from GraalJS!')"</span><span class="o">);</span>
+  <span class="o">}</span></code></pre></figure>
+</div>
           </div>
         </div>
       </div>
     </div>
-</section>
+&lt;/section&gt;
 <!-- GraalJS Starter Guide -->
 <section class="content-section">
   <div class="wrapper">
@@ -325,8 +319,7 @@
                   <h5>High-performance server-side rendering for React.js and other client frameworks</h5>
                 </div>
                 <div class="langcases__link langcases__link-bot">
-                  <a href="https://medium.com/graalvm/improve-react-js-server-side-rendering-by-150-with-graalvm-58a06ccb45df"
-                    target="_blank">Read More</a>
+                  <a href="https://medium.com/graalvm/improve-react-js-server-side-rendering-by-150-with-graalvm-58a06ccb45df" target="_blank">Read More</a>
                 </div>
               </div>
             </div>
@@ -341,8 +334,7 @@
                   <h5>NetSuite chose GraalJS as their JavaScript runtime because of its support for the latest ECMAScript standards and enhanced performance</h5>
                 </div>
                 <div class="langcases__link langcases__link-bot">
-                  <a href="https://blogs.oracle.com/graal/oracle-netsuite-on-graalvm"
-                    target="_blank">Read More</a>
+                  <a href="https://blogs.oracle.com/graal/oracle-netsuite-on-graalvm" target="_blank">Read More</a>
                 </div>
               </div>
             </div>
@@ -358,7 +350,7 @@
   <div class="wrapper">
     <div class="langquote">
       <div class="container">
-        <img src='/javascript/assets/img/icon-set-general/quote-icon.svg' class="langquote__icon" alt="box">
+        <img src="/javascript/assets/img/icon-set-general/quote-icon.svg" class="langquote__icon" alt="box" />
         <div class="langquote__text">
           <p>There are significant benefits with the GraalJS runtime environment and how that gives
             SuiteScript developers access to the most current ECMAScript features and syntax out of the box.
@@ -383,7 +375,7 @@
           <div class="lang-article__card">
             <a href="https://www.netsuite.com/blog/graal-runtime-technology-improves-netsuite-platform-developer-productivity">
               <div class="langpage__article-image">
-                <img src='/javascript/assets/img/javascript/article-01.png' alt="article image">
+                <img src="/javascript/assets/img/javascript/article-01.png" alt="article image" />
               </div>
               <div class="langpage__article-title">
                 <h5>Improving NetSuite Platform Developer Productivity</h5>
@@ -393,7 +385,7 @@
           <div class="lang-article__card">
             <a href="https://medium.com/graalvm/mle-executing-javascript-in-oracle-database-c545feb1a010">
               <div class="langpage__article-image">
-                <img src='/javascript/assets/img/javascript/article-02.png' alt="article image">
+                <img src="/javascript/assets/img/javascript/article-02.png" alt="article image" />
               </div>
               <div class="langpage__article-title">
                 <h5>Multilingual Engine: Executing JavaScript in Oracle Database</h5>
@@ -402,7 +394,7 @@
           </div>
           <div class="lang-article__card">
             <div class="langpage__article-image">
-              <img src='/javascript/assets/img/javascript/article-03.png' alt="article image">
+              <img src="/javascript/assets/img/javascript/article-03.png" alt="article image" />
             </div>
             <div class="langpage__article-title">
               <h5>Launching React.js in Java with GraalVM</h5>
@@ -413,6 +405,7 @@
     </div>
   </div>
 </section>
+</div></section>
 
     </main>
     <footer class="footer footer__mobile">
