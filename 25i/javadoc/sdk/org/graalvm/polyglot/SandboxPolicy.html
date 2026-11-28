@@ -35,7 +35,7 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../search.html">Search</a></li>
 <li><a href="../../../help-doc.html#class">Help</a></li>
 </ul>
-<div class="about-language"><b>GraalVM SDK Java API Reference<br>25.7.0-dev</b><br>93dabba7018590082983d9d46655672286c862fe</div>
+<div class="about-language"><b>GraalVM SDK Java API Reference<br>25.7.0-dev</b><br>15c33233cf776b77923ba9a49847418bad1e5954</div>
 </div>
 </div>
 <div class="sub-nav">
@@ -281,6 +281,8 @@ be enabled.</li>
 not be enabled.</li>
 <li>The <a href="Context.Builder.html#allowEnvironmentAccess(org.graalvm.polyglot.EnvironmentAccess)"><code>environment access</code></a>
 must be <a href="EnvironmentAccess.html#NONE"><code>EnvironmentAccess.NONE</code></a>.</li>
+<li>If the <a href="Context.Builder.html#timeZone(java.time.ZoneId)"><code>time zone</code></a> is not specified, UTC
+is used instead of the host default time zone.</li>
 <li>The <a href="Context.Builder.html#useSystemExit(boolean)"><code>host System.exit</code></a> must not be
 used.</li>
 <li>The <a href="Context.Builder.html#allowIO(org.graalvm.polyglot.io.IOAccess)"><code>access to the host file system</code></a> must be

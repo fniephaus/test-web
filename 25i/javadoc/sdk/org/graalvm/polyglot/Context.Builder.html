@@ -35,7 +35,7 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../search.html">Search</a></li>
 <li><a href="../../../help-doc.html#class">Help</a></li>
 </ul>
-<div class="about-language"><b>GraalVM SDK Java API Reference<br>25.7.0-dev</b><br>93dabba7018590082983d9d46655672286c862fe</div>
+<div class="about-language"><b>GraalVM SDK Java API Reference<br>25.7.0-dev</b><br>15c33233cf776b77923ba9a49847418bad1e5954</div>
 </div>
 </div>
 <div class="sub-nav">
@@ -1218,8 +1218,9 @@ messages are printed to <a href="#err(java.io.OutputStream)"><code>Context's err
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Context.Builder.html" title="class in org.graalvm.polyglot">Context.Builder</a></span>&nbsp;<span class="element-name">timeZone</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/ZoneId.html" title="class or interface in java.time" class="external-link">ZoneId</a>&nbsp;zone)</span></div>
 <div class="block">Sets the default time zone to be used for this context. If not set, or explicitly set to
-<code>null</code> then the <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/ZoneId.html#systemDefault()" title="class or interface in java.time" class="external-link"><code>system default</code></a> zone will be
-used.</div>
+<code>null</code>, then UTC is used with <a href="SandboxPolicy.html#CONSTRAINED"><code>SandboxPolicy.CONSTRAINED</code></a> or stricter
+sandbox policies, and the <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/ZoneId.html#systemDefault()" title="class or interface in java.time" class="external-link"><code>system default</code></a> zone is used
+otherwise.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the <a href="Context.Builder.html" title="class in org.graalvm.polyglot"><code>Context.Builder</code></a></dd>
